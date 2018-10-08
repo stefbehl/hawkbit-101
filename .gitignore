@@ -1,0 +1,67 @@
+# Directories #
+build
+bin
+tmp
+.settings
+.classpath
+target
+!hawkbit-rest/hawkbit-mgmt-api/src/main/java/org/eclipse/hawkbit/mgmt/json/model/target
+.allure
+.vscode
+.springbeans
+.metadata
+.project
+.idea
+
+# Windows image file caches
+Thumbs.db
+
+# Folder config file
+Desktop.ini
+
+# OSX
+.DS_Store
+.svn
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Compiled filed
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.db
+
+# Sonar
+.sonar_lock
+
+# VSCode
+classpath-data.json
+
+# Created by spring-boot-configuration-processor
+.factorypath
+
+# Eclipse IDE
+*.pydevproject
+
+# Intellij
+*.iml
+
+# Maven
+maven.properties
+
+# Test Files
+*.tmp
+
+# Documentation
+docs/themes/**
+docs/public/**
+docs/content/rest-api/*.html
+.gitmodules
