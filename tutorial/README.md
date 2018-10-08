@@ -7,7 +7,23 @@ This Docker stack contains a full-blown hawkBit setup:
 * hawkBit Device Simulator (Port: 8083)
 * MySQL Database 
 * RabbitMQ 
+ 
+**Start**
 
+```
+$ docker swarm init
+$ docker stack deploy -c docker-compose-stack.yml hawkbit
+```
+
+**Remove**
+
+```
+$ docker stack rm hawkbit
+```
+
+**Troubleshooting**
+
+* *Broken Simulator*: Wait until other services are online (`docker stack services hawkbit`) and then restart simulator: `docker service update --force hawkbit_simulator`
 
 ## Device Simulator
 
