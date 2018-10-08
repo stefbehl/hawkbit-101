@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Eclipse hawkBit - 101 tutorial</title>
+
+    <meta name="description" content="Eclipse hawkBit 101">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/hawkBit.css" id="theme">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section data-background-image="https://images.unsplash.com/photo-1496867557017-559adb93b339?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1304bcfdaa956c3acad348d06ff059e3&auto=format">
+                    <div style="color: white; margin-left: 15em; margin-top: 2em;">
+                        <h1 style="font-weight: normal;">hawkBit 101</h1>
+                        <h6>&nbsp;Tutorial - @EclipseCon Europe 2018</h6>
+                    </div>
+                    <div class="footer" style="position: fixed; bottom: 0; right: 0; text-align: right;">
+                      Photo by <a href="https://unsplash.com/photos/zb2vBaHYB2I">Dawid Zawiła</a> on <a href="https://unsplash.com">Unsplash</a>
+                    </div>
+                </section>
+                <section>
+                  <h1>Who we are</h1>
+                    <div style="font-size: 1.5em; position:absolute; left:2em; width: 100%;">
+                      <div style="display: inline-block;">
+                        <a href="https://github.com/stefbehl"><img src="https://avatars2.githubusercontent.com/u/16321153?s=120&v=4" style="border-radius: 50%;" align="left"></a>
+                        <p style="margin-left: 5em; margin-top: 1.2em;">Stefan Behl</p>
+                      </div>
+                      <br>
+                      <div style="display: inline-block;">
+                        <a href="https://github.com/schabdo"><img src="https://avatars1.githubusercontent.com/u/18215905?s=120&v=4" style="border-radius: 50%;" align="left"></a>
+                        <p style="margin-left: 5em; margin-top: 1.2em;">Dominic Schabel</p>
+                      </div>
+                    </div>
+                </section>
+                <section data-background-image="https://images.unsplash.com/photo-1514388614019-c755c395185c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=52ee84aaf0d189ef9efa9a80ae411457&auto=format&fit=crop&w=1050&q=80">
+                  <h1 style="color: white;">Who are you?</h1>
+                  <div class="footer" style="position: fixed; bottom: 0; right: 0; text-align: right;">
+                    Photo by <a href="https://unsplash.com/photos/KPydzVyWfqg">Christian Chen</a> on <a href="https://unsplash.com">Unsplash</a>
+                  </div>
+                </section>
+                <section>
+                    <h1>Today's mission</h1>
+                    <ul style="position:absolute; left:2em;">
+                      <li style="margin-bottom: 0.5em">Welcome</li>
+                      <li style="margin-bottom: 0.5em">Intro hawkBit</li>
+                      <li style="margin-bottom: 0.5em">Tutorial setup</li>
+                      <li style="margin-bottom: 0.5em">All things hawkBit</li>
+                      <li style="margin-bottom: 0.5em">Q&nbsp;&&nbsp;A</li>
+                    </ul>
+                </section>
+                <section>
+                    <h1>About</h1>
+                    <p>
+                      Eclipse hawkBit aims to create a <b>domain independent</b> back end solution for rolling out <b>software updates</b>
+                      to constrained edge devices as well as more powerful controllers and gateways connected to IP based networking infrastructure.
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, 1fr); margin-top: 4em; grid-gap: 40px">
+                      <div style="justify-self: center;"><i class="fas fa-microchip fa-2x"></i></div>
+                      <div style="justify-self: center;"><i class="fas fa-server fa-2x"></i></div>
+                      <div style="justify-self: center;">specific</div>
+                      <div style="justify-self: center;">independent</div>
+                   </div>
+                </section>
+                <section>
+                  <h1>Update package</h1>
+                  <div class="noborder" style="margin-top: 4em;">
+                    <img src="resources/images/packagemodel.png">
+                  </div>
+                </section>
+                <section>
+                  <h1>Big picture</h1>
+                  <img src="resources/images/hawkBit_overview.jpg">
+                </section>
+                <section>
+                  <h1>Thank you</h1>
+                  <div style="font-size: 1.5em; position:absolute; left:2em;">
+                    <p><i class="fab fa-docker fa-fw"></i>&nbsp;<a href="https://hub.docker.com/u/hawkbit">hawkbit</a></p>
+                    <p><i class="fab fa-gitter fa-fw"></i>&nbsp;<a href="https://gitter.im/eclipse/hawkbit">eclipse/hawkbit</a></p>
+                    <p><i class="fab fa-github fa-fw"></i>&nbsp;<a href="https://github.com/eclipse/hawkbit">eclipse/hawkbit</a></p>
+                    <p><i class="fa fa-book-open fa-fw"></i>&nbsp;<a href="http://www.eclipse.org/hawkbit">eclipse.org/hawkbit</a></p>
+                  </div>
+                </section>
+            </div>
+        </div>
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [{
+                    src: 'lib/js/classList.js',
+                    condition: function() {
+                        return !document.body.classList;
+                    }
+                }, {
+                    src: 'plugin/markdown/marked.js',
+                    condition: function() {
+                        return !!document.querySelector('[data-markdown]');
+                    }
+                }, {
+                    src: 'plugin/markdown/markdown.js',
+                    condition: function() {
+                        return !!document.querySelector('[data-markdown]');
+                    }
+                }, {
+                    src: 'plugin/highlight/highlight.js',
+                    async: true,
+                    condition: function() {
+                        return !!document.querySelector('pre code');
+                    },
+                    callback: function() {
+                        hljs.initHighlightingOnLoad();
+                    }
+                }, {
+                    src: 'plugin/zoom-js/zoom.js',
+                    async: true
+                }, {
+                    src: 'plugin/notes/notes.js',
+                    async: true
+                }]
+            });
+
+            Reveal.configure({
+                slideNumber: true
+            });
+        </script>
+
+    </body>
+
+</html>
