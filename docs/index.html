@@ -81,6 +81,72 @@
                   <h1>Big picture</h1>
                   <img src="resources/images/hawkBit_overview.jpg">
                 </section>
+                                <section>
+                    <h1>Docker Setup</h1>
+                    <p>
+                      <a target="_blank" href="https://github.com/stefbehl/hawkbit-101/blob/master/tutorial/docker-compose-stack.yml">https://github.com/stefbehl/hawkbit-101/blob/master/tutorial/docker-compose-stack.yml</a>                      
+                    </p>
+                   	<div style="display: grid; grid-template-columns: 40% 60%;">
+                   	  <div>Services:
+                        <ul>
+                          <li>hawkBit Update Server v0.2.3</li>
+                          <li>hawkBit Device Simulator</li>
+                          <li>MySQL database</li>
+                          <li>Rabbit MQ</li>
+                        </ul>
+                      </div>
+                      <div>                      
+                        <pre><code data-trim>
+                          $ docker swarm init
+                          [...]
+                          $ docker stack deploy -c docker-compose-stack.yml hawkbit
+                          Creating network hawkbit_hawknet
+                          Creating service hawkbit_hawkbit
+                          Creating service hawkbit_simulator
+                          Creating service hawkbit_rabbitmq
+                          Creating service hawkbit_mysql                          
+                        </code></pre>
+                      </div>                      
+                    </div>
+                </section>
+                <section>
+                    <h1>Setup Verification</h1>
+                    <ul style="width:100%;">
+                      <li>
+                        <div>Update Server: <a href="http://localhost:8080">http://localhost:8080</a></div>
+                        <div style="width:50%;">
+                          <pre><code data-trim>
+                          $ curl http://localhost:8080/health
+                          {"status":"UP"}                          
+                          </code></pre>
+                        </div>
+                      </li>
+                      <li>
+                        <div>Device Simulator: <a href="http://localhost:8080">http://localhost:8083</a></div>
+                        <div style="width:50%;">
+                          <pre><code data-trim>
+                          $ curl http://localhost:8083/health
+                          {"status":"UP"}                          
+                          </code></pre>
+                        </div>
+                      </li>
+                    </ul>                      
+                </section>
+                <section>
+                  <h1>Tutorial Overview</h1>
+                  <div style="display: grid; grid-template-columns: 40% 60%;">                  
+                  <ol>
+                    <li>Provisioning a device</li>                    
+                    <li>Creating an update</li>                    
+                    <li>Updating a single device</li>                    
+                    <li>Updating many devices</li>                    
+                    <li>Orchestrating rollouts</li>                    
+                  </ol>
+                  <div>
+                    <img style="box-shadow: none; max-width: 100%; max-height: 100%;" src="resources/images/hawkBit_tutorial_focusareas.jpg">
+                  </div>
+                  </div>
+                </section>
                 <section>
                   <h1>Thank you</h1>
                   <div style="font-size: 1.5em; position:absolute; left:2em;">
