@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>Eclipse hawkBit - 101 tutorial</title>
+    <title>Eclipse hawkBit101 Tutorial</title>
 
     <meta name="description" content="Eclipse hawkBit 101">
 
@@ -16,9 +16,36 @@
     <link rel="stylesheet" href="css/theme/hawkBit.css" id="theme">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-    <body>
+    <style>
+      .hawkbit101 .reveal li {
+        margin: 0.4em 0;
+      }
+      .hawkbit101 .two-columns-eq {
+      	display: grid;
+      	grid-template-columns: 50% 50%;
+      	grid-gap: 1em;
+      }
+      .hawkbit101 .reveal pre {
+        width: 100%;      
+      }
+      .hawkbit101 blockquote {
+        width: 80%;
+      }
+      .hawkbit101 blockquote.verify {
+        font-style: italic;
+        text-align: center;
+      }
+      .hawkbit101 .current-page {
+        position: fixed;
+        top: 0;
+        right: 0;
+      }
+    </style>
+
+    <body class="hawkbit101">
         <div class="reveal">
             <div class="slides">
+            
                 <section data-background-image="https://images.unsplash.com/photo-1496867557017-559adb93b339?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1304bcfdaa956c3acad348d06ff059e3&auto=format">
                     <div style="color: white; margin-left: 15em; margin-top: 2em;">
                         <h1 style="font-weight: normal;">hawkBit 101</h1>
@@ -28,6 +55,7 @@
                       Photo by <a href="https://unsplash.com/photos/zb2vBaHYB2I">Dawid Zawiła</a> on <a href="https://unsplash.com">Unsplash</a>
                     </div>
                 </section>
+                
                 <section>
                   <h1>Who we are</h1>
                     <div style="font-size: 1.5em; position:absolute; left:2em; width: 100%;">
@@ -42,22 +70,25 @@
                       </div>
                     </div>
                 </section>
+                
                 <section data-background-image="https://images.unsplash.com/photo-1514388614019-c755c395185c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=52ee84aaf0d189ef9efa9a80ae411457&auto=format&fit=crop&w=1050&q=80">
                   <h1 style="color: white;">Who are you?</h1>
                   <div class="footer" style="position: fixed; bottom: 0; right: 0; text-align: right;">
                     Photo by <a href="https://unsplash.com/photos/KPydzVyWfqg">Christian Chen</a> on <a href="https://unsplash.com">Unsplash</a>
                   </div>
                 </section>
+                
                 <section>
                     <h1>Today's mission</h1>
                     <ul style="position:absolute; left:2em;">
-                      <li style="margin-bottom: 0.5em">Welcome</li>
-                      <li style="margin-bottom: 0.5em">Intro hawkBit</li>
-                      <li style="margin-bottom: 0.5em">Tutorial setup</li>
-                      <li style="margin-bottom: 0.5em">All things hawkBit</li>
-                      <li style="margin-bottom: 0.5em">Q&nbsp;&&nbsp;A</li>
+                      <li>Welcome</li>
+                      <li>Intro hawkBit</li>
+                      <li>Tutorial setup</li>
+                      <li>All things hawkBit</li>
+                      <li>Q&nbsp;&&nbsp;A</li>
                     </ul>
                 </section>
+                
                 <section>
                     <h1>About</h1>
                     <p>
@@ -71,82 +102,431 @@
                       <div style="justify-self: center;">independent</div>
                    </div>
                 </section>
+                
                 <section>
                   <h1>Update package</h1>
                   <div class="noborder" style="margin-top: 4em;">
                     <img src="resources/images/packagemodel.png">
                   </div>
                 </section>
+                
                 <section>
                   <h1>Big picture</h1>
                   <img src="resources/images/hawkBit_overview.jpg">
                 </section>
-                                <section>
-                    <h1>Docker Setup</h1>
-                    <p>
-                      <a target="_blank" href="https://github.com/stefbehl/hawkbit-101/blob/master/tutorial/docker-compose-stack.yml">https://github.com/stefbehl/hawkbit-101/blob/master/tutorial/docker-compose-stack.yml</a>                      
-                    </p>
-                   	<div style="display: grid; grid-template-columns: 40% 60%;">
-                   	  <div>Services:
-                        <ul>
-                          <li>hawkBit Update Server v0.2.3</li>
-                          <li>hawkBit Device Simulator</li>
-                          <li>MySQL database</li>
-                          <li>Rabbit MQ</li>
-                        </ul>
-                      </div>
-                      <div>                      
-                        <pre><code data-trim>
-                          $ docker swarm init
-                          [...]
-                          $ docker stack deploy -c docker-compose-stack.yml hawkbit
-                          Creating network hawkbit_hawknet
-                          Creating service hawkbit_hawkbit
-                          Creating service hawkbit_simulator
-                          Creating service hawkbit_rabbitmq
-                          Creating service hawkbit_mysql                          
-                        </code></pre>
-                      </div>                      
-                    </div>
-                </section>
+                
                 <section>
-                    <h1>Setup Verification</h1>
-                    <ul style="width:100%;">
-                      <li>
-                        <div>Update Server: <a href="http://localhost:8080">http://localhost:8080</a></div>
-                        <div style="width:50%;">
-                          <pre><code data-trim>
+                  <h1>Docker Setup</h1>
+                  <p>
+                    <a target="_blank" href="https://github.com/stefbehl/hawkbit-101/blob/master/tutorial/docker-compose-stack.yml">https://github.com/stefbehl/hawkbit-101/blob/master/tutorial/docker-compose-stack.yml</a>                      
+                  </p>
+                  <div style="display: grid; grid-template-columns: 40% 60%;">
+                    <div>Services:
+                      <ul>
+                        <li>hawkBit Update Server v0.2.3</li>
+                        <li>hawkBit Device Simulator</li>
+                        <li>MySQL database</li>
+                        <li>Rabbit MQ</li>
+                      </ul>
+                    </div>
+                    <div>                      
+                      <pre><code data-trim>
+                        $ docker swarm init
+                        [...]
+                        $ docker stack deploy -c docker-compose-stack.yml hawkbit
+                        Creating network hawkbit_hawknet
+                        Creating service hawkbit_hawkbit
+                        Creating service hawkbit_simulator
+                        Creating service hawkbit_rabbitmq
+                        Creating service hawkbit_mysql                          
+                      </code></pre>
+                    </div>                      
+                  </div>
+                </section>
+                
+                <section>
+                  <h1>Setup Verification</h1>
+                  <ul style="width:100%;">
+                    <li>
+                      <div>Update Server: <a href="http://localhost:8080">http://localhost:8080</a></div>
+                      <div style="width:50%;">
+                        <pre><code data-trim>
                           $ curl http://localhost:8080/health
                           {"status":"UP"}                          
-                          </code></pre>
-                        </div>
-                      </li>
-                      <li>
-                        <div>Device Simulator: <a href="http://localhost:8080">http://localhost:8083</a></div>
-                        <div style="width:50%;">
-                          <pre><code data-trim>
+                        </code></pre>
+                      </div>
+                    </li>
+                    <li>
+                      <div>Device Simulator: <a href="http://localhost:8080">http://localhost:8083</a></div>
+                      <div style="width:50%;">
+                        <pre><code data-trim>
                           $ curl http://localhost:8083/health
                           {"status":"UP"}                          
-                          </code></pre>
-                        </div>
-                      </li>
-                    </ul>                      
+                        </code></pre>
+                      </div>
+                    </li>
+                  </ul>                      
                 </section>
+                
                 <section>
                   <h1>Tutorial Overview</h1>
                   <div style="display: grid; grid-template-columns: 40% 60%;">                  
                   <ol>
-                    <li>Provisioning a device</li>                    
-                    <li>Creating an update</li>                    
-                    <li>Updating a single device</li>                    
-                    <li>Updating many devices</li>                    
-                    <li>Orchestrating rollouts</li>                    
+                    <li>Provisioning a device</li>
+                    <li>Creating an update</li>
+                    <li>Updating a single device</li>
+                    <li>Updating many devices</li>
                   </ol>
                   <div>
                     <img style="box-shadow: none; max-width: 100%; max-height: 100%;" src="resources/images/hawkBit_tutorial_focusareas.jpg">
                   </div>
                   </div>
                 </section>
+                
+                <section>
+                  <h6>Part 1</h6>
+                  <h1>Provisioning a Device</h1>
+                  <div>
+                  	<ul>
+                      <li>Device "pre-provisioning" via Management UI or Management API</li>
+                      <li>Device registration via DDI or DMF API<br>Plug&Play via gateway token</li>
+                      <li>Device metadata and attributes</li>
+                  	</ul>
+                  </div>
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 1, step 1</div>
+                  <h2>Device Pre-Provisioning via Mgmt API</h2>
+                  <div class="two-columns-eq">
+                    <div>Request
+                      <div>
+                        <pre><code data-trim>
+                          $ curl 'http://localhost:8080/rest/v1/targets' \
+                              -i -X POST \
+                              -u 'admin:admin' \
+                              -H 'Content-Type:application/json' \
+                              -d '[{
+                                "controllerId": "dev01",
+                                "name": "Device 01",
+                                "description": "My first device"
+                              }]'
+                        </code></pre>
+                      </div>
+                      The response contains the controller ID and the security token that can be used for DDI.
+                    </div>
+                    <div>Response
+                      <div>
+                        <pre><code class="json" data-trim>
+                          HTTP/1.1 201 Created
+                          [{
+                            "controllerId": "dev01",
+                            "createdBy": "admin",
+                            "createdAt": 1539089120222,
+                            "lastModifiedBy": "admin",
+                            "lastModifiedAt": 1539089120222,
+                            "name": "Device 01",
+                            "description": "My first device",
+                            "updateStatus": "unknown",
+                            "securityToken": "742f7f594c157f5885a8c5fbabcb84dd",
+                            "requestAttributes": true,
+                            "_links": {
+                              "self": {
+                                "href": "http://localhost:8080/rest/v1/targets/dev01"
+                              }
+                            }
+                          }]                    
+                        </code></pre>
+                      </div>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the target has been created. Create another target via the UI.</blockquote>
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 1, step 2</div>
+                  <h2>Device Registration via DDI</h2>
+                  <div class="two-columns-eq">
+                    <div>Request
+                      <div>
+                        <pre><code data-trim>
+                          $ curl \
+                            'http://localhost:8080/DEFAULT/controller/v1/{{ctrlId}}' \
+                            -i -H 'Accept: application/hal+json' \
+                            -H 'Authorization: TargetToken {{securityToken}}'
+                        </code></pre>
+                      </div>
+                      <p>The response contains a link to set device attributes (via HTTP PUT).</p>
+                    </div>
+                    <div>Response
+                      <div>
+                        <pre><code data-trim>
+                          HTTP/1.1 200 OK
+                          {
+                            "config": {
+                              "polling": {
+                                "sleep": "00:05:00"
+                              }
+                            },
+                            "_links": {
+                              "configData": {
+                                "href":
+                          "https://localhost:8080/DEFAULT/controller/v1/dev01/configData"
+                              }
+                            }
+                          }                  
+                        </code></pre>
+                      </div>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the state of the target changed from UNKNOWN to REGISTERED.<br>OK, this one is really hard... :-)</blockquote>                  
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 1, step 3</div>
+                  <h2>Setting Device Attributes via DDI</h2>
+                  <div class="two-columns-eq">
+                    <div>Request
+                      <div>
+                        <pre><code data-trim>
+                          $ curl \
+                            'http://localhost:8080/DEFAULT/controller/v1/{{ctrlId}}/configData' \
+                            -i -X PUT \
+                            -H 'Authorization: TargetToken {{securityToken}}' \
+                            -H 'Content-Type: application/json;charset=UTF-8' \
+                            -d '{
+                              "mode": "merge",
+                              "data": {
+                                "VIN": "JH4TB2H26CC000001",
+                                "hwRevision": "1"
+                              },
+                              "status": {
+                                "result": {
+                                  "finished": "success"
+                                },
+                                "execution": "closed",
+                                "details": []
+                              }
+                            }'
+                        </code></pre>
+                      </div>
+                    </div>
+                    <div>Response
+                      <div>
+                        <pre><code data-trim>
+                          HTTP/1.1 200 OK           
+                        </code></pre>
+                      </div>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the device attributes are present.</blockquote>                  
+                </section>
+                
+                <section>
+                  <h6>Part 2</h6>
+                  <h1>Creating an Update</h1>
+                  <div>
+                  	<ul>
+                      <li>Creating a Software Module</li>
+                      <li>Uploading an Artifact</li>
+                      <li>Creating a Distribution Set</li>
+                      <li>Assigning the Software Module to the Distribution Set</li>
+                  	</ul>
+                  </div>
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 2, step 1</div>
+                  <h2>Creating a Software Module via Mgmt API</h2>
+                  <div class="two-columns-eq">
+                    <div>Request
+                      <div>
+                        <pre><code data-trim>
+                          $ curl \
+                            'http://localhost:8080/rest/v1/softwaremodules' \
+                            -i -X POST \
+                            -u 'admin:admin' \
+                            -H 'Content-Type: application/json;charset=UTF-8' \
+                            -d '[{
+                              "vendor": "Example Ltd.",
+                              "name": "os1",
+                              "description": "First version of MyOS.",
+                              "type": "os",
+                              "version": "1.0"
+                            }]'
+                        </code></pre>
+                      </div>
+                      <p>This will create an empty software module of type "OS". Next we will add artifacts to the module.</p>
+                    </div>
+                    <div>Response
+                      <div>
+                        <pre><code data-trim>
+                          HTTP/1.1 201 CREATED
+                          [{
+                            [...]
+                            "id": 2
+                            "name": "os1",
+                            "description": "First version of MyOS.",
+                            "version": "1.0",
+                            "type": "os",
+                            "vendor": "Example Ltd.",
+                            "deleted": false,
+                            "_links": {
+                              "self": {
+                                "href": "http://localhost:8080/rest/v1/softwaremodules/2"
+                              }
+                            }
+                          }]
+                          </code></pre>
+                      </div>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the Distribution Management view of the UI that the software module has been created. Create another software module of type "Application" via the UI.</blockquote>                  
+                </section>
+
+                <section>
+                  <div class="current-page">Part 2, step 2</div>
+                  <h2>Uploading an Artifact via Mgmt API</h2>
+                  <div class="two-columns-eq">
+                    <div>Request
+                      <div>
+                        <pre><code data-trim>
+                          $ echo "This is a test update file." > example.file
+                          $ curl \
+                            'http://localhost:8080
+                              /rest/v1/softwaremodules/{{moduleId}}/artifacts' \
+                            -i -X POST \
+                            -u 'admin:admin' \
+                            -H 'Content-Type: multipart/form-data' \
+                            -F 'file=@example.file'
+                        </code></pre>
+                      </div>
+                      <p>The uploaded artifact will be associated with the specified software module. The response provides a download link.</p>
+                    </div>
+                    <div>Response
+                      <div>
+                        <pre><code data-trim>
+                          HTTP/1.1 201 CREATED
+                          {
+                            [...]
+                            "id": 2,
+                            "hashes": {
+                              "sha1": "d2e7291c2c52b87b2ee00983217e1bcc0909251f",
+                              "md5": "b14f29fe8cea6b25e62a8e5c48b5a3a1"
+                            },
+                            "providedFilename": "example.file",
+                            "size": 28,
+                            "_links": {
+                              "self": {
+                                "href": "http://localhost:8080/rest/v1/softwaremodules/2/artifacts/2"
+                              },
+                              "download": {
+                                "href": "http://localhost:8080/rest/v1/softwaremodules/2/artifacts/2/download"
+                              }
+                            }
+                          }
+                        </code></pre>
+                      </div>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the Upload view of the UI that the artifact is associated with your software module. Upload another artifact for the same software module via the UI.</blockquote>                  
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 2, step 3</div>
+                  <h2>Creating a Distribution Set via Mgmt API</h2>
+                  <div class="two-columns-eq">
+                    <div>Request
+                      <div>
+                        <pre><code data-trim>
+                          $ curl \
+                            'http://localhost:8080/rest/v1/distributionsets' \
+                            -i -X POST \
+                            -u 'admin:admin' \
+                            -H 'Content-Type: application/json' \
+                            -d '[{
+                              "requiredMigrationStep": false,
+                              "name": "myDS",
+                              "description": "My initial distribution",
+                              "type": "os",
+                              "version": "1.0",
+                              "modules": [{
+                                "id": {{moduleId}}
+                              }]
+                            }]'
+                        </code></pre>
+                      </div>
+                      <p>Your software module is assigned to the new distribution set. But you can also assign software modules separately...</p>
+                    </div>
+                    <div>Response
+                      <div>
+                        <pre><code data-trim>
+                          HTTP/1.1 201 CREATED
+                          [{
+                            [...]
+                            "id": 2,
+                            "name": "myDS",
+                            "description": "My initial distribution",
+                            "version": "1.0",
+                            "modules": [...],
+                            "requiredMigrationStep": false,
+                            "type": "os",
+                            "complete": true,
+                            "deleted": false,
+                            "_links": {
+                              "self": {
+                                "href": "http://localhost:8080/rest/v1/distributionsets/2"
+                              }
+                            }
+                          }]
+                        </code></pre>
+                      </div>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the Distribution Management view of the UI that the distribution set is created and the software module is assigned.</blockquote>                  
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 2, step 4</div>
+                  <h2>Assigning a Software Module via Mgmt API</h2>
+                  <div class="two-columns-eq">
+                    <div>Request
+                      <div>
+                        <pre><code data-trim>
+                          $ curl \
+                            'http://localhost:8080/rest/v1/distributionsets/{{distributionId}}/assignedSM' \
+                            -i -X POST \
+                            -u 'admin:admin' \
+                            -H 'Content-Type: application/json' \
+                            -d '[{
+                              "id": {{moduleId}}
+                            }]'
+                        </code></pre>
+                      </div>
+                      <p>Try to assign a software module of type "Application". Why does it fail?</p>
+                    </div>
+                    <div>Response
+                      <div>
+                        <pre><code data-trim>
+                          HTTP/1.1 200 OK
+                        </code></pre>
+                      </div>
+                      or
+                      <div>
+                        <pre><code data-trim>
+                          HTTP/1.1 400 Bad Request
+                          {
+                            "exceptionClass": "org.eclipse.hawkbit.repository.exception.UnsupportedSoftwareModuleForThisDistributionSetException",
+                            "errorCode": "hawkbit.server.error.distributionset.modules.unsupported",
+                            "message": "Distribution set type does not contain the given module, i.e. is incompatible."
+                          }
+                        </code></pre>                        
+                      </div>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify your software module assignments in the "Distributions Management" view of the UI. Review the properties of your distribution set, in particular its type.</blockquote>                  
+                </section>
+                
                 <section>
                   <h1>Thank you</h1>
                   <div style="font-size: 1.5em; position:absolute; left:2em;">
@@ -156,6 +536,7 @@
                     <p><i class="fa fa-book-open fa-fw"></i>&nbsp;<a href="http://www.eclipse.org/hawkbit">eclipse.org/hawkbit</a></p>
                   </div>
                 </section>
+                
             </div>
         </div>
         <script src="lib/js/head.min.js"></script>
