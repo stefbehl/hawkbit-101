@@ -1,15 +1,16 @@
 {
 	"info": {
 		"_postman_id": "08ab393e-90ac-8aaf-8a45-2ef997713e4f",
-		"name": "EclipseCon 2018 - Hawkbit101 Tutorial",
+		"name": "EclipseCon 2018 - hawkBit101 Tutorial",
+		"description": "This Postman collection is part of the hawkBit 101 Tutorial which was developed for EclipseCon 2018.\n\nIts purpose is to demonstrate the public APIs of Eclipse hawkBit, in particular the\n- Direct Device Integration API (DDI) and\n- Management REST API.\n\nThere is a separate folder for each part of the tutorial. Each folder contains a couple of requests which are meant to be executed in sequential order.\n\nIt is recommended to execute this collection against the hawkBit Docker setup which is available here:\nhttps://github.com/stefbehl/hawkbit-101\n\n\n\n===\n\nDISCLAIMER\n\nThis collection is for illustrative purposes only to provide information about Eclipse hawkBit.\nIt is provided \"AS IS\" without any warranties and support.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Setup Verification",
+			"name": "Setup Verification and Initialization",
 			"item": [
 				{
-					"name": "Prep 1: Verify Update Server is Running",
+					"name": "Step 1: Verify Update Server is Running",
 					"event": [
 						{
 							"listen": "test",
@@ -43,7 +44,7 @@
 					"response": []
 				},
 				{
-					"name": "Prep 2: Verify Device Simulator is Running (Mgmt API + DDI)",
+					"name": "Step 2: Verify Device Simulator is Running",
 					"event": [
 						{
 							"listen": "test",
@@ -74,6 +75,144 @@
 							"port": "{{deviceSimulatorPort}}",
 							"path": [
 								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Step 3: Enable Target Token Authentication (Mgmt API)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a8932cdb-1cd3-4b72-8008-cf320834122c",
+								"exec": [
+									"verifyStatusCode(pm, 200);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"value\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/rest/v1/system/configs/authentication.targettoken.enabled/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"rest",
+								"v1",
+								"system",
+								"configs",
+								"authentication.targettoken.enabled",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Step 4: Enable Gateway Token Authentication (Mgmt API)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4fb8dcc3-3217-4433-963c-d52575749d1d",
+								"exec": [
+									"verifyStatusCode(pm, 200);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"value\" : true\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/rest/v1/system/configs/authentication.gatewaytoken.enabled/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"rest",
+								"v1",
+								"system",
+								"configs",
+								"authentication.gatewaytoken.enabled",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Step 5: Initialize Gateway Token (Mgmt API)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1e879b13-1c5f-4483-ae03-da10ba2bc9fa",
+								"exec": [
+									"verifyStatusCode(pm, 200);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"value\": \"{{gatewayToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/rest/v1/system/configs/authentication.gatewaytoken.key/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"rest",
+								"v1",
+								"system",
+								"configs",
+								"authentication.gatewaytoken.key",
+								""
 							]
 						}
 					},
@@ -1220,7 +1359,7 @@
 					"response": []
 				},
 				{
-					"name": "Step 2.1: Create Target Filter for \"Americas\" (Mgmt API)",
+					"name": "Step 2.3: Create Target Filter for \"Americas\" (Mgmt API)",
 					"event": [
 						{
 							"listen": "test",
@@ -1239,8 +1378,8 @@
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"type": "text",
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -1479,79 +1618,79 @@
 	],
 	"variable": [
 		{
-			"id": "596cbe89-171a-4fca-80c5-432461b6e857",
+			"id": "72f47fc7-eea8-4e3d-8588-4ff800c93ee5",
 			"key": "baseURL",
 			"value": "http://localhost",
 			"type": "string"
 		},
 		{
-			"id": "0cdb295d-9446-4627-85af-729de8b572bb",
+			"id": "2bedb510-dc9d-490c-b349-b963795ab920",
 			"key": "port",
 			"value": "8080",
 			"type": "string"
 		},
 		{
-			"id": "d2084d9f-1d19-482e-b87d-693a72ca6967",
+			"id": "d1c8b6f1-8c3b-4c8a-a6e1-e140eb712a14",
 			"key": "deviceSimulatorPort",
 			"value": "8083",
 			"type": "string"
 		},
 		{
-			"id": "9460592b-85da-48b2-a283-d9e8df398692",
+			"id": "9d9ab3cd-2a22-4a83-9362-15e19de0b335",
 			"key": "tenant",
 			"value": "DEFAULT",
 			"type": "string"
 		},
 		{
-			"id": "b968e4c9-1c4d-4320-94b0-b54168a72ad6",
+			"id": "c8579bc6-07ba-4fdc-a16f-3ac5d0528369",
 			"key": "gatewayToken",
 			"value": "e61c6b2b78a674d19304c357a20f1d09",
 			"type": "string"
 		},
 		{
-			"id": "4802b076-b554-4689-a212-e11f4adbf5ac",
+			"id": "fb05b787-c2ca-4760-8760-7605d532da7d",
 			"key": "currentTargetToken",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "ecc574b8-4966-43a6-85d7-9e32f044cb3f",
+			"id": "c6491924-b49f-4f50-9b19-4659a675eee6",
 			"key": "currentSoftwareModuleId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "57e1f3e3-1179-45cd-94c7-94d3e86d3dc6",
+			"id": "9575b8af-e867-4b69-bdcc-fec786d29efb",
 			"key": "currentDistributionSetId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "a2c021ea-ed65-4761-a1a9-da1b6af5e742",
+			"id": "2b46a396-ad55-44cc-b7c9-73e8e8764218",
 			"key": "currentTargetId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "ab1934c6-56e3-485d-bfde-3db6c39e3794",
+			"id": "059156df-1e25-4361-92e4-3c9c9a878fe0",
 			"key": "currentDeploymentActionHref",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "dae8fce0-1385-4669-a69d-4770cfe64bdc",
+			"id": "2a762bf5-4179-4fc0-b904-f92f12998939",
 			"key": "currentArtifactDownloadHref",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "4ea1fcb7-8866-4d5b-a971-7b19bda1200d",
+			"id": "143dbcd7-c681-4e4c-ac37-a13eab98871e",
 			"key": "currentDeploymentActionId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "88336bec-8785-42a4-88b5-9b4f95ae3edc",
+			"id": "4720b79c-a5e5-41b2-8241-d08f68078988",
 			"key": "currentRolloutId",
 			"value": "",
 			"type": "string"
