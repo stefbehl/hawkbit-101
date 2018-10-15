@@ -22,8 +22,11 @@
       }
       .hawkbit101 .two-columns-eq {
       	display: grid;
-      	grid-template-columns: 50% 50%;
-      	grid-gap: 1em;
+      	grid-template-columns: 1fr 1fr;
+      	grid-gap: 0 1em;
+      }
+      .hawkbit101 .two-columns-eq > * {
+        overflow: hidden;
       }
       .hawkbit101 .reveal pre {
         width: 100%;      
@@ -199,10 +202,11 @@
                   <div class="current-page">Part 1, step 1</div>
                   <h2>Device Pre-Provisioning via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>Request
+                    <div>
                       <div>
+                        <div>Request</div>
                         <pre><code data-trim>
-                          $ curl 'http://localhost:8080/rest/v1/targets' \
+                          $ curl '{{baseURL}}/rest/v1/targets' \
                               -i -X POST \
                               -u 'admin:admin' \
                               -H 'Content-Type:application/json' \
@@ -215,8 +219,9 @@
                       </div>
                       The response contains the controller ID and the security token that can be used for DDI.
                     </div>
-                    <div>Response
+                    <div>
                       <div>
+                        <div>Response</div>
                         <pre><code class="json" data-trim>
                           HTTP/1.1 201 Created
                           [{
@@ -247,19 +252,21 @@
                   <div class="current-page">Part 1, step 2</div>
                   <h2>Device Registration via DDI</h2>
                   <div class="two-columns-eq">
-                    <div>Request
+                    <div>
                       <div>
+                        <div>Request</div>
                         <pre><code data-trim>
                           $ curl \
-                            'http://localhost:8080/DEFAULT/controller/v1/{{ctrlId}}' \
+                            '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}' \
                             -i -H 'Accept: application/hal+json' \
                             -H 'Authorization: TargetToken {{securityToken}}'
                         </code></pre>
                       </div>
                       <p>The response contains a link to set device attributes (via HTTP PUT).</p>
                     </div>
-                    <div>Response
+                    <div>
                       <div>
+                        <div>Response</div>
                         <pre><code data-trim>
                           HTTP/1.1 200 OK
                           {
@@ -286,14 +293,15 @@
                   <div class="current-page">Part 1, step 3</div>
                   <h2>Setting Device Attributes via DDI</h2>
                   <div class="two-columns-eq">
-                    <div>Request
+                    <div>
                       <div>
+                        <div>Request</div>
                         <pre><code data-trim>
                           $ curl \
-                            'http://localhost:8080/DEFAULT/controller/v1/{{ctrlId}}/configData' \
+                            '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}/configData' \
                             -i -X PUT \
                             -H 'Authorization: TargetToken {{securityToken}}' \
-                            -H 'Content-Type: application/json;charset=UTF-8' \
+                            -H 'Content-Type: application/json' \
                             -d '{
                               "mode": "merge",
                               "data": {
@@ -311,8 +319,9 @@
                         </code></pre>
                       </div>
                     </div>
-                    <div>Response
+                    <div>
                       <div>
+                        <div>Response</div>
                         <pre><code data-trim>
                           HTTP/1.1 200 OK           
                         </code></pre>
@@ -339,14 +348,15 @@
                   <div class="current-page">Part 2, step 1</div>
                   <h2>Creating a Software Module via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>Request
+                    <div>
                       <div>
+                        <div>Request</div>
                         <pre><code data-trim>
                           $ curl \
-                            'http://localhost:8080/rest/v1/softwaremodules' \
+                            '{{baseURL}}/rest/v1/softwaremodules' \
                             -i -X POST \
                             -u 'admin:admin' \
-                            -H 'Content-Type: application/json;charset=UTF-8' \
+                            -H 'Content-Type: application/json' \
                             -d '[{
                               "vendor": "Example Ltd.",
                               "name": "os1",
@@ -358,8 +368,9 @@
                       </div>
                       <p>This will create an empty software module of type "OS". Next we will add artifacts to the module.</p>
                     </div>
-                    <div>Response
+                    <div>
                       <div>
+                        <div>Response</div>
                         <pre><code data-trim>
                           HTTP/1.1 201 CREATED
                           [{
@@ -388,13 +399,13 @@
                   <div class="current-page">Part 2, step 2</div>
                   <h2>Uploading an Artifact via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>Request
+                    <div>
                       <div>
+                        <div>Request</div>
                         <pre><code data-trim>
                           $ echo "This is a test update file." > example.file
                           $ curl \
-                            'http://localhost:8080
-                              /rest/v1/softwaremodules/{{moduleId}}/artifacts' \
+                            '{{baseURL}}/rest/v1/softwaremodules/{{moduleId}}/artifacts' \
                             -i -X POST \
                             -u 'admin:admin' \
                             -H 'Content-Type: multipart/form-data' \
@@ -403,8 +414,9 @@
                       </div>
                       <p>The uploaded artifact will be associated with the specified software module. The response provides a download link.</p>
                     </div>
-                    <div>Response
+                    <div>
                       <div>
+                        <div>Response</div>
                         <pre><code data-trim>
                           HTTP/1.1 201 CREATED
                           {
@@ -436,11 +448,12 @@
                   <div class="current-page">Part 2, step 3</div>
                   <h2>Creating a Distribution Set via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>Request
+                    <div>
                       <div>
+                        <div>Request</div>
                         <pre><code data-trim>
                           $ curl \
-                            'http://localhost:8080/rest/v1/distributionsets' \
+                            '{{baseURL}}/rest/v1/distributionsets' \
                             -i -X POST \
                             -u 'admin:admin' \
                             -H 'Content-Type: application/json' \
@@ -458,8 +471,9 @@
                       </div>
                       <p>Your software module is assigned to the new distribution set. But you can also assign software modules separately...</p>
                     </div>
-                    <div>Response
+                    <div>
                       <div>
+                        <div>Response</div>
                         <pre><code data-trim>
                           HTTP/1.1 201 CREATED
                           [{
@@ -490,41 +504,272 @@
                   <div class="current-page">Part 2, step 4</div>
                   <h2>Assigning a Software Module via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>Request
-                      <div>
-                        <pre><code data-trim>
-                          $ curl \
-                            'http://localhost:8080/rest/v1/distributionsets/{{distributionId}}/assignedSM' \
-                            -i -X POST \
-                            -u 'admin:admin' \
-                            -H 'Content-Type: application/json' \
-                            -d '[{
-                              "id": {{moduleId}}
-                            }]'
-                        </code></pre>
-                      </div>
+                    <div>
+                      <div>Request</div>
+                      <pre><code data-trim>
+                        $ curl \
+                          '{{baseURL}}/rest/v1/distributionsets/{{distributionId}}/assignedSM' \
+                          -i -X POST \
+                          -u 'admin:admin' \
+                          -H 'Content-Type: application/json' \
+                          -d '[{
+                            "id": {{moduleId}}
+                          }]'
+                      </code></pre>
                       <p>Try to assign a software module of type "Application". Why does it fail?</p>
                     </div>
-                    <div>Response
-                      <div>
+                    <div>
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                      </code></pre>
+                      <div>or</div>
                         <pre><code data-trim>
-                          HTTP/1.1 200 OK
-                        </code></pre>
-                      </div>
-                      or
-                      <div>
-                        <pre><code data-trim>
-                          HTTP/1.1 400 Bad Request
-                          {
-                            "exceptionClass": "org.eclipse.hawkbit.repository.exception.UnsupportedSoftwareModuleForThisDistributionSetException",
-                            "errorCode": "hawkbit.server.error.distributionset.modules.unsupported",
-                            "message": "Distribution set type does not contain the given module, i.e. is incompatible."
-                          }
-                        </code></pre>                        
-                      </div>
+                        HTTP/1.1 400 Bad Request
+                        {
+                          "exceptionClass": "o.e.h.r.e.UnsupportedSoftwareModuleForThisDistributionSetException",
+                          "errorCode": "hawkbit.server.error.distributionset.modules.unsupported",
+                          "message": "Distribution set type does not contain the given module, i.e. is incompatible."
+                        }
+                      </code></pre>                        
                     </div>
                   </div>
-                  <blockquote class="verify">Verify your software module assignments in the "Distributions Management" view of the UI. Review the properties of your distribution set, in particular its type.</blockquote>                  
+                  <blockquote class="verify">Verify your software module assignments in the Distributions Management view of the UI. Review the properties of your distribution set, in particular its type.</blockquote>                  
+                </section>
+                
+                <section>
+                  <h6>Part 3</h6>
+                  <h1>Updating a Single Device</h1>
+                  <div>
+                  	<ul>
+                      <li>Assigning a Distribution Set to a Device</li>
+                      <li>Polling for Updates</li>
+                      <li>Inspecting the Deployment Action</li>
+                      <li>Downloading Artifacts</li>
+                      <li>Providing Deployment Feedback</li>
+                  	</ul>
+                  </div>
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 3, step 1</div>
+                  <h2>Assigning a Distribution Set via Mgmt API</h2>
+                  <div class="two-columns-eq">
+                    <div>
+                      <div>Request</div>
+                      <pre><code data-trim>
+                        $ curl \
+                          '{{baseURL}}/rest/v1/distributionsets
+                              /{{distributionId}}/assignedTargets/' \
+                          -i -X POST \
+                          -u 'admin:admin' \
+                          -H 'Content-Type: application/json' \
+                          -d '[{
+                            "id" : "{{targetId}}",
+                            "type" : "forced"
+                          }]'
+                      </code></pre>
+                      <p>The specified type "forced" instructs the device to apply the update immediately. Alternatives are "soft" and "timeforced".</p>
+                    </div>
+                    <div>
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                        {
+                          "assigned": 1,
+                          "alreadyAssigned": 0,
+                          "total":1
+                        }
+                      </code></pre>
+                    </div>
+                    <!--<div>As an alternative, you can also use the API entry point "/rest/v1/targets{{targetId}}/assignedDS" to update a single device.</div>-->
+                  </div>
+                  <blockquote class="verify">Verify in the Deployment Management view of the UI that a deployment action is listed in the action history of your device. Maximize the action history of your device.</blockquote>                  
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 3, step 2</div>
+                  <h2>Polling for Updates via DDI</h2>
+                  <div class="two-columns-eq">
+                    <div>
+                      <div>Request</div>
+                      <pre><code data-trim>
+                        $ curl \
+                          '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}' \
+                          -i -H 'Accept: application/hal+json' \
+                          -H 'Authorization: TargetToken {{securityToken}}'
+                      </code></pre>
+                      <p>The response contains a "deploymentBase" link that can be used by the device to get all the information needed to process the assigned update.</p>
+                    </div>
+                    <div>
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                        {
+                          "config": {
+                            "polling": {
+                              "sleep": "00:05:00"
+                            }
+                          },
+                          "_links": {
+                            "deploymentBase": {
+                              "href": "http://localhost:8080/DEFAULT
+                                /controller/v1/dev01/deploymentBase/1?c=411599879"
+                            }
+                          }
+                        }
+                        </code></pre>
+                    </div>
+                  </div>
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 3, step 3</div>
+                  <h2>Inspecting the Deployment Action via DDI</h2>
+                  <div class="two-columns-eq">
+                    <div>
+                      <div>Request</div>
+                      <pre><code data-trim>
+                        $ curl \
+                          'http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/1?c=411599879' \
+                          -i -H 'Accept: application/hal+json' \
+                          -H 'Authorization: TargetToken {{securityToken}}'
+                      </code></pre>
+                      <p>The response contains an array of chunks, each representing a software module. For each software module there is an array of artifacts providing the artifact download URLs and checksums.</p>
+                    </div>
+                    <div>
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                        {
+                          "id": "1",
+                          "deployment": {
+                            "download": "forced",
+                            "update": "forced",
+                            "chunks": [{
+                              "part": "os",
+                              "version": "1",
+                              "name": "os1",
+                              "artifacts": [{
+                                "filename": "test_large.txt",
+                                "hashes": {...},
+                                "size": 3400321,
+                                "_links": {
+                                  "download-http": {
+                                    "href": "http://localhost:8080/DEFAULT/controller/v1/dev01/softwaremodules/1/artifacts/test_large.txt"
+                                  },
+                                  "md5sum-http": {
+                                    "href": "http://localhost:8080/DEFAULT/controller/v1/dev01/softwaremodules/1/artifacts/test_large.txt.MD5SUM"
+                                  }
+                                }
+                              }
+                            ]}
+                          ]}
+                        }
+                        </code></pre>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the action history of the Deployment Management view that the update was retrieved by the device.</blockquote>                  
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 3, step 4</div>
+                  <h2>Downloading an Artifact via DDI</h2>
+                  <div class="two-columns-eq">
+                    <div>
+                      <div>Request</div>
+                      <pre><code data-trim>
+                        $ curl \
+                          '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}/softwaremodules/1/artifacts/{{filename}}' \
+                          -i -H 'Accept: application/hal+json' \
+                          -H 'Authorization: TargetToken {{securityToken}}'
+                      </code></pre>
+                      <p>You can configure that devices are allowed to download artifacts w/o providing a security token.</p>
+                    </div>
+                    <div>
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                        
+                        This is a test update file
+                        </code></pre>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the action history of the Deployment Management view<br>that the device has downloaded the artifact.</blockquote>                  
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 3, step 5.1</div>
+                  <h2>Providing Intermediary Feedback via DDI</h2>
+                  <div class="two-columns-eq">
+                    <div>
+                      <div>Request</div>
+                      <pre><code data-trim>
+                        $ curl \
+                          '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}/deploymentBase/{{actionId}}/feedback' \
+                            -i -X POST \
+                            -H 'Authorization: TargetToken {{securityToken}}' \
+                            -H 'Content-Type: application/json' \
+                            -d '{
+                              "id": "{{actionId}}",
+                              "status": {
+                                "result": {
+                                  "progress": {
+                                    "cnt": 2,
+                                    "of": 5
+                                  },
+                                  "finished": "none"
+                                },
+                                "execution": "proceeding",
+                                "details": ["The update is being processed."]
+                              }                            
+                            }'
+                      </code></pre>
+                    </div>
+                    <div>
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                      </code></pre>
+                      <p>Devices can provide arbitrary feedback (e.g. fine granular progress updates) which does not cause state transitions in the deployment action workflow.</p>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the action history of the Deployment Management view that your progress message appears in the list. Send another feedback message.</blockquote>                  
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 3, step 5.2</div>
+                  <h2>Providing Deployment Feedback via DDI</h2>
+                  <div class="two-columns-eq">
+                    <div>
+                      <div>Request</div>
+                      <pre><code data-trim>
+                        $ curl \
+                          '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}/deploymentBase/{{actionId}}/feedback' \
+                            -i -X POST \
+                            -H 'Authorization: TargetToken {{securityToken}}' \
+                            -H 'Content-Type: application/json' \
+                            -d '{
+                              "id": "{{actionId}}",
+                              "status": {
+                                "result": {
+                                  "finished": "success"
+                                },
+                                "execution": "closed",
+                                "details": ["The update was successfully installed."]
+                              }                            
+                            }'
+                      </code></pre>
+                    </div>
+                    <div>
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                      </code></pre>
+                      <p>This action finishes the deployment action workflow and pushes the action into state "Finished". Further feedback requests are rejected with "HTTP/1.1 410 GONE".</p>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the in the Deployment Management view of the UI that the deployment action is in state "Finished".</blockquote>                  
                 </section>
                 
                 <section>
