@@ -56,7 +56,7 @@ Step 2: Device Pre-Provisioning (Mgmt API)
         }]'
     
     Post:    
-    -> Retrieve the security token from response      
+    -> Retrieve the security token from the JSON response      
 
         
 Step 3: Device Registration (DDI)
@@ -74,7 +74,7 @@ Step 3: Device Registration (DDI)
         }]'
         
     Post:
-    - Retrieve configData URL from response
+    - Retrieve the configData URL from the JSON response
 
 
 Step 4: Set Device Attributes (DDI)      
@@ -120,7 +120,7 @@ Step 1: Create a Software Module
         }]'
         
     Post:
-    - Retrieve software module ID from response    
+    - Retrieve the software module ID from the JSON response    
 
 
 Step 2: Upload an Artifact
@@ -149,7 +149,7 @@ Step 3: Create a Distribution Set
         }]'
         
     Post:
-    - Retrieve distribution set ID from response
+    - Retrieve the distribution set ID from the JSON response
         
 
 Step 4: Assign the Software Module to the Distribution Set
@@ -208,8 +208,8 @@ Step 3: Inspect Update /Deployment Action (DDI)
         -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'
         
     Post:
-    - Retrieve the deployment action ID from response
-    - Retrieve one of the artifact download URLs from response
+    - Retrieve the deployment action ID from the JSON response
+    - Retrieve one of the artifact download URLs from the JSON response
     
 
 Step 4: Download Artifact (DDI)

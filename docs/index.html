@@ -43,7 +43,11 @@
         top: 0;
         right: 0;
       }
-    </style>
+     .hawkbit101 .reveal img {
+        border: 0;
+        box-shadow: none;
+     }
+     </style>
 
     <body class="hawkbit101">
         <div class="reveal">
@@ -107,7 +111,7 @@
                 </section>
                 
                 <section>
-                  <h1>Update package</h1>
+                  <h1>Update Package</h1>
                   <div class="noborder" style="margin-top: 4em;">
                     <img src="resources/images/packagemodel.png">
                   </div>
@@ -128,9 +132,17 @@
                       <li>Updating many devices</li>
                     </ol>
                     <div>
-                      <img style="box-shadow: none; max-width: 100%; max-height: 100%;" src="resources/images/hawkBit_tutorial_focusareas.jpg">
+                      <img style="max-width: 100%; max-height: 100%;" src="resources/images/hawkBit_tutorial_focusareas.jpg">
                     </div>
                   </div>
+                </section>
+                
+                <section>
+                  <h1>Tutorial Resources</h1>
+                  <div>All resources are available in the hawkBit-101 Git repository</div>
+                  <div><a target="_blank" href="https://github.com/stefbehl/hawkbit-101">https://github.com/stefbehl/hawkbit-101</a></div>
+                  <br>
+                  <div>Recommendation is to clone the repository</div>
                 </section>
                 
                 <section>
@@ -167,7 +179,7 @@
                   <div class="two-columns-eq">
                     <div>
                       <h3>Update Server</h3>
-                      <div><a href="http://localhost:8080">http://localhost:8080</a></div>
+                      <div><a target="_blank" href="http://localhost:8080">http://localhost:8080</a></div>
                       <div>
                         <pre><code data-trim>
                           $ curl http://localhost:8080/health
@@ -178,7 +190,7 @@
                     </div>
                     <div>
                       <h3>Device Simulator</h3>
-                      <div><a href="http://localhost:8080">http://localhost:8083</a></div>
+                      <div><a target="_blank" href="http://localhost:8080">http://localhost:8083</a></div>
                       <div>
                         <pre><code data-trim>
                           $ curl http://localhost:8083/health
@@ -203,12 +215,12 @@
                       <div>Execute the oulined steps via</div>
                       <ul>
                         <li>
-                          <div>Postman</div>
-                          <div><a href="https://github.com/stefbehl/hawkbit-101/tree/master/postman">https://github.com/stefbehl/hawkbit-101/tree/master/postman</a></div>
+                          <div>curl snippets (copy & paste)</div>
+                          <div><a target="_blank" href="https://github.com/stefbehl/hawkbit-101/blob/master/postman/hawkbit101.curl_snippets.txt">https://github.com/stefbehl/hawkbit-101/blob/master/postman/hawkbit101.curl_snippets.txt</a></div>
                         </li>
                         <li>
-                          <div>curl CLI</div>
-                          <div><a href="https://github.com/stefbehl/hawkbit-101/tree/master/postman">https://github.com/stefbehl/hawkbit-101/tree/master/postman</a></div>
+                          <div>Postman</div>
+                          <div><a target="_blank" href="https://github.com/stefbehl/hawkbit-101/blob/master/postman/hawkbit101.postman_collection.json">https://github.com/stefbehl/hawkbit-101/blob/master/postman/hawkbit101.postman_collection.json</a></div>
                         </li>
                         <li>Any other HTTP client of your choice</li>
                       </ul>
@@ -222,16 +234,17 @@
                         </li>
                         <li>
                           <div>hawkBit Update Server UI</div>
-                          <div><a href="http://localhost:8080">http://localhost:8080</a></div>
+                          <div><a target="_blank" href="http://localhost:8080">http://localhost:8080</a></div>
+                          <div>admin /admin</div>
                         </li>
                         <li>
                           <div>hawkBit API documentation</div>
-                          <div><a href="https://www.eclipse.org/hawkbit/apis/">https://www.eclipse.org/hawkbit/apis/</a></div>
+                          <div><a target="_blank" href="https://www.eclipse.org/hawkbit/apis/">https://www.eclipse.org/hawkbit/apis/</a></div>
                         </li>
                       </ul>
                     </div>
                   </div><br>
-                  <blockquote class="verify" style="border: 0; box-shadow: none; font-size: 1.5em">Talk to us if you need help!</blockquote>
+                  <blockquote class="verify" style="font-size: 1.5em">Talk to us if you need help!</blockquote>
                 </section>
                 
                 <section>
@@ -385,10 +398,10 @@
                   <h1>Creating an Update</h1>
                   <div>
                   	<ul>
-                      <li>Creating a Software Module</li>
-                      <li>Uploading an Artifact</li>
-                      <li>Creating a Distribution Set</li>
-                      <li>Assigning the Software Module to the Distribution Set</li>
+                      <li>Creating a software module</li>
+                      <li>Uploading an artifact</li>
+                      <li>Creating a distribution set</li>
+                      <li>Assigning the software module to the distribution Set</li>
                   	</ul>
                   </div>
                 </section>
@@ -591,11 +604,11 @@
                   <h1>Updating a Single Device</h1>
                   <div>
                   	<ul>
-                      <li>Assigning a Distribution Set to a Device</li>
-                      <li>Polling for Updates</li>
-                      <li>Inspecting the Deployment Action</li>
-                      <li>Downloading Artifacts</li>
-                      <li>Providing Deployment Feedback</li>
+                      <li>Assigning a distribution set to a device</li>
+                      <li>Polling for updates</li>
+                      <li>Inspecting the deployment action</li>
+                      <li>Downloading artifacts</li>
+                      <li>Providing deployment feedback</li>
                   	</ul>
                   </div>
                 </section>
@@ -819,6 +832,177 @@
                     </div>
                   </div>
                   <blockquote class="verify">Verify in the in the Deployment Management view of the UI that the deployment action is in state "Finished".</blockquote>                  
+                </section>
+
+                <section>
+                  <h6>Part 4</h6>
+                  <h1>Updating Many Devices</h1>
+                  <div>
+                  	<ul>
+                  	  <li>Configure gateway token authentication</li>
+                      <li>Provision many devices</li>
+                      <li>Create target filters</li>
+                      <li>Create a rollout</li>
+                      <li>Start a rollout</li>
+                  	</ul>
+                  </div>
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 4, step 1.1</div>
+                  <h2>Enable Gateway Token Authentication via Mgmt API</h2>
+                  <div class="two-columns-eq">
+                    <div>
+                      <div>
+                        <div>Request</div>
+                        <pre><code data-trim>
+                          $ curl \
+                            '{{baseURL}}:{{port}}/rest/v1/system/configs/authentication.gatewaytoken.enabled/' \
+                            -i -X PUT \
+                            -u 'admin:admin' \
+                            -H 'Content-Type: application/json' \
+                            -d '{
+                              "value": true
+                            }'
+                        </code></pre>
+                      </div>
+                      <p>This allows a gateway to authenticate on behalf of the devices that are connected to it. The device simulator acts like a gateway and relies on this authentication mechanism.</p>
+                    </div>
+                    <div>
+                      <div>
+                        <div>Response</div>
+                        <pre><code data-trim>
+                          HTTP/1.1 200 OK
+                          {
+                            "value": true,
+                            "lastModifiedAt": 1539682103744,
+                            "lastModifiedBy": "admin",
+                            "createdAt": 1539682103744,
+                            "createdBy": "admin",
+                            "global": false,
+                            "_links": {
+                              "self": {
+                                "href": "http://127.0.0.1:8080/rest/v1/system/configs/authentication.gatewaytoken.enabled"
+                               }
+                             }
+                          }
+                          </code></pre>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 4, step 1.2</div>
+                  <h2>Initialize Gateway Token via Mgmt API</h2>
+                  <div class="two-columns-eq">
+                    <div>
+                      <div>
+                        <div>Request</div>
+                        <pre><code data-trim>
+                          $ curl \
+                            '{{baseURL}}:{{port}}/rest/v1/system/configs/authentication.gatewaytoken.key/' \
+                            -i -X PUT \
+                            -u 'admin:admin' \
+                            -H 'Content-Type: application/json' \
+                            -d '{
+                              "value": "e61C6b2B78A674d19304c357a20f1D09"
+                            }'
+                        </code></pre>
+                      </div>
+                    </div>
+                    <div>
+                      <div>
+                        <div>Response</div>
+                        <pre><code data-trim>
+                          HTTP/1.1 200 OK
+                          {
+                            "value": "e61C6b2B78A674d19304c357a20f1D09",
+                            "lastModifiedAt": 1539682107943,
+                            "lastModifiedBy": "admin",
+                            "createdAt": 1539682107943,
+                            "createdBy": "admin",
+                            "global": false,
+                            "_links": {
+                              "self": {
+                                "href": "http://127.0.0.1:8080/rest/v1/system/configs/authentication.gatewaytoken.key"
+                              }
+                            }
+                          }
+                          </code></pre>
+                      </div>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the System Configuration view of the UI that gateway token authentication is enabled and that the correct token is set.</blockquote>                  
+                </section>
+
+                <section>
+                  <div class="current-page">Part 4, step 2</div>
+                  <h2>Provisioning Many Devices via Device Simulator</h2>
+                  <div>
+                    <div>Provision 15 "EMEA Devices" and start their simulation</div>
+                    <pre><code data-trim>
+                      $ curl \
+                        '{{baseURL}}:{{deviceSimulatorPort}}/start?name=emeadevice&amount=15&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:{{port}}&gatewaytoken={{gatewayToken}}' \
+                        -i
+                    </code></pre>
+                    <div>Provision 20 "APAC Devices" and start their simulation</div>
+                    <pre><code data-trim>
+                      $ curl \
+                        '{{baseURL}}:{{deviceSimulatorPort}}/start?name=apacdevice&amount=20&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:{{port}}&gatewaytoken={{gatewayToken}}' \
+                        -i
+                    </code></pre>
+                    <div>Provision 30 "Americas Devices" and start their simulation</div>
+                    <pre><code data-trim>
+                      $ curl \
+                        '{{baseURL}}:{{deviceSimulatorPort}}/start?name=amerdevice&amount=30&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:{{port}}&gatewaytoken={{gatewayToken}}' \
+                        -i
+                    </code></pre>
+                  </div>
+                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the devices are present.</blockquote>                  
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 4, step 3</div>
+                  <h2>Creating Target Filters via Mgmt API</h2>
+                  <div class="two-columns-eq">
+                    <div>
+                      <div>Request</div>
+                      <pre><code data-trim>
+                        $ curl \
+                          '{{baseURL}}:{{port}}/rest/v1/system/configs/authentication.gatewaytoken.key/' \
+                          -i -X PUT \
+                          -u 'admin:admin' \
+                          -H 'Content-Type: application/json' \
+                          -d '{
+                            "value": "e61C6b2B78A674d19304c357a20f1D09"
+                          }'
+                      </code></pre>
+                      <p>Creates a target filter which selects all devices with name prefix "emeadevice".
+                    </div>
+                    <div>
+                      <div>
+                        <div>Response</div>
+                        <pre><code data-trim>
+                          HTTP/1.1 200 OK
+                          {
+                            "value": "e61C6b2B78A674d19304c357a20f1D09",
+                            "lastModifiedAt": 1539682107943,
+                            "lastModifiedBy": "admin",
+                            "createdAt": 1539682107943,
+                            "createdBy": "admin",
+                            "global": false,
+                            "_links": {
+                              "self": {
+                                "href": "http://127.0.0.1:8080/rest/v1/system/configs/authentication.gatewaytoken.key"
+                              }
+                            }
+                          }
+                          </code></pre>
+                      </div>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the devices are present.</blockquote>                  
                 </section>
                 
                 <section>
