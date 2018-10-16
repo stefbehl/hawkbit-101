@@ -990,7 +990,7 @@
 					"response": []
 				},
 				{
-					"name": "Step 5: Provide Deployment Feedback (DDI)",
+					"name": "Step 5.1: Provide Intermediary Feedback (DDI)",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1023,19 +1023,86 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "TargetToken {{currentTargetToken}}",
-								"type": "text"
+								"type": "text",
+								"value": "TargetToken {{currentTargetToken}}"
 							},
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"type": "text",
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\" : \"{{currentDeploymentActionId}}\",\n    \"status\" : {\n        \"result\" : {\n            \"finished\" : \"success\"\n        },\n        \"execution\" : \"closed\",\n        \"details\" : [ \"The update was successfully installed.\" ]\n    }\n}"
+							"raw": "{\n    \"id\" : \"{{currentDeploymentActionId}}\",\n    \"status\" : {\n        \"result\": {\n            \"progress\": {\n                \"cnt\": 2,\n                \"of\": 5\n            },\n            \"finished\": \"none\"\n        },\n        \"execution\": \"proceeding\",\n        \"details\": [\"The update is being processed.\"]\n    }\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}:{{port}}/DEFAULT/controller/v1/{{currentTargetId}}/deploymentBase/{{currentDeploymentActionId}}/feedback",
+							"host": [
+								"{{baseURL}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"DEFAULT",
+								"controller",
+								"v1",
+								"{{currentTargetId}}",
+								"deploymentBase",
+								"{{currentDeploymentActionId}}",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Step 5.2: Provide Deployment Feedback (DDI)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "24c54252-63f4-4203-8600-39e0062f5a02",
+								"exec": [
+									"restoreVariable(pm, \"currentTargetId\");",
+									"restoreVariable(pm, \"currentTargetToken\");",
+									"restoreVariable(pm, \"currentDeploymentActionId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "f7abd3c9-63f0-494e-a936-7ec372899900",
+								"exec": [
+									"verifyStatusCode(pm, 200);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "TargetToken {{currentTargetToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\" : \"{{currentDeploymentActionId}}\",\n    \"status\" : {\n        \"result\" : {\n            \"finished\" : \"success\"\n        },\n        \"execution\" : \"closed\",\n        \"details\" : [\"The update was successfully installed.\"]\n    }\n}"
 						},
 						"url": {
 							"raw": "{{baseURL}}:{{port}}/DEFAULT/controller/v1/{{currentTargetId}}/deploymentBase/{{currentDeploymentActionId}}/feedback",
@@ -1084,7 +1151,7 @@
 			"name": "Part 4: Updating Many Devices (Mgmt API)",
 			"item": [
 				{
-					"name": "Step 1.1: Provision Many Devices for Group \"EMEA\" (Device Simulator)",
+					"name": "Step 1.1: Provision Many Devices for Group \"EMEA\" (Device Simulator + DDI)",
 					"event": [
 						{
 							"listen": "test",
@@ -1147,7 +1214,7 @@
 					"response": []
 				},
 				{
-					"name": "Step 1.2: Provision Many Devices for Group \"APAC\" (Device Simulator)",
+					"name": "Step 1.2: Provision Many Devices for Group \"APAC\" (Device Simulator + DMF)",
 					"event": [
 						{
 							"listen": "test",
@@ -1171,7 +1238,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{deviceSimulatorPort}}/start?name=apacdevice&amount=15&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:{{port}}&gatewaytoken={{gatewayToken}}",
+							"raw": "{{baseURL}}:{{deviceSimulatorPort}}/start?name=apacdevice&amount=20&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:{{port}}&gatewaytoken={{gatewayToken}}",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1186,7 +1253,7 @@
 								},
 								{
 									"key": "amount",
-									"value": "15"
+									"value": "20"
 								},
 								{
 									"key": "tenant",
@@ -1210,7 +1277,7 @@
 					"response": []
 				},
 				{
-					"name": "Step 1.3: Provision Many Devices for Group \"Americas\" (Device Simulator)",
+					"name": "Step 1.3: Provision Many Devices for Group \"Americas\" (Device Simulator + DMF)",
 					"event": [
 						{
 							"listen": "test",
@@ -1234,7 +1301,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{deviceSimulatorPort}}/start?name=amerdevice&amount=15&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:{{port}}&gatewaytoken={{gatewayToken}}",
+							"raw": "{{baseURL}}:{{deviceSimulatorPort}}/start?name=amerdevice&amount=30&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:{{port}}&gatewaytoken={{gatewayToken}}",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1249,7 +1316,7 @@
 								},
 								{
 									"key": "amount",
-									"value": "15"
+									"value": "30"
 								},
 								{
 									"key": "tenant",
@@ -1591,10 +1658,11 @@
 					"",
 					"restoreVariable = function(session, key) {",
 					"    var value = session.globals.get(key);",
-					"    if (!value) {",
+					"    if (value) {",
+					"        session.variables.set(key, value);",
+					"    } else {",
 					"        console.log(\"Could not find \" + key);",
 					"    }",
-					"    session.variables.set(key, value);",
 					"}",
 					"",
 					"verifyStatusCode = function(session, statusCode) {",
@@ -1618,79 +1686,79 @@
 	],
 	"variable": [
 		{
-			"id": "72f47fc7-eea8-4e3d-8588-4ff800c93ee5",
+			"id": "0effb3a2-7d79-4a92-94ea-b3698ff7cd96",
 			"key": "baseURL",
 			"value": "http://localhost",
 			"type": "string"
 		},
 		{
-			"id": "2bedb510-dc9d-490c-b349-b963795ab920",
+			"id": "beb87117-6b8b-461c-920a-64efef492da6",
 			"key": "port",
 			"value": "8080",
 			"type": "string"
 		},
 		{
-			"id": "d1c8b6f1-8c3b-4c8a-a6e1-e140eb712a14",
+			"id": "5e5e08ab-20a4-464a-8b26-57430db358e2",
 			"key": "deviceSimulatorPort",
 			"value": "8083",
 			"type": "string"
 		},
 		{
-			"id": "9d9ab3cd-2a22-4a83-9362-15e19de0b335",
+			"id": "0c79384a-8ab7-4d6a-a22b-86a4d95069d0",
 			"key": "tenant",
 			"value": "DEFAULT",
 			"type": "string"
 		},
 		{
-			"id": "c8579bc6-07ba-4fdc-a16f-3ac5d0528369",
+			"id": "e1cc976b-2b3e-4608-95ef-7f8027e94d2a",
 			"key": "gatewayToken",
 			"value": "e61c6b2b78a674d19304c357a20f1d09",
 			"type": "string"
 		},
 		{
-			"id": "fb05b787-c2ca-4760-8760-7605d532da7d",
+			"id": "bb3aa2ff-2283-4b91-9a2d-0f510514e45f",
 			"key": "currentTargetToken",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "c6491924-b49f-4f50-9b19-4659a675eee6",
+			"id": "3bb2b02c-ddc2-4100-8d35-a1aa6163b075",
 			"key": "currentSoftwareModuleId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "9575b8af-e867-4b69-bdcc-fec786d29efb",
+			"id": "8a508f05-a641-4c52-b568-2045944854d7",
 			"key": "currentDistributionSetId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "2b46a396-ad55-44cc-b7c9-73e8e8764218",
+			"id": "d7615773-77f6-4cee-91a6-b17e729307c6",
 			"key": "currentTargetId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "059156df-1e25-4361-92e4-3c9c9a878fe0",
+			"id": "a9ca2f05-e697-4f9c-b0bc-f53bff8d531e",
 			"key": "currentDeploymentActionHref",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "2a762bf5-4179-4fc0-b904-f92f12998939",
+			"id": "a0bcb39b-3150-4798-b920-c2bd0f818beb",
 			"key": "currentArtifactDownloadHref",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "143dbcd7-c681-4e4c-ac37-a13eab98871e",
+			"id": "6b962730-8cc0-484d-8d51-43cb2b26d153",
 			"key": "currentDeploymentActionId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "4720b79c-a5e5-41b2-8241-d08f68078988",
+			"id": "1c1dd0aa-3300-4a9e-b4d3-33240b0f8d03",
 			"key": "currentRolloutId",
 			"value": "",
 			"type": "string"
