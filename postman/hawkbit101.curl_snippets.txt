@@ -1,0 +1,401 @@
+HawkBit 101 Tutorial - curl snippets for copy&paste
+====================================================
+
+The following curl commands assume the hawkBit update server running under http://localhost:8080
+
+
+Deploy hawkBit setup
+=====================
+
+    Pre:
+    - docker-compose-stack.yml is available
+
+    docker swarm init
+    docker stack deploy -c docker-compose-stack.yml hawkbit
+
+
+Setup Verification
+===================
+
+Step 1: Verify Update Server is Running
+
+    curl -X GET http://localhost:8080/health
+
+Step 2: Verify Device Simulator is Running
+
+    curl -X GET http://localhost:8083/health
+
+In case device simulator is broken, restart its Docker container
+
+    docker service update --force hawkbit_simulator
+
+
+Part 1: Provisioning a Device
+==============================
+
+
+Step 1: Enable Target Token Authentication (Mgmt API)
+
+    curl -i -X PUT 'http://localhost:8080/rest/v1/system/configs/authentication.targettoken.enabled/' \
+        -u 'admin:admin' \
+        -H 'Content-Type: application/json' \
+        -d '{
+            "value": true
+        }'
+
+        
+Step 2: Device Pre-Provisioning (Mgmt API)
+
+    curl -i -X POST 'http://localhost:8080/rest/v1/targets' \
+        -u 'admin:admin' \
+        -H 'Content-Type: application/json' \
+        -d '[{
+            "controllerId": "dev01",
+            "name": "Device 01",
+            "description": "My first device"
+        }]'
+    
+    Post:    
+	-> Retrieve the security token from response      
+
+        
+Step 3: Device Registration (DDI)
+
+	Pre:
+	- Make sure controllerId in the URL is correct (replace "dev01" if needed)
+	- Make sure the target token in the Authorization header is correct (replace "231d3b55c80a8a65de93eb0141fe908e" if needed)
+       
+    curl -i -X GET 'http://localhost:8080/DEFAULT/controller/v1/dev01' \
+        -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e' \
+        -d '[{
+            "controllerId" : "dev01",
+            "name" : "Device 01",
+            "description" : "My first device"
+        }]'
+        
+    Post:
+    - Retrieve configData URL from response
+
+
+Step 4: Set Device Attributes (DDI)      
+
+	Pre:
+	- Make sure controllerId in the URL is correct (replace "dev01" if needed)
+	- Make sure the target token in the Authorization header is correct (replace "231d3b55c80a8a65de93eb0141fe908e" if needed)
+        
+    curl -i -X PUT 'http://localhost:8080/DEFAULT/controller/v1/dev01/configData' \
+        -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e' \
+        -H 'Content-Type: application/json' \
+        -d '{
+            "mode": "merge",
+            "data": {
+                "VIN": "JH4TB2H26CC000001",
+                "hwRevision": "1"
+            },
+            "status": {
+                "result": {
+                    "finished": "success"
+                },
+                "execution": "closed",
+                "details": []
+            }
+        }'
+        
+        
+Part 2: Creating an Update (Mgmt API)
+======================================
+
+
+Step 1: Create a Software Module
+
+    curl -i -X POST 'http://localhost:8080/rest/v1/softwaremodules' \
+        -u 'admin:admin' \
+        -H 'Content-Type: application/json' \
+        -d '[{
+            "vendor": "Example Ltd.",
+            "name": "MyOS",
+            "description": "First version of MyOS.",
+            "type": "os",
+            "version": "1.0"
+        }]'
+        
+	Post:
+	- Retrieve software module ID from response    
+
+
+Step 2: Upload an Artifact
+
+    Pre:
+    - Make sure the software module ID addressed in the URL is correct (replace "1" if needed)
+    - Create a file "artifact01.file" first in your current directory
+
+    curl -i -X POST 'http://localhost:8080/rest/v1/softwaremodules/1/artifacts' \
+        -u 'admin:admin' \
+        -H 'Content-Type: multipart/form-data' \
+        -F 'file=@artifact01.file'     
+
+
+Step 3: Create a Distribution Set
+
+    curl -i -X POST 'http://localhost:8080/rest/v1/distributionsets' \
+        -u 'admin:admin' \
+        -H 'Content-Type: application/json' \
+        -d '[{
+            "requiredMigrationStep": false,
+            "name": "myDS",
+            "description": "MyOS initial update",
+            "type": "os",
+            "version": "1.0"
+        }]'
+        
+    Post:
+    - Retrieve distribution set ID from response
+        
+
+Step 4: Assign the Software Module to the Distribution Set
+
+    Pre:
+    - Make sure the distribution set ID in the URL is correct (replace "1" if needed)
+    - Make sure the software module ID in the request body is correct (replace "1" if needed)
+
+    curl -i -X POST http://localhost:8080/rest/v1/distributionsets/1/assignedSM \
+        -u 'admin:admin' \
+        -H 'Content-Type: application/json' \
+        -d '[{
+            "id": "1"
+        }]'
+        
+
+Part 3: Updating a Single Device (Mgmt API + DDI)
+==================================================
+
+
+Step 1: Assign a Distribution Set to a Device (Mgmt API)
+
+    Pre:
+    - Make sure the distribution set ID in the URL is correct (replace "1" if needed)
+    - Make sure the controller ID /target ID in the request body is correct (replace "dev01" if needed)
+
+    curl -i -X POST http://localhost:8080/rest/v1/distributionsets/1/assignedTargets/ \
+        -u 'admin:admin' \
+        -H 'Content-Type: application/json' \
+        -d '[{
+            "id" : "dev01",
+            "type" : "forced"
+        }]'
+
+    
+Step 2: Poll for Updates (DDI)
+    
+    Pre:
+    - Make sure the controller ID in the URL is correct (replace "dev01" if needed)
+	- Make sure the target token in the Authorization header is correct (replace "231d3b55c80a8a65de93eb0141fe908e" if needed)
+        
+    curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01 \
+        -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'
+        
+    Post:
+    - Retrieve the deploymentBase link
+
+
+Step 3: Inspect Update /Deployment Action (DDI)
+
+    Pre:
+    - Make sure you use the deploymentBase URL retrieved from previous response
+	- Make sure the target token in the Authorization header is correct (replace "231d3b55c80a8a65de93eb0141fe908e" if needed)
+
+    curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/167?c=564904365 \
+        -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'
+        
+    Post:
+    - Retrieve the deployment action ID from response
+    - Retrieve one of the artifact download URLs from response
+    
+
+Step 4: Download Artifact (DDI)
+
+    Pre:
+    - Make sure you use the download URL retrieved from previous response
+	- Make sure the target token in the Authorization header is correct (replace "231d3b55c80a8a65de93eb0141fe908e" if needed)
+
+    curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01/softwaremodules/1/artifacts/artifact01.file \
+        -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'
+        
+        
+Step 5.1: Provide Intermediary Feedback (DDI)
+
+    Pre:
+    - Make sure the controller ID in the URL is correct (replace "dev01" if needed)
+    - Make sure the deployment action ID in the URL is correct (replace "167" if needed)
+    - Make sure the deployment action ID in the request body is correct (replace "167" if needed)
+	- Make sure the target token in the Authorization header is correct (replace "231d3b55c80a8a65de93eb0141fe908e" if needed)
+
+    curl -i -X POST http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/167/feedback \
+        -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e' \
+        -H 'Content-Type: application/json' \
+        -d '{
+            "id" : "167",
+            "status" : {
+                "result": {
+                    "progress": {
+                        "cnt": 2,
+                        "of": 5
+                    },
+                    "finished": "none"
+                },
+                "execution": "proceeding",
+                "details": ["The update is being processed."]
+            }
+        }'
+
+
+Step 5.2: Provide Deployment Feedback (DDI)
+
+    Pre:
+    - Make sure the controller ID in the URL is correct (replace "dev01" if needed)
+    - Make sure the deployment action ID in the URL is correct (replace "167" if needed)
+    - Make sure the deployment action ID in the request body is correct (replace "167" if needed)
+	- Make sure the target token in the Authorization header is correct (replace "231d3b55c80a8a65de93eb0141fe908e" if needed)
+
+    curl -i -X POST http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/167/feedback \
+        -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e' \
+        -H 'Content-Type: application/json' \
+        -d '{
+            "id" : "167",
+            "status" : {
+                "result" : {
+                    "finished" : "success"
+                },
+                "execution" : "closed",
+                "details" : ["The update was successfully installed."]
+            }
+        }'
+
+
+
+Part 4: Updating Many Devices (Mgmt API)
+=========================================
+
+
+Step 1.1: Enable Gateway Token Authentication (Mgmt API)
+
+    curl -i -X PUT http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.enabled/ \
+        -u 'admin:admin' \
+        -H 'Content-Type: application/json' \
+        -d '{
+            "value" : true
+        }'
+
+
+Step 1.2: Initialize Gateway Token (Mgmt API)
+
+    curl -i -X PUT http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.key/ \
+        -u 'admin:admin' \
+        -H 'Content-Type: application/json' \
+        -d '{
+            "value": "e61c6b2b78a674d19304c357a20f1d09"
+        }'
+
+
+Step 2.1: Provision Many Devices for Group "EMEA" (Device Simulator + DDI)        
+
+	Pre:
+	- Make sure the gateway token in the URL is correct (replace "e61c6b2b78a674d19304c357a20f1d09" if needed)
+
+    curl -i -X GET 'http://localhost:8083/start?name=emeadevice&amount=15&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:8080&gatewaytoken=e61c6b2b78a674d19304c357a20f1d09'
+
+
+Step 2.2: Provision Many Devices for Group "APAC" (Device Simulator + DDI)     
+
+	Pre:
+	- Make sure the gateway token in the URL is correct (replace "e61c6b2b78a674d19304c357a20f1d09" if needed)
+
+    curl -i -X GET 'http://localhost:8083/start?name=apacdevice&amount=15&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:8080&gatewaytoken=e61c6b2b78a674d19304c357a20f1d09'
+
+
+Step 2.3: Provision Many Devices for Group "Americas" (Device Simulator + DDI)     
+
+	Pre:
+	- Make sure the gateway token in the URL is correct (replace "e61c6b2b78a674d19304c357a20f1d09" if needed)
+
+    curl -i -X GET 'http://localhost:8083/start?name=amerdevice&amount=15&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:8080&gatewaytoken=e61c6b2b78a674d19304c357a20f1d09'
+        
+                
+Step 3: Create a Rollout (Mgmt API)
+
+	Pre:
+	- Make sure the distribution set ID in the request body is correct (replace "1" if needed)
+        
+    curl -i -X POST http://localhost:8080/rest/v1/rollouts \
+        -u 'admin:admin' \
+        -H 'Content-Type: application/json' \
+        -d '{
+            "distributionSetId" : 1,
+            "targetFilterQuery" : "description=='\''Plug and Play*'\''",
+            "name" : "MyOS-Global-Rollout-1.0",
+            "description" : "Global rollout of MyOS",
+            "groups" : [{
+                "name" : "EMEA_Devices",
+                "description" : "Devices in EMEA",
+                "targetFilterQuery" : "name==emea*",
+                "successCondition" : {
+                    "condition" : "THRESHOLD",
+                    "expression" : "70"
+                },
+                "successAction" : {
+                    "expression" : "",
+                    "action" : "NEXTGROUP"
+                },
+                "errorAction" : {
+                    "expression" : "",
+                    "action" : "PAUSE"
+                },
+                "errorCondition" : {
+                    "condition" : "THRESHOLD",
+                    "expression" : "20"
+                }
+            }, {
+                "name" : "APAC_Devices",
+                "description" : "Devices in APAC",
+                "targetFilterQuery" : "name==apac*",
+                "successCondition" : {
+                    "condition" : "THRESHOLD",
+                    "expression" : "50"
+                },
+                "successAction" : {
+                    "expression" : "",
+                    "action" : "NEXTGROUP"
+                },
+                "errorAction" : {
+                    "expression" : "",
+                    "action" : "PAUSE"
+                },
+                "errorCondition" : {
+                    "condition" : "THRESHOLD",
+                    "expression" : "20"
+                }
+            }, {
+                "name" : "AMER_Devices",
+                "description" : "Devices in AMER",
+                "targetFilterQuery" : "name==amer*",
+                "successCondition" : {
+                "condition" : "THRESHOLD",
+                    "expression" : "25"
+                },
+                "successAction" : {
+                    "expression" : "",
+                    "action" : "NEXTGROUP"
+                },
+                "errorAction" : {
+                    "expression" : "",
+                    "action" : "PAUSE"
+                },
+                "errorCondition" : {
+                    "condition" : "THRESHOLD",
+                    "expression" : "20"
+                }
+            }]
+        }'
+        
+        
+        
