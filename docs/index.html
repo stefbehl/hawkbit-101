@@ -114,14 +114,29 @@
                 </section>
                 
                 <section>
-                  <h1>Big picture</h1>
+                  <h1>Big Picture</h1>
                   <img src="resources/images/hawkBit_overview.jpg">
+                </section>
+                
+                <section>
+                  <h1>Tutorial Overview</h1>
+                  <div class="two-columns-eq" style="grid-template-columns: 2fr 3fr">                  
+                    <ol style="overflow: inherit">
+                      <li>Provisioning a device</li>
+                      <li>Creating an update</li>
+                      <li>Updating a single device</li>
+                      <li>Updating many devices</li>
+                    </ol>
+                    <div>
+                      <img style="box-shadow: none; max-width: 100%; max-height: 100%;" src="resources/images/hawkBit_tutorial_focusareas.jpg">
+                    </div>
+                  </div>
                 </section>
                 
                 <section>
                   <h1>Docker Setup</h1>
                   <p>
-                    <a target="_blank" href="https://github.com/stefbehl/hawkbit-101/blob/master/tutorial/docker-compose-stack.yml">https://github.com/stefbehl/hawkbit-101/blob/master/tutorial/docker-compose-stack.yml</a>                      
+                    <a target="_blank" href="https://github.com/stefbehl/hawkbit-101/blob/master/setup/docker-compose-stack.yml">https://github.com/stefbehl/hawkbit-101/blob/master/setup/docker-compose-stack.yml</a>                      
                   </p>
                   <div style="display: grid; grid-template-columns: 40% 60%;">
                     <div>Services:
@@ -132,7 +147,7 @@
                         <li>Rabbit MQ</li>
                       </ul>
                     </div>
-                    <div>                      
+                    <div>
                       <pre><code data-trim>
                         $ docker swarm init
                         [...]
@@ -149,41 +164,74 @@
                 
                 <section>
                   <h1>Setup Verification</h1>
-                  <ul style="width:100%;">
-                    <li>
-                      <div>Update Server: <a href="http://localhost:8080">http://localhost:8080</a></div>
-                      <div style="width:50%;">
+                  <div class="two-columns-eq">
+                    <div>
+                      <h3>Update Server</h3>
+                      <div><a href="http://localhost:8080">http://localhost:8080</a></div>
+                      <div>
                         <pre><code data-trim>
                           $ curl http://localhost:8080/health
+                          
                           {"status":"UP"}                          
                         </code></pre>
                       </div>
-                    </li>
-                    <li>
-                      <div>Device Simulator: <a href="http://localhost:8080">http://localhost:8083</a></div>
-                      <div style="width:50%;">
+                    </div>
+                    <div>
+                      <h3>Device Simulator</h3>
+                      <div><a href="http://localhost:8080">http://localhost:8083</a></div>
+                      <div>
                         <pre><code data-trim>
                           $ curl http://localhost:8083/health
+                          
                           {"status":"UP"}                          
                         </code></pre>
                       </div>
-                    </li>
-                  </ul>                      
+                      <div>In case of a broken simulator, restart the Docker container:</div>
+                      <div>
+                        <pre><code data-trim>
+                          $ docker service update --force hawkbit_simulator
+                        </code></pre>
+                      </div>
+                    </div>
+                  </div>                      
                 </section>
-                
+
                 <section>
-                  <h1>Tutorial Overview</h1>
-                  <div style="display: grid; grid-template-columns: 40% 60%;">                  
-                  <ol>
-                    <li>Provisioning a device</li>
-                    <li>Creating an update</li>
-                    <li>Updating a single device</li>
-                    <li>Updating many devices</li>
-                  </ol>
-                  <div>
-                    <img style="box-shadow: none; max-width: 100%; max-height: 100%;" src="resources/images/hawkBit_tutorial_focusareas.jpg">
-                  </div>
-                  </div>
+                  <h1>Execution</h1>
+                  <div class="two-columns-eq">
+                    <div>
+                      <div>Execute the oulined steps via</div>
+                      <ul>
+                        <li>
+                          <div>Postman</div>
+                          <div><a href="https://github.com/stefbehl/hawkbit-101/tree/master/postman">https://github.com/stefbehl/hawkbit-101/tree/master/postman</a></div>
+                        </li>
+                        <li>
+                          <div>curl CLI</div>
+                          <div><a href="https://github.com/stefbehl/hawkbit-101/tree/master/postman">https://github.com/stefbehl/hawkbit-101/tree/master/postman</a></div>
+                        </li>
+                        <li>Any other HTTP client of your choice</li>
+                      </ul>
+                    </div>
+                    <div>                      
+                      <div>Open in your browser</div>
+                      <ul>
+                        <li>
+                          <div>Tutorial slides</div>
+                          <div><a href="https://stefbehl.github.io/hawkbit-101/">https://stefbehl.github.io/hawkbit-101/</a></div>
+                        </li>
+                        <li>
+                          <div>hawkBit Update Server UI</div>
+                          <div><a href="http://localhost:8080">http://localhost:8080</a></div>
+                        </li>
+                        <li>
+                          <div>hawkBit API documentation</div>
+                          <div><a href="https://www.eclipse.org/hawkbit/apis/">https://www.eclipse.org/hawkbit/apis/</a></div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div><br>
+                  <blockquote class="verify" style="border: 0; box-shadow: none; font-size: 1.5em">Talk to us if you need help!</blockquote>
                 </section>
                 
                 <section>
@@ -323,8 +371,9 @@
                       <div>
                         <div>Response</div>
                         <pre><code data-trim>
-                          HTTP/1.1 200 OK           
+                          HTTP/1.1 200 OK
                         </code></pre>
+                        <p>Once the device has sent its attributes, the "configData" link is no longer exposed.<br>You can instruct the device to re-send its (potentially updated) attributes via the UI and Mgmt API.</p>
                       </div>
                     </div>
                   </div>
