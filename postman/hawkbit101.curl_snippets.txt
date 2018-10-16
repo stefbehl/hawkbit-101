@@ -397,10 +397,14 @@ Step 3: Create a Rollout (Mgmt API)
             }]
         }'
         
+    Post:
+    - Retrieve the link for starting the rollout from the JSON response
+        
         
 Step 4: Start the Rollout (Mgmt API)
 
     Pre:
+    - Make sure the start URL from the previous response is used
     - Make sure the rollout ID in the request body is correct (replace "1" if needed)
         
     curl -i -X POST http://localhost:8080/rest/v1/rollouts/1/start \
