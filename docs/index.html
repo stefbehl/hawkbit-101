@@ -23,6 +23,9 @@
       .hawkbit101 .reveal li {
         margin: 0.4em 0;
       }
+      .hawkbit101 .reveal li > div + div {
+        margin-top: 0.2em;
+      }
       .hawkbit101 .two-columns-eq {
       	display: grid;
       	grid-template-columns: 1fr 1fr;
@@ -66,13 +69,15 @@
         position: absolute;
         top: -1000px;
       }
-      .hawkbit101 .copy-to-clipboard input[type='submit'] {
+      .hawkbit101 .copy-to-clipboard input[type='submit'],
+      .hawkbit101 .copy-to-clipboard-link {
         border: 0;
         background: none;
         color: #6eb553;
       }
       .hawkbit101 .copy-to-clipboard input[type='submit']:hover,
-      .hawkbit101 .copy-to-clipboard input[type='submit']:active {
+      .hawkbit101 .copy-to-clipboard input[type='submit']:active,
+      .hawkbit101 .copy-to-clipboard-link {
         text-decoration: underline;
         cursor: pointer;    
       }
@@ -84,8 +89,8 @@
             
                 <section data-background-image="https://images.unsplash.com/photo-1496867557017-559adb93b339?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1304bcfdaa956c3acad348d06ff059e3&auto=format">
                     <div style="color: white; margin-left: 15em; margin-top: 2em;">
-                        <h1 style="font-weight: normal;">hawkBit 101</h1>
-                        <h6>&nbsp;Tutorial - @EclipseCon Europe 2018</h6>
+                        <h1 style="font-size: 4em">hawkBit-101</h1>
+                        <h3>&nbsp;Tutorial @ EclipseCon Europe 2018</h3>
                     </div>
                     <div class="footer" style="position: fixed; bottom: 0; right: 0; text-align: right;">
                       Photo by <a href="https://unsplash.com/photos/zb2vBaHYB2I">Dawid Zawiła</a> on <a href="https://unsplash.com">Unsplash</a>
@@ -128,7 +133,7 @@
                 <section>
                     <h1>About</h1>
                     <p>
-                      Eclipse hawkBit aims to create a <b>domain independent</b> back end solution for rolling out <b>software updates</b>
+                      Eclipse hawkBit aims to create a <b>domain-independent</b> backend solution for rolling out <b>software updates</b>
                       to constrained edge devices as well as more powerful controllers and gateways connected to IP based networking infrastructure.
                     </p>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, 1fr); margin-top: 4em; grid-gap: 40px">
@@ -188,7 +193,13 @@
                         <li>Rabbit MQ</li>
                       </ul>
                     </div>
-                    <div>
+                    <div class="api-request">
+                      <form class="copy-to-clipboard" style="top:-10px" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        docker swarm init
+                        docker stack deploy -c docker-compose-stack.yml hawkbit</textarea>
+                        <input type="submit" value="copy2clipboard">
+                      </form>
                       <pre><code data-trim>
                         $ docker swarm init
                         [...]
@@ -209,26 +220,38 @@
                     <div>
                       <h3>Update Server</h3>
                       <div><a target="_blank" href="http://localhost:8080">http://localhost:8080</a></div>
-                      <div>
+                      <div class="api-request">
+                        <form class="copy-to-clipboard" style="top:-30px" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                    	  <textarea name="buffer">curl -i http://localhost:8080/health</textarea>
+                          <input type="submit" value="copy2clipboard">
+                        </form>
                         <pre><code data-trim>
                           $ curl http://localhost:8080/health
                           
-                          {"status":"UP"}                          
+                          {"status":"UP"}
                         </code></pre>
                       </div>
                     </div>
                     <div>
                       <h3>Device Simulator</h3>
                       <div><a target="_blank" href="http://localhost:8080">http://localhost:8083</a></div>
-                      <div>
+                      <div class="api-request">
+                        <form class="copy-to-clipboard" style="top:-30px" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                    	  <textarea name="buffer">curl -i http://localhost:8083/health</textarea>
+                          <input type="submit" value="copy2clipboard">
+                        </form>
                         <pre><code data-trim>
                           $ curl http://localhost:8083/health
                           
-                          {"status":"UP"}                          
+                          {"status":"UP"}
                         </code></pre>
                       </div>
                       <div>In case of a broken simulator, restart the Docker container:</div>
-                      <div>
+                      <div class="api-request">
+                        <form class="copy-to-clipboard" style="top:-30px" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                    	  <textarea name="buffer">docker service update --force hawkbit_simulator</textarea>
+                          <input type="submit" value="copy2clipboard">
+                        </form>
                         <pre><code data-trim>
                           $ docker service update --force hawkbit_simulator
                         </code></pre>
@@ -244,7 +267,7 @@
                       <div>Execute the oulined steps via</div>
                       <ul>
                         <li>
-                          <div>Inline "curl2clipboard" links</div>
+                          <div>Inline <span class="copy-to-clipboard-link">curl2clipboard</span> links</div>
                         </li>
                         <li>
                           <div>curl snippets (copy&paste)</div>
@@ -293,10 +316,10 @@
 
                 <section>
                   <div class="current-page">Part 1, step 1</div>
-                  <h2>Enable Target Token Authentication</h2>
+                  <h2>Enable Target Token Authentication via Mgmt API</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
-                      <div>Request (Mgmt API)</div>
+                      <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
                   	    <textarea name="buffer">
                         curl -i -X PUT 'http://localhost:8080/rest/v1/system/configs/authentication.targettoken.enabled/' \
@@ -331,7 +354,7 @@
                           "global": false,
                           "_links": {
                             "self": {
-                              "href": "http://localhost:8080/rest/v1/system/configs/authentication.targettoken.enabled"
+                              "href": "/rest/v1/system/configs/authentication.targettoken.enabled"
                             }
                           }
                         }
@@ -390,10 +413,10 @@
                           "requestAttributes": true,
                           "_links": {
                             "self": {
-                              "href": "http://localhost:8080/rest/v1/targets/dev01"
+                              "href": "/rest/v1/targets/dev01"
                             }
                           }
-                        }]                    
+                        }]
                       </code></pre>
                     </div>
                   </div>
@@ -433,10 +456,10 @@
                           },
                           "_links": {
                             "configData": {
-                              "href": "https://localhost:8080/DEFAULT/controller/v1/dev01/configData"
+                              "href": "/DEFAULT/controller/v1/dev01/configData"
                             }
                           }
-                        }                  
+                        }
                       </code></pre>
                     </div>
                   </div>
@@ -499,7 +522,8 @@
                       <pre><code data-trim>
                         HTTP/1.1 200 OK
                       </code></pre>
-                      <p>Once the device has sent its attributes, the "configData" link is no longer exposed.<br>You can instruct the device to re-send its (potentially updated) attributes via the UI and Mgmt API.</p>
+                      <p>Once the device has sent its attributes, the "configData" link is no longer exposed.</p>
+                      <p>You can instruct the device to re-send its (potentially updated) attributes via the UI and Mgmt API.</p>
                     </div>
                   </div>
                   <blockquote class="verify">Verify in the Deployment Management view of the UI that the device attributes are present.</blockquote>                  
@@ -570,7 +594,7 @@
                           "deleted": false,
                           "_links": {
                             "self": {
-                              "href": "http://localhost:8080/rest/v1/softwaremodules/2"
+                              "href": "/rest/v1/softwaremodules/2"
                             }
                           }
                         }]
@@ -620,14 +644,15 @@
                             "sha1": "d2e7291c2c52b87b2ee00983217e1bcc0909251f",
                             "md5": "b14f29fe8cea6b25e62a8e5c48b5a3a1"
                           },
-                          "providedFilename": "example.file",
+                          "providedFilename": "artifact01.file",
                           "size": 28,
                           "_links": {
                             "self": {
-                              "href": "http://localhost:8080/rest/v1/softwaremodules/2/artifacts/2"
+                              "href": "/rest/v1/softwaremodules/2/artifacts/2"
                             },
                             "download": {
-                              "href": "http://localhost:8080/rest/v1/softwaremodules/2/artifacts/2/download"
+                              "href":
+                                "/rest/v1/softwaremodules/2/artifacts/2/download"
                             }
                           }
                         }
@@ -691,7 +716,7 @@
                           "deleted": false,
                           "_links": {
                             "self": {
-                              "href": "http://localhost:8080/rest/v1/distributionsets/2"
+                              "href": "/rest/v1/distributionsets/2"
                             }
                           }
                         }]
@@ -842,8 +867,7 @@
                           },
                           "_links": {
                             "deploymentBase": {
-                              "href": "http://localhost:8080/DEFAULT
-                                /controller/v1/dev01/deploymentBase/1?c=411599879"
+                              "href": "/DEFAULT/controller/v1/dev01/deploymentBase/1"
                             }
                           }
                         }
@@ -866,7 +890,8 @@
                       </form>
                       <pre><code data-trim>
                         HTTP GET
-                        /DEFAULT/controller/v1/{controllerId}/deploymentBase/{actionId}
+                        /DEFAULT/controller/v1/{controllerId}
+                            /deploymentBase/{actionId}
                         
                         Accept: application/hal+json
                         Authorization: TargetToken {targetToken}
@@ -892,10 +917,10 @@
                                 "size": 3400321,
                                 "_links": {
                                   "download-http": {
-                                    "href": "http://localhost:8080/DEFAULT/controller/v1/dev01/softwaremodules/1/artifacts/test_large.txt"
+                                    "href": "/DEFAULT/controller/v1/dev01/softwaremodules/1/artifacts/test_large.txt"
                                   },
                                   "md5sum-http": {
-                                    "href": "http://localhost:8080/DEFAULT/controller/v1/dev01/softwaremodules/1/artifacts/test_large.txt.MD5SUM"
+                                    "href": "/DEFAULT/controller/v1/dev01/softwaremodules/1/artifacts/test_large.txt.MD5SUM"
                                   }
                                 }
                               }
@@ -922,7 +947,8 @@
                       </form>
                       <pre><code data-trim>
                         HTTP GET
-                        /DEFAULT/controller/v1/{controllerId}/softwaremodules/{moduleId}/artifacts/{filename}
+                        /DEFAULT/controller/v1/{controllerId}
+                            /softwaremodules/{moduleId}/artifacts/{filename}
                         
                         Authorization: TargetToken {targetToken}
                       </code></pre>
@@ -969,7 +995,8 @@
                       </form>
                       <pre><code data-trim>
                         HTTP POST
-                        /DEFAULT/controller/v1/{controllerId}/deploymentBase/{actionId}/feedback
+                        /DEFAULT/controller/v1/{controllerId}
+                            /deploymentBase/{actionId}/feedback
                                                 
                         Authorization: TargetToken {targetToken}
                         Content-Type: application/json
@@ -1026,7 +1053,8 @@
                       </form>
                       <pre><code data-trim>
                         HTTP POST
-                        /DEFAULT/controller/v1/{controllerId}/deploymentBase/{actionId}/feedback
+                        /DEFAULT/controller/v1/{controllerId}
+                            /deploymentBase/{actionId}/feedback
                         
                         Authorization: TargetToken {targetToken}
                         Content-Type: application/json
@@ -1069,7 +1097,7 @@
                 
                 <section>
                   <div class="current-page">Part 4, step 1.1</div>
-                  <h2>Enable Gateway Token Authentication via Mgmt API</h2>
+                  <h2>Enable Gateway Token Authentication</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -1109,7 +1137,8 @@
                           "global": false,
                           "_links": {
                             "self": {
-                              "href": "http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.enabled"
+                              "href":
+                                "/rest/v1/system/configs/authentication.gatewaytoken.enabled"
                             }
                           }
                         }
@@ -1159,7 +1188,8 @@
                           "global": false,
                           "_links": {
                             "self": {
-                              "href": "http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.key"
+                              "href":
+                                "/rest/v1/system/configs/authentication.gatewaytoken.key"
                             }
                           }
                         }
@@ -1230,8 +1260,10 @@
                           gatewaytoken = {gatewayToken}
                       </code></pre>
                     </div>
-                  </div>
-                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the devices are present.</blockquote>                  
+                    <div style="position:relative">
+                      <blockquote style="position:absolute;bottom:0;right:0" class="verify">Verify in the Deployment Management view of the UI that the devices are present.</blockquote>
+                    </div>
+                  </div>                                    
                 </section>
 
                 <section>
@@ -1376,23 +1408,22 @@
                             "finished": 0,
                             "error": 0
                           },
-                          "deleted": false,
                           "_links": {
                             "start": {
-                              "href": "http://localhost:8080/rest/v1/rollouts/1/start"
+                              "href": "/rest/v1/rollouts/1/start"
                             },
                             "pause": {
-                              "href": "http://localhost:8080/rest/v1/rollouts/1/pause"
+                              "href": "/rest/v1/rollouts/1/pause"
                             },
                             "resume": {
-                              "href": "http://localhost:8080/rest/v1/rollouts/1/resume"
+                              "href": "/rest/v1/rollouts/1/resume"
                             },
                             "groups": {
-                              "href": "http://localhost:8080/rest/v1/rollouts/1/deploygroups?offset=0&limit=50{&sort,q}",
+                              "href": "/rest/v1/rollouts/1/deploygroups?offset=0&limit=50{&sort,q}",
                               "templated":true
                             },
                             "self":{
-                              "href":"http://localhost:8080/rest/v1/rollouts/1"
+                              "href":"/rest/v1/rollouts/1"
                             }
                           }
                         }
