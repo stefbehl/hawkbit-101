@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <style>
+      .hawkbit101 .reveal h1 {
+        color: #572564;
+      }
       .hawkbit101 .reveal li {
         margin: 0.4em 0;
       }
@@ -29,13 +32,14 @@
         overflow: hidden;
       }
       .hawkbit101 .reveal pre {
-        width: 100%;      
+        width: 100%; 
+        box-shadow: none;     
       }
       .hawkbit101 blockquote {
         width: 80%;
         border: 0;
         box-shadow: none;
-        background-color: #f1f4f6;
+        background-color: #f6f0f8;
       }
       .hawkbit101 blockquote.verify {
         font-style: italic;
@@ -59,8 +63,8 @@
         right: 0;
       }     
       .hawkbit101 .copy-to-clipboard textarea {
-        height: 0;
-        width: 0;
+        position: absolute;
+        top: -1000px;
       }
       .hawkbit101 .copy-to-clipboard input[type='submit'] {
         border: 0;
@@ -289,10 +293,10 @@
 
                 <section>
                   <div class="current-page">Part 1, step 1</div>
-                  <h2>Enable Target Token Authentication via Mgmt API</h2>
+                  <h2>Enable Target Token Authentication</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
-                      <div>Request</div>
+                      <div>Request (Mgmt API)</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
                   	    <textarea name="buffer">
                         curl -i -X PUT 'http://localhost:8080/rest/v1/system/configs/authentication.targettoken.enabled/' \
