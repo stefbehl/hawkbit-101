@@ -3,6 +3,9 @@ HawkBit 101 Tutorial - curl snippets for copy&paste
 
 The following curl commands assume a hawkBit update server running under http://localhost:8080
 
+This collection is for illustrative purposes only to provide information about Eclipse hawkBit.
+It is provided \"AS IS\" without any warranties and support.
+
 
 Deploy hawkBit setup
 =====================
@@ -66,12 +69,7 @@ Step 3: Device Registration (DDI)
     - Make sure the target token in the Authorization header is correct (replace "231d3b55c80a8a65de93eb0141fe908e" if needed)
        
     curl -i -X GET 'http://localhost:8080/DEFAULT/controller/v1/dev01' \
-        -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e' \
-        -d '[{
-            "controllerId" : "dev01",
-            "name" : "Device 01",
-            "description" : "My first device"
-        }]'
+        -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'
         
     Post:
     - Retrieve the configData URL from the JSON response
@@ -129,6 +127,7 @@ Step 2: Upload an Artifact
     - Make sure the software module ID addressed in the URL is correct (replace "1" if needed)
     - Create a file "artifact01.file" first in your current directory
 
+    echo "This is a test update file." > artifact01.file
     curl -i -X POST 'http://localhost:8080/rest/v1/softwaremodules/1/artifacts' \
         -u 'admin:admin' \
         -H 'Content-Type: multipart/form-data' \

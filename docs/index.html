@@ -33,6 +33,9 @@
       }
       .hawkbit101 blockquote {
         width: 80%;
+        border: 0;
+        box-shadow: none;
+        background-color: #f1f4f6;
       }
       .hawkbit101 blockquote.verify {
         font-style: italic;
@@ -43,10 +46,32 @@
         top: 0;
         right: 0;
       }
-     .hawkbit101 .reveal img {
+      .hawkbit101 .reveal img {
         border: 0;
         box-shadow: none;
-     }
+      }
+      .hawkbit101 .api-request {
+        position: relative;
+      }
+      .hawkbit101 .copy-to-clipboard {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }     
+      .hawkbit101 .copy-to-clipboard textarea {
+        height: 0;
+        width: 0;
+      }
+      .hawkbit101 .copy-to-clipboard input[type='submit'] {
+        border: 0;
+        background: none;
+        color: #6eb553;
+      }
+      .hawkbit101 .copy-to-clipboard input[type='submit']:hover,
+      .hawkbit101 .copy-to-clipboard input[type='submit']:active {
+        text-decoration: underline;
+        cursor: pointer;    
+      }
      </style>
 
     <body class="hawkbit101">
@@ -215,14 +240,16 @@
                       <div>Execute the oulined steps via</div>
                       <ul>
                         <li>
-                          <div>curl snippets (copy & paste)</div>
+                          <div>Inline "curl2clipboard" links</div>
+                        </li>
+                        <li>
+                          <div>curl snippets (copy&paste)</div>
                           <div><a target="_blank" href="https://github.com/stefbehl/hawkbit-101/blob/master/postman/hawkbit101.curl_snippets.txt">https://github.com/stefbehl/hawkbit-101/blob/master/postman/hawkbit101.curl_snippets.txt</a></div>
                         </li>
                         <li>
                           <div>Postman</div>
                           <div><a target="_blank" href="https://github.com/stefbehl/hawkbit-101/blob/master/postman/hawkbit101.postman_collection.json">https://github.com/stefbehl/hawkbit-101/blob/master/postman/hawkbit101.postman_collection.json</a></div>
                         </li>
-                        <li>Any other HTTP client of your choice</li>
                       </ul>
                     </div>
                     <div>                      
@@ -252,142 +279,223 @@
                   <h1>Provisioning a Device</h1>
                   <div>
                   	<ul>
-                      <li>Device "pre-provisioning" via Management UI or Management API</li>
-                      <li>Device registration via DDI or DMF API<br>Plug&Play via gateway token</li>
-                      <li>Device metadata and attributes</li>
+                  	  <li>Configure target token authentication</li>
+                      <li>Provisioning a device</li>
+                      <li>Registering a device</li>
+                      <li>Setting device attributes</li>
                   	</ul>
                   </div>
                 </section>
-                
+
                 <section>
                   <div class="current-page">Part 1, step 1</div>
+                  <h2>Enable Target Token Authentication via Mgmt API</h2>
+                  <div class="two-columns-eq">
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X PUT 'http://localhost:8080/rest/v1/system/configs/authentication.targettoken.enabled/' \
+                          -u 'admin:admin' \
+                          -H 'Content-Type: application/json' \
+                          -d '{
+                            "value": true
+                          }'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP PUT
+                        /rest/v1/system/configs/authentication.targettoken.enabled
+                          
+                        Content-Type: application/json
+                        Body:
+                        {
+                          "value": true
+                        }
+                      </code></pre>
+                    </div>
+                    <div class="api-response">
+                      <div>Response</div>
+                      <pre><code class="json" data-trim>
+                        HTTP/1.1 200 OK
+                        {
+                          "value": true,
+                          "lastModifiedAt": 1539767150967,
+                          "lastModifiedBy": "admin",
+                          "createdAt": 1539767150967,
+                          "createdBy": "admin",
+                          "global": false,
+                          "_links": {
+                            "self": {
+                              "href": "http://localhost:8080/rest/v1/system/configs/authentication.targettoken.enabled"
+                            }
+                          }
+                        }
+                        </code></pre>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the System Configuration view of the UI that target token authentication is enabled.</blockquote>
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 1, step 2</div>
                   <h2>Device Pre-Provisioning via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>
-                      <div>
-                        <div>Request</div>
-                        <pre><code data-trim>
-                          $ curl '{{baseURL}}/rest/v1/targets' \
-                              -i -X POST \
-                              -u 'admin:admin' \
-                              -H 'Content-Type:application/json' \
-                              -d '[{
-                                "controllerId": "dev01",
-                                "name": "Device 01",
-                                "description": "My first device"
-                              }]'
-                        </code></pre>
-                      </div>
-                      The response contains the controller ID and the security token that can be used for DDI.
-                    </div>
-                    <div>
-                      <div>
-                        <div>Response</div>
-                        <pre><code class="json" data-trim>
-                          HTTP/1.1 201 Created
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X POST 'http://localhost:8080/rest/v1/targets' \
+                          -u 'admin:admin' \
+                          -H 'Content-Type: application/json' \
+                          -d '[{
+                            "controllerId": "dev01",
+                            "name": "Device 01",
+                            "description": "My first device"
+                          }]'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                          HTTP POST
+                          /rest/v1/targets
+                          
+                          Content-Type: application/json
+                          Body:
                           [{
                             "controllerId": "dev01",
-                            "createdBy": "admin",
-                            "createdAt": 1539089120222,
-                            "lastModifiedBy": "admin",
-                            "lastModifiedAt": 1539089120222,
                             "name": "Device 01",
-                            "description": "My first device",
-                            "updateStatus": "unknown",
-                            "securityToken": "742f7f594c157f5885a8c5fbabcb84dd",
-                            "requestAttributes": true,
-                            "_links": {
-                              "self": {
-                                "href": "http://localhost:8080/rest/v1/targets/dev01"
-                              }
+                            "description": "My first device"
+                          }]
+                      </code></pre>
+                      <p>The response contains the controller ID and the security token that can be used for DDI.</p>
+                    </div>
+                    <div class="api-response">
+                      <div>Response</div>
+                      <pre><code class="json" data-trim>
+                        HTTP/1.1 201 Created
+                        [{
+                          "controllerId": "dev01",
+                          "createdBy": "admin",
+                          "createdAt": 1539089120222,
+                          "lastModifiedBy": "admin",
+                          "lastModifiedAt": 1539089120222,
+                          "name": "Device 01",
+                          "description": "My first device",
+                          "updateStatus": "unknown",
+                          "securityToken": "742f7f594c157f5885a8c5fbabcb84dd",
+                          "requestAttributes": true,
+                          "_links": {
+                            "self": {
+                              "href": "http://localhost:8080/rest/v1/targets/dev01"
                             }
-                          }]                    
-                        </code></pre>
-                      </div>
+                          }
+                        }]                    
+                      </code></pre>
                     </div>
                   </div>
                   <blockquote class="verify">Verify in the Deployment Management view of the UI that the target has been created. Create another target via the UI.</blockquote>
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 1, step 2</div>
+                  <div class="current-page">Part 1, step 3</div>
                   <h2>Device Registration via DDI</h2>
                   <div class="two-columns-eq">
-                    <div>
-                      <div>
-                        <div>Request</div>
-                        <pre><code data-trim>
-                          $ curl \
-                            '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}' \
-                            -i -H 'Accept: application/hal+json' \
-                            -H 'Authorization: TargetToken {{securityToken}}'
-                        </code></pre>
-                      </div>
-                      <p>The response contains a link to set device attributes (via HTTP PUT).</p>
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X GET 'http://localhost:8080/DEFAULT/controller/v1/dev01' \
+                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                          HTTP GET
+                          /DEFAULT/controller/v1/{controllerId}
+                          
+                          Accept: application/hal+json
+                          Authorization: TargetToken {targetToken}
+                      </code></pre>
+                      <p>The response contains a "configData" link to set device attributes (via HTTP PUT).</p>
                     </div>
-                    <div>
-                      <div>
-                        <div>Response</div>
-                        <pre><code data-trim>
-                          HTTP/1.1 200 OK
-                          {
-                            "config": {
-                              "polling": {
-                                "sleep": "00:05:00"
-                              }
-                            },
-                            "_links": {
-                              "configData": {
-                                "href":
-                          "https://localhost:8080/DEFAULT/controller/v1/dev01/configData"
-                              }
+                    <div class="api-response">
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                        {
+                          "config": {
+                            "polling": {
+                              "sleep": "00:05:00"
                             }
-                          }                  
-                        </code></pre>
-                      </div>
+                          },
+                          "_links": {
+                            "configData": {
+                              "href": "https://localhost:8080/DEFAULT/controller/v1/dev01/configData"
+                            }
+                          }
+                        }                  
+                      </code></pre>
                     </div>
                   </div>
                   <blockquote class="verify">Verify in the Deployment Management view of the UI that the state of the target changed from UNKNOWN to REGISTERED.<br>OK, this one is really hard... :-)</blockquote>                  
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 1, step 3</div>
+                  <div class="current-page">Part 1, step 4</div>
                   <h2>Setting Device Attributes via DDI</h2>
                   <div class="two-columns-eq">
-                    <div>
-                      <div>
-                        <div>Request</div>
-                        <pre><code data-trim>
-                          $ curl \
-                            '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}/configData' \
-                            -i -X PUT \
-                            -H 'Authorization: TargetToken {{securityToken}}' \
-                            -H 'Content-Type: application/json' \
-                            -d '{
-                              "mode": "merge",
-                              "data": {
-                                "VIN": "JH4TB2H26CC000001",
-                                "hwRevision": "1"
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X PUT 'http://localhost:8080/DEFAULT/controller/v1/dev01/configData' \
+                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e' \
+                          -H 'Content-Type: application/json' \
+                          -d '{
+                            "mode": "merge",
+                            "data": {
+                              "VIN": "JH4TB2H26CC000001",
+                              "hwRevision": "1"
+                            },
+                            "status": {
+                              "result": {
+                                "finished": "success"
                               },
-                              "status": {
-                                "result": {
-                                  "finished": "success"
-                                },
-                                "execution": "closed",
-                                "details": []
-                              }
-                            }'
-                        </code></pre>
-                      </div>
+                              "execution": "closed",
+                              "details": []
+                            }
+                          }'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP PUT
+                        /DEFAULT/controller/v1/{controllerId}/configData
+                        
+                        Accept: application/hal+json
+                        Authorization: TargetToken {targetToken}
+                        Content-Type: application/json
+                        Body:
+                        {
+                          "mode": "merge",
+                          "data": {
+                            "VIN": "JH4TB2H26CC000001",
+                            "hwRevision": "1"
+                          },
+                          "status": {
+                            "result": {
+                              "finished": "success"
+                            },
+                            "execution": "closed",
+                            "details": []
+                          }
+                        }'
+                      </code></pre>
                     </div>
-                    <div>
-                      <div>
-                        <div>Response</div>
-                        <pre><code data-trim>
-                          HTTP/1.1 200 OK
-                        </code></pre>
-                        <p>Once the device has sent its attributes, the "configData" link is no longer exposed.<br>You can instruct the device to re-send its (potentially updated) attributes via the UI and Mgmt API.</p>
-                      </div>
+                    <div class="api-response">
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                      </code></pre>
+                      <p>Once the device has sent its attributes, the "configData" link is no longer exposed.<br>You can instruct the device to re-send its (potentially updated) attributes via the UI and Mgmt API.</p>
                     </div>
                   </div>
                   <blockquote class="verify">Verify in the Deployment Management view of the UI that the device attributes are present.</blockquote>                  
@@ -401,7 +509,7 @@
                       <li>Creating a software module</li>
                       <li>Uploading an artifact</li>
                       <li>Creating a distribution set</li>
-                      <li>Assigning the software module to the distribution Set</li>
+                      <li>Assigning the software module to the distribution set</li>
                   	</ul>
                   </div>
                 </section>
@@ -410,48 +518,59 @@
                   <div class="current-page">Part 2, step 1</div>
                   <h2>Creating a Software Module via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>
-                      <div>
-                        <div>Request</div>
-                        <pre><code data-trim>
-                          $ curl \
-                            '{{baseURL}}/rest/v1/softwaremodules' \
-                            -i -X POST \
-                            -u 'admin:admin' \
-                            -H 'Content-Type: application/json' \
-                            -d '[{
-                              "vendor": "Example Ltd.",
-                              "name": "os1",
-                              "description": "First version of MyOS.",
-                              "type": "os",
-                              "version": "1.0"
-                            }]'
-                        </code></pre>
-                      </div>
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X POST 'http://localhost:8080/rest/v1/softwaremodules' \
+                          -u 'admin:admin' \
+                          -H 'Content-Type: application/json' \
+                          -d '[{
+                            "vendor": "Example Ltd.",
+                            "name": "MyOS",
+                            "description": "First version of MyOS.",
+                            "type": "os",
+                            "version": "1.0"
+                          }]'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP POST
+                        /rest/v1/softwaremodules
+                        
+                        Accept: application/hal+json
+                        Content-Type: application/json
+                        Body:
+                        [{
+                          "vendor": "Example Ltd.",
+                          "name": "MyOS",
+                          "description": "First version of MyOS.",
+                          "type": "os",
+                          "version": "1.0"
+                        }]
+                      </code></pre>
                       <p>This will create an empty software module of type "OS". Next we will add artifacts to the module.</p>
                     </div>
-                    <div>
-                      <div>
-                        <div>Response</div>
-                        <pre><code data-trim>
-                          HTTP/1.1 201 CREATED
-                          [{
-                            [...]
-                            "id": 2
-                            "name": "os1",
-                            "description": "First version of MyOS.",
-                            "version": "1.0",
-                            "type": "os",
-                            "vendor": "Example Ltd.",
-                            "deleted": false,
-                            "_links": {
-                              "self": {
-                                "href": "http://localhost:8080/rest/v1/softwaremodules/2"
-                              }
+                    <div class="api-response">
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 201 CREATED
+                        [{
+                          [...]
+                          "id": 2
+                          "name": "MyOS",
+                          "description": "First version of MyOS.",
+                          "version": "1.0",
+                          "type": "os",
+                          "vendor": "Example Ltd.",
+                          "deleted": false,
+                          "_links": {
+                            "self": {
+                              "href": "http://localhost:8080/rest/v1/softwaremodules/2"
                             }
-                          }]
-                          </code></pre>
-                      </div>
+                          }
+                        }]
+                      </code></pre>
                     </div>
                   </div>
                   <blockquote class="verify">Verify in the Distribution Management view of the UI that the software module has been created. Create another software module of type "Application" via the UI.</blockquote>                  
@@ -461,46 +580,54 @@
                   <div class="current-page">Part 2, step 2</div>
                   <h2>Uploading an Artifact via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>
-                      <div>
-                        <div>Request</div>
-                        <pre><code data-trim>
-                          $ echo "This is a test update file." > example.file
-                          $ curl \
-                            '{{baseURL}}/rest/v1/softwaremodules/{{moduleId}}/artifacts' \
-                            -i -X POST \
-                            -u 'admin:admin' \
-                            -H 'Content-Type: multipart/form-data' \
-                            -F 'file=@example.file'
-                        </code></pre>
-                      </div>
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                  	    echo "This is a test update file." > artifact01.file
+                        curl -i -X POST 'http://localhost:8080/rest/v1/softwaremodules/1/artifacts' \
+                          -u 'admin:admin' \
+                          -H 'Content-Type: multipart/form-data' \
+                          -F 'file=@artifact01.file'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP POST
+                        /rest/v1/softwaremodules/{moduleId}/artifacts
+                        
+                        Accept: application/hal+json
+                        Content-Type: multipart/form-data;
+                          boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+                        Body:
+                        --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
+                        Content-Disposition: form-data; name=artifact01.file
+                        [...]
+                      </code></pre>
                       <p>The uploaded artifact will be associated with the specified software module. The response provides a download link.</p>
                     </div>
-                    <div>
-                      <div>
-                        <div>Response</div>
-                        <pre><code data-trim>
-                          HTTP/1.1 201 CREATED
-                          {
-                            [...]
-                            "id": 2,
-                            "hashes": {
-                              "sha1": "d2e7291c2c52b87b2ee00983217e1bcc0909251f",
-                              "md5": "b14f29fe8cea6b25e62a8e5c48b5a3a1"
+                    <div class="api-response">
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 201 CREATED
+                        {
+                          [...]
+                          "id": 2,
+                          "hashes": {
+                            "sha1": "d2e7291c2c52b87b2ee00983217e1bcc0909251f",
+                            "md5": "b14f29fe8cea6b25e62a8e5c48b5a3a1"
+                          },
+                          "providedFilename": "example.file",
+                          "size": 28,
+                          "_links": {
+                            "self": {
+                              "href": "http://localhost:8080/rest/v1/softwaremodules/2/artifacts/2"
                             },
-                            "providedFilename": "example.file",
-                            "size": 28,
-                            "_links": {
-                              "self": {
-                                "href": "http://localhost:8080/rest/v1/softwaremodules/2/artifacts/2"
-                              },
-                              "download": {
-                                "href": "http://localhost:8080/rest/v1/softwaremodules/2/artifacts/2/download"
-                              }
+                            "download": {
+                              "href": "http://localhost:8080/rest/v1/softwaremodules/2/artifacts/2/download"
                             }
                           }
-                        </code></pre>
-                      </div>
+                        }
+                      </code></pre>
                     </div>
                   </div>
                   <blockquote class="verify">Verify in the Upload view of the UI that the artifact is associated with your software module. Upload another artifact for the same software module via the UI.</blockquote>                  
@@ -510,53 +637,61 @@
                   <div class="current-page">Part 2, step 3</div>
                   <h2>Creating a Distribution Set via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>
-                      <div>
-                        <div>Request</div>
-                        <pre><code data-trim>
-                          $ curl \
-                            '{{baseURL}}/rest/v1/distributionsets' \
-                            -i -X POST \
-                            -u 'admin:admin' \
-                            -H 'Content-Type: application/json' \
-                            -d '[{
-                              "requiredMigrationStep": false,
-                              "name": "myDS",
-                              "description": "My initial distribution",
-                              "type": "os",
-                              "version": "1.0",
-                              "modules": [{
-                                "id": {{moduleId}}
-                              }]
-                            }]'
-                        </code></pre>
-                      </div>
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X POST 'http://localhost:8080/rest/v1/distributionsets' \
+                          -u 'admin:admin' \
+                          -H 'Content-Type: application/json' \
+                          -d '[{
+                            "requiredMigrationStep": false,
+                            "name": "MyDS",
+                            "description": "My initial distribution",
+                            "type": "os",
+                            "version": "1.0"
+                          }]'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP POST
+                        /rest/v1/distributionsets
+                        
+                        Accept: application/hal+json
+                        Content-Type: application/json
+                        Body:
+                        [{
+                          "requiredMigrationStep": false,
+                          "name": "MyDS",
+                          "description": "My initial distribution",
+                          "type": "os",
+                          "version": "1.0"
+                        }]
+                      </code></pre>
                       <p>Your software module is assigned to the new distribution set. But you can also assign software modules separately...</p>
                     </div>
-                    <div>
-                      <div>
-                        <div>Response</div>
-                        <pre><code data-trim>
-                          HTTP/1.1 201 CREATED
-                          [{
-                            [...]
-                            "id": 2,
-                            "name": "myDS",
-                            "description": "My initial distribution",
-                            "version": "1.0",
-                            "modules": [...],
-                            "requiredMigrationStep": false,
-                            "type": "os",
-                            "complete": true,
-                            "deleted": false,
-                            "_links": {
-                              "self": {
-                                "href": "http://localhost:8080/rest/v1/distributionsets/2"
-                              }
+                    <div class="api-response">
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 201 CREATED
+                        [{
+                          [...]
+                          "id": 2,
+                          "name": "MyDS",
+                          "description": "My initial distribution",
+                          "version": "1.0",
+                          "modules": [...],
+                          "requiredMigrationStep": false,
+                          "type": "os",
+                          "complete": true,
+                          "deleted": false,
+                          "_links": {
+                            "self": {
+                              "href": "http://localhost:8080/rest/v1/distributionsets/2"
                             }
-                          }]
-                        </code></pre>
-                      </div>
+                          }
+                        }]
+                      </code></pre>
                     </div>
                   </div>
                   <blockquote class="verify">Verify in the Distribution Management view of the UI that the distribution set is created and the software module is assigned.</blockquote>                  
@@ -566,21 +701,31 @@
                   <div class="current-page">Part 2, step 4</div>
                   <h2>Assigning a Software Module via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>
+                    <div class="api-request">
                       <div>Request</div>
-                      <pre><code data-trim>
-                        $ curl \
-                          '{{baseURL}}/rest/v1/distributionsets/{{distributionId}}/assignedSM' \
-                          -i -X POST \
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X POST http://localhost:8080/rest/v1/distributionsets/1/assignedSM \
                           -u 'admin:admin' \
                           -H 'Content-Type: application/json' \
                           -d '[{
-                            "id": {{moduleId}}
-                          }]'
+                            "id": "1"
+                          }]'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP POST
+                        /rest/v1/distributionsets/{distributionId}/assignedSM
+                        
+                        Content-Type: application/json
+                        Body:
+                        [{
+                            "id": "{moduleId}"
+                        }]'
                       </code></pre>
                       <p>Try to assign a software module of type "Application". Why does it fail?</p>
                     </div>
-                    <div>
+                    <div class="api-response">
                       <div>Response</div>
                       <pre><code data-trim>
                         HTTP/1.1 200 OK
@@ -617,23 +762,34 @@
                   <div class="current-page">Part 3, step 1</div>
                   <h2>Assigning a Distribution Set via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>
+                    <div class="api-request">
                       <div>Request</div>
-                      <pre><code data-trim>
-                        $ curl \
-                          '{{baseURL}}/rest/v1/distributionsets
-                              /{{distributionId}}/assignedTargets/' \
-                          -i -X POST \
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X POST http://localhost:8080/rest/v1/distributionsets/1/assignedTargets/ \
                           -u 'admin:admin' \
                           -H 'Content-Type: application/json' \
                           -d '[{
-                            "id" : "{{targetId}}",
+                            "id" : "dev01",
                             "type" : "forced"
-                          }]'
+                          }]'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP POST
+                        /rest/v1/distributionsets/{distributionId}/assignedTargets/
+                        
+                        Accept: application/hal+json
+                        Content-Type: application/json
+                        Body:
+                        [{
+                          "id" : "{targetId}",
+                          "type" : "forced"
+                        }]
                       </code></pre>
                       <p>The specified type "forced" instructs the device to apply the update immediately. Alternatives are "soft" and "timeforced".</p>
                     </div>
-                    <div>
+                    <div class="api-response">
                       <div>Response</div>
                       <pre><code data-trim>
                         HTTP/1.1 200 OK
@@ -653,17 +809,24 @@
                   <div class="current-page">Part 3, step 2</div>
                   <h2>Polling for Updates via DDI</h2>
                   <div class="two-columns-eq">
-                    <div>
+                    <div class="api-request">
                       <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01 \
+                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
                       <pre><code data-trim>
-                        $ curl \
-                          '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}' \
-                          -i -H 'Accept: application/hal+json' \
-                          -H 'Authorization: TargetToken {{securityToken}}'
+                        HTTP GET
+                        /DEFAULT/controller/v1/{controllerId}
+                        
+                        Accept: application/hal+json
+                        Authorization: TargetToken {targetToken}
                       </code></pre>
                       <p>The response contains a "deploymentBase" link that can be used by the device to get all the information needed to process the assigned update.</p>
                     </div>
-                    <div>
+                    <div class="api-response">
                       <div>Response</div>
                       <pre><code data-trim>
                         HTTP/1.1 200 OK
@@ -689,17 +852,24 @@
                   <div class="current-page">Part 3, step 3</div>
                   <h2>Inspecting the Deployment Action via DDI</h2>
                   <div class="two-columns-eq">
-                    <div>
+                    <div class="api-request">
                       <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/167?c=564904365 \
+                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
                       <pre><code data-trim>
-                        $ curl \
-                          'http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/1?c=411599879' \
-                          -i -H 'Accept: application/hal+json' \
-                          -H 'Authorization: TargetToken {{securityToken}}'
+                        HTTP GET
+                        /DEFAULT/controller/v1/{controllerId}/deploymentBase/{actionId}
+                        
+                        Accept: application/hal+json
+                        Authorization: TargetToken {targetToken}
                       </code></pre>
                       <p>The response contains an array of chunks, each representing a software module. For each software module there is an array of artifacts providing the artifact download URLs and checksums.</p>
                     </div>
-                    <div>
+                    <div class="api-response">
                       <div>Response</div>
                       <pre><code data-trim>
                         HTTP/1.1 200 OK
@@ -738,17 +908,23 @@
                   <div class="current-page">Part 3, step 4</div>
                   <h2>Downloading an Artifact via DDI</h2>
                   <div class="two-columns-eq">
-                    <div>
+                    <div class="api-request">
                       <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01/softwaremodules/1/artifacts/artifact01.file \
+                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
                       <pre><code data-trim>
-                        $ curl \
-                          '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}/softwaremodules/1/artifacts/{{filename}}' \
-                          -i -H 'Accept: application/hal+json' \
-                          -H 'Authorization: TargetToken {{securityToken}}'
+                        HTTP GET
+                        /DEFAULT/controller/v1/{controllerId}/softwaremodules/{moduleId}/artifacts/{filename}
+                        
+                        Authorization: TargetToken {targetToken}
                       </code></pre>
                       <p>You can configure that devices are allowed to download artifacts w/o providing a security token.</p>
                     </div>
-                    <div>
+                    <div class="api-response">
                       <div>Response</div>
                       <pre><code data-trim>
                         HTTP/1.1 200 OK
@@ -764,31 +940,53 @@
                   <div class="current-page">Part 3, step 5.1</div>
                   <h2>Providing Intermediary Feedback via DDI</h2>
                   <div class="two-columns-eq">
-                    <div>
+                    <div class="api-request">
                       <div>Request</div>
-                      <pre><code data-trim>
-                        $ curl \
-                          '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}/deploymentBase/{{actionId}}/feedback' \
-                            -i -X POST \
-                            -H 'Authorization: TargetToken {{securityToken}}' \
-                            -H 'Content-Type: application/json' \
-                            -d '{
-                              "id": "{{actionId}}",
-                              "status": {
-                                "result": {
-                                  "progress": {
-                                    "cnt": 2,
-                                    "of": 5
-                                  },
-                                  "finished": "none"
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X POST http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/1/feedback \
+                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e' \
+                          -H 'Content-Type: application/json' \
+                          -d '{
+                            "id" : "1",
+                            "status" : {
+                              "result": {
+                                "progress": {
+                                  "cnt": 2,
+                                  "of": 5
                                 },
-                                "execution": "proceeding",
-                                "details": ["The update is being processed."]
-                              }                            
-                            }'
+                                "finished": "none"
+                              },
+                              "execution": "proceeding",
+                              "details": ["The update is being processed."]
+                            }
+                          }'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP POST
+                        /DEFAULT/controller/v1/{controllerId}/deploymentBase/{actionId}/feedback
+                                                
+                        Authorization: TargetToken {targetToken}
+                        Content-Type: application/json
+                        Body:
+                        {
+                          "id" : "{actionId}",
+                          "status" : {
+                            "result": {
+                              "progress": {
+                                "cnt": 2,
+                                "of": 5
+                              },
+                              "finished": "none"
+                            },
+                            "execution": "proceeding",
+                            "details": ["The update is being processed."]
+                          }
+                        }
                       </code></pre>
                     </div>
-                    <div>
+                    <div class="api-response">
                       <div>Response</div>
                       <pre><code data-trim>
                         HTTP/1.1 200 OK
@@ -803,27 +1001,45 @@
                   <div class="current-page">Part 3, step 5.2</div>
                   <h2>Providing Deployment Feedback via DDI</h2>
                   <div class="two-columns-eq">
-                    <div>
+                    <div class="api-request">
                       <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                  	    curl -i -X POST http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/1/feedback \
+                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e' \
+                          -H 'Content-Type: application/json' \
+                          -d '{
+                            "id" : "1",
+                            "status" : {
+                              "result" : {
+                                "finished" : "success"
+                              },
+                              "execution" : "closed",
+                              "details" : ["The update was successfully installed."]
+                            }
+                        }'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
                       <pre><code data-trim>
-                        $ curl \
-                          '{{baseURL}}/DEFAULT/controller/v1/{{ctrlId}}/deploymentBase/{{actionId}}/feedback' \
-                            -i -X POST \
-                            -H 'Authorization: TargetToken {{securityToken}}' \
-                            -H 'Content-Type: application/json' \
-                            -d '{
-                              "id": "{{actionId}}",
-                              "status": {
-                                "result": {
-                                  "finished": "success"
-                                },
-                                "execution": "closed",
-                                "details": ["The update was successfully installed."]
-                              }                            
-                            }'
+                        HTTP POST
+                        /DEFAULT/controller/v1/{controllerId}/deploymentBase/{actionId}/feedback
+                        
+                        Authorization: TargetToken {targetToken}
+                        Content-Type: application/json
+                        Body:
+                        {
+                          "id": "{actionId}",
+                          "status": {
+                            "result": {
+                              "finished": "success"
+                            },
+                            "execution": "closed",
+                            "details": ["The update was successfully installed."]
+                          }                            
+                        }
                       </code></pre>
                     </div>
-                    <div>
+                    <div class="api-response">
                       <div>Response</div>
                       <pre><code data-trim>
                         HTTP/1.1 200 OK
@@ -841,7 +1057,6 @@
                   	<ul>
                   	  <li>Configure gateway token authentication</li>
                       <li>Provision many devices</li>
-                      <li>Create target filters</li>
                       <li>Create a rollout</li>
                       <li>Start a rollout</li>
                   	</ul>
@@ -852,42 +1067,49 @@
                   <div class="current-page">Part 4, step 1.1</div>
                   <h2>Enable Gateway Token Authentication via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>
-                      <div>
-                        <div>Request</div>
-                        <pre><code data-trim>
-                          $ curl \
-                            '{{baseURL}}:{{port}}/rest/v1/system/configs/authentication.gatewaytoken.enabled/' \
-                            -i -X PUT \
-                            -u 'admin:admin' \
-                            -H 'Content-Type: application/json' \
-                            -d '{
-                              "value": true
-                            }'
-                        </code></pre>
-                      </div>
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X PUT http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.enabled \
+                          -u 'admin:admin' \
+                          -H 'Content-Type: application/json' \
+                          -d '{
+                            "value" : true
+                          }'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP PUT
+                        /rest/v1/system/configs/authentication.gatewaytoken.enabled
+                        
+                        Accept: application/hal+json
+                        Content-Type: application/json
+                        Body:
+                        {
+                          "value" : true
+                        }
+                      </code></pre>
                       <p>This allows a gateway to authenticate on behalf of the devices that are connected to it. The device simulator acts like a gateway and relies on this authentication mechanism.</p>
                     </div>
-                    <div>
-                      <div>
-                        <div>Response</div>
-                        <pre><code data-trim>
-                          HTTP/1.1 200 OK
-                          {
-                            "value": true,
-                            "lastModifiedAt": 1539682103744,
-                            "lastModifiedBy": "admin",
-                            "createdAt": 1539682103744,
-                            "createdBy": "admin",
-                            "global": false,
-                            "_links": {
-                              "self": {
-                                "href": "http://127.0.0.1:8080/rest/v1/system/configs/authentication.gatewaytoken.enabled"
-                               }
-                             }
+                    <div class="api-response">
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                        {
+                          "value": true,
+                          "lastModifiedAt": 1539682103744,
+                          "lastModifiedBy": "admin",
+                          "createdAt": 1539682103744,
+                          "createdBy": "admin",
+                          "global": false,
+                          "_links": {
+                            "self": {
+                              "href": "http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.enabled"
+                            }
                           }
-                          </code></pre>
-                      </div>
+                        }
+                      </code></pre>
                     </div>
                   </div>
                 </section>
@@ -896,41 +1118,48 @@
                   <div class="current-page">Part 4, step 1.2</div>
                   <h2>Initialize Gateway Token via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>
-                      <div>
-                        <div>Request</div>
-                        <pre><code data-trim>
-                          $ curl \
-                            '{{baseURL}}:{{port}}/rest/v1/system/configs/authentication.gatewaytoken.key/' \
-                            -i -X PUT \
-                            -u 'admin:admin' \
-                            -H 'Content-Type: application/json' \
-                            -d '{
-                              "value": "e61C6b2B78A674d19304c357a20f1D09"
-                            }'
-                        </code></pre>
-                      </div>
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X PUT http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.key/ \
+                          -u 'admin:admin' \
+                          -H 'Content-Type: application/json' \
+                          -d '{
+                            "value": "e61c6b2b78a674d19304c357a20f1d09"
+                          }'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP PUT
+                        /rest/v1/system/configs/authentication.gatewaytoken.key
+                        
+                        Accept: application/hal+json
+                        Content-Type: application/json
+                        Body: 
+                        {
+                          "value": "e61C6b2B78A674d19304c357a20f1D09"
+                        }
+                      </code></pre>
                     </div>
-                    <div>
-                      <div>
-                        <div>Response</div>
-                        <pre><code data-trim>
-                          HTTP/1.1 200 OK
-                          {
-                            "value": "e61C6b2B78A674d19304c357a20f1D09",
-                            "lastModifiedAt": 1539682107943,
-                            "lastModifiedBy": "admin",
-                            "createdAt": 1539682107943,
-                            "createdBy": "admin",
-                            "global": false,
-                            "_links": {
-                              "self": {
-                                "href": "http://127.0.0.1:8080/rest/v1/system/configs/authentication.gatewaytoken.key"
-                              }
+                    <div class="api-response">
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                        {
+                          "value": "e61C6b2B78A674d19304c357a20f1D09",
+                          "lastModifiedAt": 1539682107943,
+                          "lastModifiedBy": "admin",
+                          "createdAt": 1539682107943,
+                          "createdBy": "admin",
+                          "global": false,
+                          "_links": {
+                            "self": {
+                              "href": "http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.key"
                             }
                           }
-                          </code></pre>
-                      </div>
+                        }
+                        </code></pre>
                     </div>
                   </div>
                   <blockquote class="verify">Verify in the System Configuration view of the UI that gateway token authentication is enabled and that the correct token is set.</blockquote>                  
@@ -939,70 +1168,277 @@
                 <section>
                   <div class="current-page">Part 4, step 2</div>
                   <h2>Provisioning Many Devices via Device Simulator</h2>
-                  <div>
-                    <div>Provision 15 "EMEA Devices" and start their simulation</div>
-                    <pre><code data-trim>
-                      $ curl \
-                        '{{baseURL}}:{{deviceSimulatorPort}}/start?name=emeadevice&amount=15&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:{{port}}&gatewaytoken={{gatewayToken}}' \
-                        -i
-                    </code></pre>
-                    <div>Provision 20 "APAC Devices" and start their simulation</div>
-                    <pre><code data-trim>
-                      $ curl \
-                        '{{baseURL}}:{{deviceSimulatorPort}}/start?name=apacdevice&amount=20&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:{{port}}&gatewaytoken={{gatewayToken}}' \
-                        -i
-                    </code></pre>
-                    <div>Provision 30 "Americas Devices" and start their simulation</div>
-                    <pre><code data-trim>
-                      $ curl \
-                        '{{baseURL}}:{{deviceSimulatorPort}}/start?name=amerdevice&amount=30&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:{{port}}&gatewaytoken={{gatewayToken}}' \
-                        -i
-                    </code></pre>
+                  <div class="two-columns-eq">
+                    <div class="api-request">
+                      <div>Provision 15 "EMEA" devices</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">curl -i -X GET 'http://localhost:8083/start?name=emeadevice&amount=15&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:8080&gatewaytoken=e61c6b2b78a674d19304c357a20f1d09'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP GET
+                        {deviceSimulatorBaseURL}/start
+                        
+                        Query Parameters:
+                          name = emeadevice
+                          amount = 15
+                          tenant = DEFAULT
+                          api = ddi
+                          endpoint = http://hawkbit:8080
+                          gatewaytoken = {gatewayToken}
+                      </code></pre>
+                    </div>
+                    <div class="api-request">
+                      <div>Provision 20 "APAC" devices</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">curl -i -X GET 'http://localhost:8083/start?name=apacdevice&amount=20&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:8080&gatewaytoken=e61c6b2b78a674d19304c357a20f1d09'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP GET
+                        {deviceSimulatorBaseURL}/start
+                        
+                        Query Parameters:
+                          name = apacdevice
+                          amount = 20
+                          tenant = DEFAULT
+                          api = ddi
+                          endpoint = http://hawkbit:8080
+                          gatewaytoken = {gatewayToken}
+                      </code></pre>
+                    </div>
+                    <div class="api-request">
+                      <div>Provision 30 "Americas" devices</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">curl -i -X GET 'http://localhost:8083/start?name=amerdevice&amount=30&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:8080&gatewaytoken=e61c6b2b78a674d19304c357a20f1d09'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP GET
+                        {deviceSimulatorBaseURL}/start
+                        
+                        Query Parameters:
+                          name = amerdevice
+                          amount = 30
+                          tenant = DEFAULT
+                          api = ddi
+                          endpoint = http://hawkbit:8080
+                          gatewaytoken = {gatewayToken}
+                      </code></pre>
+                    </div>
                   </div>
                   <blockquote class="verify">Verify in the Deployment Management view of the UI that the devices are present.</blockquote>                  
                 </section>
-                
+
                 <section>
                   <div class="current-page">Part 4, step 3</div>
-                  <h2>Creating Target Filters via Mgmt API</h2>
+                  <h2>Creating a Rollout via Mgmt API</h2>
                   <div class="two-columns-eq">
-                    <div>
+                    <div class="api-request">
                       <div>Request</div>
-                      <pre><code data-trim>
-                        $ curl \
-                          '{{baseURL}}:{{port}}/rest/v1/system/configs/authentication.gatewaytoken.key/' \
-                          -i -X PUT \
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        curl -i -X POST http://localhost:8080/rest/v1/rollouts \
                           -u 'admin:admin' \
                           -H 'Content-Type: application/json' \
                           -d '{
-                            "value": "e61C6b2B78A674d19304c357a20f1D09"
-                          }'
+                            "distributionSetId" : 2,
+                            "targetFilterQuery" : "description=='\''Plug and Play*'\''",
+                            "name" : "MyOS-Global-Rollout-1.0",
+                            "description" : "Global rollout of MyOS",
+                            "groups" : [{
+                              "name" : "EMEA_Devices",
+                              "description" : "Devices in EMEA",
+                              "targetFilterQuery" : "name==emea*",
+                              "successCondition" : {
+                                "condition" : "THRESHOLD",
+                                "expression" : "70"
+                              },
+                              "successAction" : {
+                                "expression" : "",
+                                "action" : "NEXTGROUP"
+                              },
+                              "errorAction" : {
+                                "expression" : "",
+                                "action" : "PAUSE"
+                              },
+                              "errorCondition" : {
+                                "condition" : "THRESHOLD",
+                                "expression" : "20"
+                              }
+                            }, {
+                              "name" : "APAC_Devices",
+                              "description" : "Devices in APAC",
+                              "targetFilterQuery" : "name==apac*",
+                              "successCondition" : {
+                                "condition" : "THRESHOLD",
+                                "expression" : "50"
+                              },
+                              "successAction" : {
+                                "expression" : "",
+                                "action" : "NEXTGROUP"
+                              },
+                              "errorAction" : {
+                                "expression" : "",
+                                "action" : "PAUSE"
+                              },
+                              "errorCondition" : {
+                                "condition" : "THRESHOLD",
+                                "expression" : "20"
+                              }
+                            }, {
+                              "name" : "AMER_Devices",
+                              "description" : "Devices in AMER",
+                              "targetFilterQuery" : "name==amer*",
+                              "successCondition" : {
+                                "condition" : "THRESHOLD",
+                                "expression" : "25"
+                              },
+                              "successAction" : {
+                                "expression" : "",
+                                "action" : "NEXTGROUP"
+                              },
+                              "errorAction" : {
+                                "expression" : "",
+                                "action" : "PAUSE"
+                              },
+                              "errorCondition" : {
+                                "condition" : "THRESHOLD",
+                                "expression" : "20"
+                              }
+                            }]
+                          }'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP POST
+                        /rest/v1/rollouts
+                        
+                        Content-Type: application/json
+                        Body:
+                        {
+                          "distributionSetId" : {distributionId},
+                          "targetFilterQuery" : "description=='\''Plug and Play*'\''",
+                          "name" : "MyOS-Global-Rollout-1.0",
+                          "description" : "Global rollout of MyOS",
+                          "groups" : [{
+                            "name" : "EMEA_Devices",
+                            "description" : "Devices in EMEA",
+                            "targetFilterQuery" : "name==emea*",
+                            "successCondition" : {
+                              "condition" : "THRESHOLD",
+                              "expression" : "70"
+                            },
+                            "successAction" : {
+                              "expression" : "",
+                              "action" : "NEXTGROUP"
+                            },
+                            "errorAction" : {
+                              "expression" : "",
+                              "action" : "PAUSE"
+                            },
+                            "errorCondition" : {
+                              "condition" : "THRESHOLD",
+                              "expression" : "20"
+                            }
+                          }, {
+                            "name" : "APAC_Devices",
+                            "description" : "Devices in APAC",
+                            "targetFilterQuery" : "name==apac*",
+                            [...]
+                          }]
+                        }'
                       </code></pre>
-                      <p>Creates a target filter which selects all devices with name prefix "emeadevice".
+                      <!--<p>Creates a new rollouts with three groups for EMEA, APAC, and Americas.</p>-->
                     </div>
                     <div>
-                      <div>
-                        <div>Response</div>
-                        <pre><code data-trim>
-                          HTTP/1.1 200 OK
-                          {
-                            "value": "e61C6b2B78A674d19304c357a20f1D09",
-                            "lastModifiedAt": 1539682107943,
-                            "lastModifiedBy": "admin",
-                            "createdAt": 1539682107943,
-                            "createdBy": "admin",
-                            "global": false,
-                            "_links": {
-                              "self": {
-                                "href": "http://127.0.0.1:8080/rest/v1/system/configs/authentication.gatewaytoken.key"
-                              }
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 201 CREATED
+                        {
+                          [...]
+                          "id": 1,
+                          "name": "MyOS-Global-Rollout-1.0",
+                          "description": "Global rollout of MyOS",
+                          "targetFilterQuery": "description=='Plug and Play*'",
+                          "distributionSetId": 1,
+                          "status": "creating",
+                          "totalTargets": 65,
+                          "totalTargetsPerStatus": {
+                            "running":0,
+                            "notstarted": 65,
+                            "scheduled": 0,
+                            "cancelled": 0,
+                            "finished": 0,
+                            "error": 0
+                          },
+                          "deleted": false,
+                          "_links": {
+                            "start": {
+                              "href": "http://localhost:8080/rest/v1/rollouts/1/start"
+                            },
+                            "pause": {
+                              "href": "http://localhost:8080/rest/v1/rollouts/1/pause"
+                            },
+                            "resume": {
+                              "href": "http://localhost:8080/rest/v1/rollouts/1/resume"
+                            },
+                            "groups": {
+                              "href": "http://localhost:8080/rest/v1/rollouts/1/deploygroups?offset=0&limit=50{&sort,q}",
+                              "templated":true
+                            },
+                            "self":{
+                              "href":"http://localhost:8080/rest/v1/rollouts/1"
                             }
                           }
-                          </code></pre>
-                      </div>
+                        }
+                      </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the devices are present.</blockquote>                  
+                  <blockquote class="verify">Verify in the Rollout Management view of the UI that the rollout is present. Drill down into the rollout to review the three groups.</blockquote>                  
+                </section>
+
+                <section>
+                  <div class="current-page">Part 4, step 4</div>
+                  <h2>Starting the Rollout via Mgmt API</h2>
+                  <div class="two-columns-eq">
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">curl -i -X POST http://localhost:8080/rest/v1/rollouts/1/start -u 'admin:admin'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP POST
+                        /rest/v1/rollouts/{rolloutId}/start
+                      </code></pre>
+                      <p>The rollout has been started. Keep in mind that the devices are being simulated by our Device Simulator. The Device Simulator sends deployment feedback messages on behalf of its devices.</p>
+                    </div>
+                    <div>
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                      </code></pre>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the Rollout Management view of the UI that the rollout is now being processed. Watch the progress bars of the rollout groups.</blockquote>                  
+                </section>
+
+                <section>
+                  <h1>Outlook</h1>
+                  <ul>
+                    <li>Support JDK 11</li>
+                    <li>Vaadin 8</li>
+                    <li>Custom key/value pairs for targets (<a href="https://github.com/eclipse/hawkbit/issues/737">#737</a>)</li>
+                    <li>Small improvements of rollout management</li>
+                    <li>JUnit 5, Java &gt;= 9 </li>
+                  </ul>
+                </section>
+
+                <section data-background-image="https://images.unsplash.com/photo-1496449903678-68ddcb189a24?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e37a38ee23569d8e72896968903cf67a&auto=format">
+                  <div class="footer" style="position: fixed; bottom: 0; right: 0; text-align: right;">
+                    Photo by <a href="https://unsplash.com/photos/ukzHlkoz1IE">Austin Chan</a> on <a href="https://unsplash.com">Unsplash</a>
+                  </div>
                 </section>
                 
                 <section>
@@ -1017,6 +1453,7 @@
                 
             </div>
         </div>
+        
         <script src="lib/js/head.min.js"></script>
         <script src="js/reveal.js"></script>
 
@@ -1068,6 +1505,13 @@
             Reveal.configure({
                 slideNumber: true
             });
+
+            function copyToClipboard(inputElem) {
+            	inputElem.select();
+            	document.execCommand("copy");
+            	return false;
+            }
+            
         </script>
 
     </body>
