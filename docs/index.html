@@ -80,6 +80,24 @@
         text-decoration: underline;
         cursor: pointer;    
       }
+      .hawkbit101 .set-target-token input[type='submit'] {
+        background-color: #f6f0f8;
+        border: 1px solid #a58dda;
+        color: #551f62;
+        margin-left: 10px;
+        padding: 4px 8px;
+        cursor: pointer;
+      }
+      .hawkbit101 .set-target-token input[type='submit']:hover,
+      .hawkbit101 .set-target-token input[type='submit']:active {
+        background-color: #efdff5;
+      }      
+      .hawkbit101 .set-target-token input[type='text'] {
+        background-color: #faf7fa;
+        border: none;
+        border-bottom: 1px dotted #a58dda;
+        padding: 4px 8px;
+      }       
      </style>
 
     <body class="hawkbit101">
@@ -383,7 +401,7 @@
                           "description": "My first device"
                         }]
                       </code></pre>
-                      <p>The response contains the security token that can be used by the device to authenticate via DDI.</p>
+                      <p>The response contains the security token that can be used by the device to authenticate via DDI:<br><form class="set-target-token" action="#" onsubmit="localStorage.setItem('REPLACE_WITH_TARGET_TOKEN', this.targetToken.value); alert('Target token successfully set'); return false;"><input type="text" name="targetToken"><input type="submit" value="Set Target Token"></form></p>
                     </div>
                     <div class="api-response">
                       <div>Response</div>
@@ -1368,9 +1386,18 @@
                 slideNumber: true
             });
 
+            const TARGET_TOKEN = "REPLACE_WITH_TARGET_TOKEN";
             function copyToClipboard(inputElem) {
-            	inputElem.select();
-            	document.execCommand("copy");
+            	var value = inputElem.value; 
+            	if (value) {
+                	var targetToken = localStorage.getItem(TARGET_TOKEN);
+                	if (targetToken && value.indexOf(TARGET_TOKEN) >= 0) {
+                		console.log("Injecting target token " + targetToken);
+						inputElem.value = value.replace(TARGET_TOKEN, targetToken);                		                		
+                	}
+                	inputElem.select();
+                	document.execCommand("copy");
+            	}
             	return false;
             }
             
