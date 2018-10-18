@@ -76,8 +76,7 @@
         color: #6eb553;
       }
       .hawkbit101 .copy-to-clipboard input[type='submit']:hover,
-      .hawkbit101 .copy-to-clipboard input[type='submit']:active,
-      .hawkbit101 .copy-to-clipboard-link {
+      .hawkbit101 .copy-to-clipboard input[type='submit']:active {
         text-decoration: underline;
         cursor: pointer;    
       }
@@ -334,6 +333,8 @@
                         HTTP PUT
                         /rest/v1/system/configs/authentication.targettoken.enabled
                           
+                        Accept: application/hal+json
+                        Authorization: Basic admin:admin
                         Content-Type: application/json
                         Body:
                         {
@@ -383,18 +384,20 @@
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
-                          HTTP POST
-                          /rest/v1/targets
+                        HTTP POST
+                        /rest/v1/targets
                           
-                          Content-Type: application/json
-                          Body:
-                          [{
-                            "controllerId": "dev01",
-                            "name": "Device 01",
-                            "description": "My first device"
-                          }]
+                        Accept: application/hal+json
+                        Authorization: Basic admin:admin
+                        Content-Type: application/json
+                        Body:
+                        [{
+                          "controllerId": "dev01",
+                          "name": "Device 01",
+                          "description": "My first device"
+                        }]
                       </code></pre>
-                      <p>The response contains the controller ID and the security token that can be used for DDI.</p>
+                      <p>The response contains the security token that can be used by the device to authenticate via DDI.</p>
                     </div>
                     <div class="api-response">
                       <div>Response</div>
@@ -432,7 +435,7 @@
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
                   	    <textarea name="buffer">
                         curl -i -X GET 'http://localhost:8080/DEFAULT/controller/v1/dev01' \
-                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'</textarea>
+                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -442,6 +445,7 @@
                           Accept: application/hal+json
                           Authorization: TargetToken {targetToken}
                       </code></pre>
+                      <p>The very first time the device "connects" via DDI is used for registering the device.</p>
                       <p>The response contains a "configData" link to set device attributes (via HTTP PUT).</p>
                     </div>
                     <div class="api-response">
@@ -475,7 +479,7 @@
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
                   	    <textarea name="buffer">
                         curl -i -X PUT 'http://localhost:8080/DEFAULT/controller/v1/dev01/configData' \
-                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e' \
+                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN' \
                           -H 'Content-Type: application/json' \
                           -d '{
                             "mode": "merge",
@@ -567,6 +571,7 @@
                         /rest/v1/softwaremodules
                         
                         Accept: application/hal+json
+                        Authorization: Basic admin:admin
                         Content-Type: application/json
                         Body:
                         [{
@@ -624,6 +629,7 @@
                         /rest/v1/softwaremodules/{moduleId}/artifacts
                         
                         Accept: application/hal+json
+                        Authorization: Basic admin:admin
                         Content-Type: multipart/form-data;
                           boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
                         Body:
@@ -687,6 +693,7 @@
                         /rest/v1/distributionsets
                         
                         Accept: application/hal+json
+                        Authorization: Basic admin:admin
                         Content-Type: application/json
                         Body:
                         [{
@@ -746,6 +753,7 @@
                         HTTP POST
                         /rest/v1/distributionsets/{distributionId}/assignedSM
                         
+                        Authorization: Basic admin:admin
                         Content-Type: application/json
                         Body:
                         [{
@@ -809,6 +817,7 @@
                         /rest/v1/distributionsets/{distributionId}/assignedTargets/
                         
                         Accept: application/hal+json
+                        Authorization: Basic admin:admin
                         Content-Type: application/json
                         Body:
                         [{
@@ -843,7 +852,7 @@
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
                   	    <textarea name="buffer">
                         curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01 \
-                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'</textarea>
+                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -885,7 +894,7 @@
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
                   	    <textarea name="buffer">
                         curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/167?c=564904365 \
-                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'</textarea>
+                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -942,7 +951,7 @@
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
                   	    <textarea name="buffer">
                         curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01/softwaremodules/1/artifacts/artifact01.file \
-                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e'</textarea>
+                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -975,7 +984,7 @@
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
                   	    <textarea name="buffer">
                         curl -i -X POST http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/1/feedback \
-                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e' \
+                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN' \
                           -H 'Content-Type: application/json' \
                           -d '{
                             "id" : "1",
@@ -1037,7 +1046,7 @@
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
                   	    <textarea name="buffer">
                   	    curl -i -X POST http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/1/feedback \
-                          -H 'Authorization: TargetToken 231d3b55c80a8a65de93eb0141fe908e' \
+                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN' \
                           -H 'Content-Type: application/json' \
                           -d '{
                             "id" : "1",
@@ -1079,7 +1088,7 @@
                       <p>This action finishes the deployment action workflow and pushes the action into state "Finished". Further feedback requests are rejected with "HTTP/1.1 410 GONE".</p>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the in the Deployment Management view of the UI that the deployment action is in state "Finished".</blockquote>                  
+                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the deployment action is in state "Finished".</blockquote>                  
                 </section>
 
                 <section>
@@ -1116,6 +1125,7 @@
                         /rest/v1/system/configs/authentication.gatewaytoken.enabled
                         
                         Accept: application/hal+json
+                        Authorization: Basic admin:admin
                         Content-Type: application/json
                         Body:
                         {
@@ -1168,6 +1178,7 @@
                         /rest/v1/system/configs/authentication.gatewaytoken.key
                         
                         Accept: application/hal+json
+                        Authorization: Basic admin:admin
                         Content-Type: application/json
                         Body: 
                         {
@@ -1350,6 +1361,8 @@
                         HTTP POST
                         /rest/v1/rollouts
                         
+                        Accept: application/hal+json
+                        Authorization: Basic admin:admin
                         Content-Type: application/json
                         Body:
                         {
@@ -1446,6 +1459,8 @@
                       <pre><code data-trim>
                         HTTP POST
                         /rest/v1/rollouts/{rolloutId}/start
+                        
+                        Authorization: Basic admin:admin
                       </code></pre>
                       <p>The rollout has been started. Keep in mind that the devices are being simulated by our Device Simulator. The Device Simulator sends deployment feedback messages on behalf of its devices.</p>
                     </div>

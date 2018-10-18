@@ -39,7 +39,7 @@ body {
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 25px;
 	font-weight: normal;
-		color: #551f62; d
+	color: #551f62;
 }
 
 .reveal .controls {
@@ -71,7 +71,7 @@ body {
 	font-family: Helvetica, Arial, sans-serif;
 	font-weight: 100;
 	line-height: 1.0;
-  padding-bottom: 15px;
+	padding-bottom: 15px;
 	letter-spacing: normal;
 	text-shadow: none;
 	word-wrap: break-word;
@@ -376,6 +376,6 @@ body {
 /*********************************************
  * SLIDE NUMBER
  *********************************************/
-.reveal .slide-number {
+.xreveal .slide-number {
 	color: #003b6a;
 }
