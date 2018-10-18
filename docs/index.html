@@ -53,6 +53,22 @@
         top: 0;
         right: 0;
       }
+      .hawkbit101 .api {
+        display: inline-block;
+        float: right;
+        padding: 4px 8px;
+        color: #fff;
+        margin-top: 10px;
+      }      
+      .hawkbit101 .api.mgmt {
+        background-color: green;
+      }
+      .hawkbit101 .api.ddi {
+        background-color: #21aee6;
+      }
+      .hawkbit101 .api.sim {
+        background-color: gray;
+      }
       .hawkbit101 .reveal img {
         border: 0;
         box-shadow: none;
@@ -332,8 +348,11 @@
                 </section>
 
                 <section>
-                  <div class="current-page">Part 1, step 1</div>
-                  <h2>Enable Target Token Authentication via Mgmt API</h2>
+                  <div class="current-page">
+                    <div>Part 1, step 1</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
+                  <h2>Enable Target Token Authentication</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -378,8 +397,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 1, step 2</div>
-                  <h2>Device Pre-Provisioning via Mgmt API</h2>
+                  <div class="current-page">
+                    <div>Part 1, step 2</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
+                  <h2>Device Pre-Provisioning</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -431,8 +453,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 1, step 3</div>
-                  <h2>Device Registration via DDI</h2>
+                  <div class="current-page">
+                    <div>Part 1, step 3</div>
+                    <div class="api ddi">DDI</div>
+                  </div>
+                  <h2>Device Registration</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -473,8 +498,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 1, step 4</div>
-                  <h2>Setting Device Attributes via DDI</h2>
+                  <div class="current-page">
+                    <div>Part 1, step 4</div>
+                    <div class="api ddi">DDI</div>
+                  </div>
+                  <h2>Setting Device Attributes</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -532,8 +560,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 2, step 1</div>
-                  <h2>Creating a Software Module via Mgmt API</h2>
+                  <div class="current-page">
+                    <div>Part 2, step 1</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
+                  <h2>Creating a Software Module</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -585,8 +616,11 @@
                 </section>
 
                 <section>
-                  <div class="current-page">Part 2, step 2</div>
-                  <h2>Uploading an Artifact via Mgmt API</h2>
+                  <div class="current-page">
+                    <div>Part 2, step 2</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
+                  <h2>Uploading an Artifact</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -640,8 +674,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 2, step 3</div>
-                  <h2>Creating a Distribution Set via Mgmt API</h2>
+                  <div class="current-page">
+                    <div>Part 2, step 3</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
+                  <h2>Creating a Distribution Set</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -695,8 +732,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 2, step 4</div>
-                  <h2>Assigning a Software Module via Mgmt API</h2>
+                  <div class="current-page">
+                    <div>Part 2, step 4</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
+                  <h2>Assigning a Software Module</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -751,8 +791,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 3, step 1</div>
-                  <h2>Assigning a Distribution Set via Mgmt API</h2>
+                  <div class="current-page">
+                    <div>Part 3, step 1</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
+                  <h2>Assigning a Distribution Set</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -792,8 +835,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 3, step 2</div>
-                  <h2>Polling for Updates via DDI</h2>
+                  <div class="current-page">
+                    <div>Part 3, step 2</div>
+                    <div class="api ddi">DDI</div>
+                  </div>
+                  <h2>Polling for Updates</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -832,8 +878,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 3, step 3</div>
-                  <h2>Inspecting the Deployment Action via DDI</h2>
+                  <div class="current-page">
+                    <div>Part 3, step 3</div>
+                    <div class="api ddi">DDI</div>
+                  </div>
+                  <h2>Inspecting the Deployment Action</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -887,8 +936,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 3, step 4</div>
-                  <h2>Downloading an Artifact via DDI</h2>
+                  <div class="current-page">
+                    <div>Part 3, step 4</div>
+                    <div class="api ddi">DDI</div>
+                  </div>
+                  <h2>Downloading an Artifact</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -918,8 +970,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 3, step 5.1</div>
-                  <h2>Providing Intermediary Feedback via DDI</h2>
+                  <div class="current-page">
+                    <div>Part 3, step 5.1</div>
+                    <div class="api ddi">DDI</div>
+                  </div>
+                  <h2>Providing Intermediary Feedback</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -963,8 +1018,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 3, step 5.2</div>
-                  <h2>Providing Deployment Feedback via DDI</h2>
+                  <div class="current-page">
+                    <div>Part 3, step 5.2</div>
+                    <div class="api ddi">DDI</div>
+                  </div>
+                  <h2>Providing Deployment Feedback</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -1017,7 +1075,10 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 4, step 1.1</div>
+                  <div class="current-page">
+                    <div>Part 4, step 1.1</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
                   <h2>Enable Gateway Token Authentication</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
@@ -1064,8 +1125,11 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 4, step 1.2</div>
-                  <h2>Initialize Gateway Token via Mgmt API</h2>
+                  <div class="current-page">
+                    <div>Part 4, step 1.2</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
+                  <h2>Initialize Gateway Token</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -1111,8 +1175,11 @@
                 </section>
 
                 <section>
-                  <div class="current-page">Part 4, step 2</div>
-                  <h2>Provisioning Many Devices via Device Simulator</h2>
+                  <div class="current-page">
+                    <div>Part 4, step 2</div>
+                    <div class="api sim">Dev Sim</div>
+                  </div>
+                  <h2>Provisioning Many Devices</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Provision 15 "EMEA" devices</div>
@@ -1178,8 +1245,11 @@
                 </section>
 
                 <section>
-                  <div class="current-page">Part 4, step 3</div>
-                  <h2>Creating a Rollout via Mgmt API</h2>
+                  <div class="current-page">
+                    <div>Part 4, step 3</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
+                  <h2>Creating a Rollout</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -1287,8 +1357,11 @@
                 </section>
 
                 <section>
-                  <div class="current-page">Part 4, step 4</div>
-                  <h2>Starting the Rollout via Mgmt API</h2>
+                  <div class="current-page">
+                    <div>Part 4, step 4</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
+                  <h2>Starting the Rollout</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
                       <div>Request</div>
@@ -1315,7 +1388,10 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 4, step 5</div>
+                  <div class="current-page">
+                    <div>Part 4, step 5</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
                   <h2>Creating a Target Filter for "EMEA"</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
@@ -1376,7 +1452,10 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 4, step 6</div>
+                  <div class="current-page">
+                    <div>Part 4, step 6</div>
+                    <div class="api mgmt">Mgmt API</div>
+                  </div>
                   <h2>Setting an "Auto Assignment" Distribution Set</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
@@ -1425,7 +1504,10 @@
                 </section>
                 
                 <section>
-                  <div class="current-page">Part 4, step 7</div>
+                  <div class="current-page">
+                    <div>Part 4, step 7</div>
+                    <div class="api sim">Dev Sim</div>
+                  </div>
                   <h2>Creating Some More "EMEA Devices"...</h2>
                   <div class="two-columns-eq">
                     <div class="api-request">
