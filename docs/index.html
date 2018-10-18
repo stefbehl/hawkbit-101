@@ -67,7 +67,7 @@
       }     
       .hawkbit101 .copy-to-clipboard textarea {
         position: absolute;
-        top: -1000px;
+        top: -9999px;
       }
       .hawkbit101 .copy-to-clipboard input[type='submit'],
       .hawkbit101 .copy-to-clipboard-link {
@@ -320,13 +320,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X PUT 'http://localhost:8080/rest/v1/system/configs/authentication.targettoken.enabled/' \
-                          -u 'admin:admin' \
-                          -H 'Content-Type: application/json' \
-                          -d '{
-                            "value": true
-                          }'</textarea>
+                  	    <textarea name="buffer">curl -i -X PUT 'http://localhost:8080/rest/v1/system/configs/authentication.targettoken.enabled/' -u 'admin:admin' -H 'Content-Type: application/json' -d '{"value": true}'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -372,15 +366,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X POST 'http://localhost:8080/rest/v1/targets' \
-                          -u 'admin:admin' \
-                          -H 'Content-Type: application/json' \
-                          -d '[{
-                            "controllerId": "dev01",
-                            "name": "Device 01",
-                            "description": "My first device"
-                          }]'</textarea>
+                  	    <textarea name="buffer">curl -i -X POST 'http://localhost:8080/rest/v1/targets' -u 'admin:admin' -H 'Content-Type: application/json' -d '[{"controllerId": "dev01", "name": "Device 01", "description": "My first device"}]'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -433,9 +419,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X GET 'http://localhost:8080/DEFAULT/controller/v1/dev01' \
-                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
+                  	    <textarea name="buffer">curl -i -X GET 'http://localhost:8080/DEFAULT/controller/v1/dev01' -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -477,24 +461,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X PUT 'http://localhost:8080/DEFAULT/controller/v1/dev01/configData' \
-                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN' \
-                          -H 'Content-Type: application/json' \
-                          -d '{
-                            "mode": "merge",
-                            "data": {
-                              "VIN": "JH4TB2H26CC000001",
-                              "hwRevision": "1"
-                            },
-                            "status": {
-                              "result": {
-                                "finished": "success"
-                              },
-                              "execution": "closed",
-                              "details": []
-                            }
-                          }'</textarea>
+                  	    <textarea name="buffer">curl -i -X PUT 'http://localhost:8080/DEFAULT/controller/v1/dev01/configData' -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN' -H 'Content-Type: application/json' \-d '{"mode": "merge", "data": {"VIN": "JH4TB2H26CC000001", "hwRevision": "1"}, "status": {"result": {"finished": "success"}, "execution": "closed", "details": []}}'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -553,17 +520,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X POST 'http://localhost:8080/rest/v1/softwaremodules' \
-                          -u 'admin:admin' \
-                          -H 'Content-Type: application/json' \
-                          -d '[{
-                            "vendor": "Example Ltd.",
-                            "name": "MyOS",
-                            "description": "First version of MyOS.",
-                            "type": "os",
-                            "version": "1.0"
-                          }]'</textarea>
+                  	    <textarea name="buffer">curl -i -X POST 'http://localhost:8080/rest/v1/softwaremodules' -u 'admin:admin' -H 'Content-Type: application/json' -d '[{"vendor": "Example Ltd.", "name": "MyOS", "description": "First version of MyOS.", "type": "os", "version": "1.0"}]'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -582,7 +539,7 @@
                           "version": "1.0"
                         }]
                       </code></pre>
-                      <p>This will create an empty software module of type "OS". Next we will add artifacts to the module.</p>
+                      <p>This will create an "empty" software module of type "OS". Next we will add artifacts to the module.</p>
                     </div>
                     <div class="api-response">
                       <div>Response</div>
@@ -616,12 +573,8 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                  	    echo "This is a test update file." > artifact01.file
-                        curl -i -X POST 'http://localhost:8080/rest/v1/softwaremodules/1/artifacts' \
-                          -u 'admin:admin' \
-                          -H 'Content-Type: multipart/form-data' \
-                          -F 'file=@artifact01.file'</textarea>
+                  	    <textarea name="buffer">echo "This is a test update file." > artifact01.file
+                        curl -i -X POST 'http://localhost:8080/rest/v1/softwaremodules/1/artifacts' -u 'admin:admin' -H 'Content-Type: multipart/form-data' -F 'file=@artifact01.file'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -675,17 +628,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X POST 'http://localhost:8080/rest/v1/distributionsets' \
-                          -u 'admin:admin' \
-                          -H 'Content-Type: application/json' \
-                          -d '[{
-                            "requiredMigrationStep": false,
-                            "name": "MyDS",
-                            "description": "My initial distribution",
-                            "type": "os",
-                            "version": "1.0"
-                          }]'</textarea>
+                  	    <textarea name="buffer">curl -i -X POST 'http://localhost:8080/rest/v1/distributionsets' -u 'admin:admin' -H 'Content-Type: application/json' -d '[{"requiredMigrationStep": false, "name": "MyDS", "description": "My initial distribution", "type": "os", "version": "1.0"}]'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -704,7 +647,7 @@
                           "version": "1.0"
                         }]
                       </code></pre>
-                      <p>Your software module is assigned to the new distribution set. But you can also assign software modules separately...</p>
+                      <p>Next we need to assign the previously created software module with the new distribution set.</p>
                     </div>
                     <div class="api-response">
                       <div>Response</div>
@@ -740,13 +683,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X POST http://localhost:8080/rest/v1/distributionsets/1/assignedSM \
-                          -u 'admin:admin' \
-                          -H 'Content-Type: application/json' \
-                          -d '[{
-                            "id": "1"
-                          }]'</textarea>
+                  	    <textarea name="buffer">curl -i -X POST http://localhost:8080/rest/v1/distributionsets/1/assignedSM -u 'admin:admin' -H 'Content-Type: application/json' -d '[{"id": "1"}]'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -802,14 +739,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X POST http://localhost:8080/rest/v1/distributionsets/1/assignedTargets/ \
-                          -u 'admin:admin' \
-                          -H 'Content-Type: application/json' \
-                          -d '[{
-                            "id" : "dev01",
-                            "type" : "forced"
-                          }]'</textarea>
+                  	    <textarea name="buffer">curl -i -X POST http://localhost:8080/rest/v1/distributionsets/1/assignedTargets/ -u 'admin:admin' -H 'Content-Type: application/json' -d '[{"id" : "dev01", "type" : "forced"}]'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -850,9 +780,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01 \
-                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
+                  	    <textarea name="buffer">curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01 -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -892,9 +820,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/167?c=564904365 \
-                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
+                  	    <textarea name="buffer">curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/1?c=564904365 -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -949,9 +875,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01/softwaremodules/1/artifacts/artifact01.file \
-                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
+                  	    <textarea name="buffer">curl -i -X GET http://localhost:8080/DEFAULT/controller/v1/dev01/softwaremodules/1/artifacts/artifact01.file -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -982,24 +906,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X POST http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/1/feedback \
-                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN' \
-                          -H 'Content-Type: application/json' \
-                          -d '{
-                            "id" : "1",
-                            "status" : {
-                              "result": {
-                                "progress": {
-                                  "cnt": 2,
-                                  "of": 5
-                                },
-                                "finished": "none"
-                              },
-                              "execution": "proceeding",
-                              "details": ["The update is being processed."]
-                            }
-                          }'</textarea>
+                  	    <textarea name="buffer">curl -i -X POST http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/1/feedback -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN' -H 'Content-Type: application/json' -d '{"id" : "1", "status" : {"result": {"progress": {"cnt": 2, "of": 5}, "finished": "none"}, "execution": "proceeding", "details": ["The update is being processed."]}}'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -1044,20 +951,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                  	    curl -i -X POST http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/1/feedback \
-                          -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN' \
-                          -H 'Content-Type: application/json' \
-                          -d '{
-                            "id" : "1",
-                            "status" : {
-                              "result" : {
-                                "finished" : "success"
-                              },
-                              "execution" : "closed",
-                              "details" : ["The update was successfully installed."]
-                            }
-                        }'</textarea>
+                  	    <textarea name="buffer">curl -i -X POST http://localhost:8080/DEFAULT/controller/v1/dev01/deploymentBase/1/feedback -H 'Authorization: TargetToken REPLACE_WITH_TARGET_TOKEN' -H 'Content-Type: application/json' -d '{"id" : "1", "status" : {"result" : {"finished" : "success"}, "execution" : "closed", "details" : ["The update was successfully installed."]}}'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -1111,13 +1005,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X PUT http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.enabled \
-                          -u 'admin:admin' \
-                          -H 'Content-Type: application/json' \
-                          -d '{
-                            "value" : true
-                          }'</textarea>
+                  	    <textarea name="buffer">curl -i -X PUT http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.enabled -u 'admin:admin' -H 'Content-Type: application/json' -d '{"value" : true}'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -1164,13 +1052,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X PUT http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.key/ \
-                          -u 'admin:admin' \
-                          -H 'Content-Type: application/json' \
-                          -d '{
-                            "value": "e61c6b2b78a674d19304c357a20f1d09"
-                          }'</textarea>
+                  	    <textarea name="buffer">curl -i -X PUT http://localhost:8080/rest/v1/system/configs/authentication.gatewaytoken.key/ -u 'admin:admin' -H 'Content-Type: application/json' -d '{"value": "e61c6b2b78a674d19304c357a20f1d09"}'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
@@ -1284,77 +1166,7 @@
                     <div class="api-request">
                       <div>Request</div>
                       <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                  	    <textarea name="buffer">
-                        curl -i -X POST http://localhost:8080/rest/v1/rollouts \
-                          -u 'admin:admin' \
-                          -H 'Content-Type: application/json' \
-                          -d '{
-                            "distributionSetId" : 2,
-                            "targetFilterQuery" : "description=='\''Plug and Play*'\''",
-                            "name" : "MyOS-Global-Rollout-1.0",
-                            "description" : "Global rollout of MyOS",
-                            "groups" : [{
-                              "name" : "EMEA_Devices",
-                              "description" : "Devices in EMEA",
-                              "targetFilterQuery" : "name==emea*",
-                              "successCondition" : {
-                                "condition" : "THRESHOLD",
-                                "expression" : "70"
-                              },
-                              "successAction" : {
-                                "expression" : "",
-                                "action" : "NEXTGROUP"
-                              },
-                              "errorAction" : {
-                                "expression" : "",
-                                "action" : "PAUSE"
-                              },
-                              "errorCondition" : {
-                                "condition" : "THRESHOLD",
-                                "expression" : "20"
-                              }
-                            }, {
-                              "name" : "APAC_Devices",
-                              "description" : "Devices in APAC",
-                              "targetFilterQuery" : "name==apac*",
-                              "successCondition" : {
-                                "condition" : "THRESHOLD",
-                                "expression" : "50"
-                              },
-                              "successAction" : {
-                                "expression" : "",
-                                "action" : "NEXTGROUP"
-                              },
-                              "errorAction" : {
-                                "expression" : "",
-                                "action" : "PAUSE"
-                              },
-                              "errorCondition" : {
-                                "condition" : "THRESHOLD",
-                                "expression" : "20"
-                              }
-                            }, {
-                              "name" : "AMER_Devices",
-                              "description" : "Devices in AMER",
-                              "targetFilterQuery" : "name==amer*",
-                              "successCondition" : {
-                                "condition" : "THRESHOLD",
-                                "expression" : "25"
-                              },
-                              "successAction" : {
-                                "expression" : "",
-                                "action" : "NEXTGROUP"
-                              },
-                              "errorAction" : {
-                                "expression" : "",
-                                "action" : "PAUSE"
-                              },
-                              "errorCondition" : {
-                                "condition" : "THRESHOLD",
-                                "expression" : "20"
-                              }
-                            }]
-                          }'</textarea>
+                  	    <textarea name="buffer">curl -i -X POST http://localhost:8080/rest/v1/rollouts -u 'admin:admin' -H 'Content-Type: application/json' -d '{"distributionSetId" : 1, "targetFilterQuery" : "description=='\''Plug and Play*'\''", "name" : "MyOS-Global-Rollout-1.0", "description" : "Global rollout of MyOS", "groups" : [{"name" : "EMEA_Devices", "description" : "Devices in EMEA", "targetFilterQuery" : "name==emea*", "successCondition" : {"condition" : "THRESHOLD", "expression" : "70"}, "successAction" : {"expression" : "", "action" : "NEXTGROUP"}, "errorAction" : {"expression" : "", "action" : "PAUSE"}, "errorCondition" : {"condition" : "THRESHOLD", "expression" : "20"}}, {"name" : "APAC_Devices", "description" : "Devices in APAC", "targetFilterQuery" : "name==apac*", "successCondition" : {"condition" : "THRESHOLD", "expression" : "50"}, "successAction" : {"expression" : "", "action" : "NEXTGROUP"}, "errorAction" : {"expression" : "", "action" : "PAUSE"}, "errorCondition" : {"condition" : "THRESHOLD", "expression" : "20"}}, {"name" : "AMER_Devices", "description" : "Devices in AMER", "targetFilterQuery" : "name==amer*", "successCondition" : {"condition" : "THRESHOLD", "expression" : "25"}, "successAction" : {"expression" : "", "action" : "NEXTGROUP"}, "errorAction" : {"expression" : "", "action" : "PAUSE"}, "errorCondition" : {"condition" : "THRESHOLD", "expression" : "20"}}]}'</textarea>
                         <input type="submit" value="curl2clipboard">
                       </form>
                       <pre><code data-trim>
