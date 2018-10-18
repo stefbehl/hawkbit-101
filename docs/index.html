@@ -97,7 +97,7 @@
         border: none;
         border-bottom: 1px solid #a58dda;
         padding: 4px 8px;
-      }       
+      }
      </style>
 
     <body class="hawkbit101">
@@ -1202,7 +1202,17 @@
                           "description" : "Global rollout of MyOS",
                           "groups" : [{
                             "name" : "EMEA_Devices",
-                            "description" : "Devices in EMEA",
+                            "description" : "Devices in EMEA",                        HTTP GET
+                        {deviceSimulatorBaseURL}/start
+                        
+                        Query Parameters:
+                          name = emeadevice
+                          amount = 15
+                          tenant = DEFAULT
+                          api = ddi
+                          endpoint = http://hawkbit:8080
+                          gatewaytoken = {gatewayToken}
+                            
                             "targetFilterQuery" : "name==emea*",
                             "successCondition" : {
                               "condition" : "THRESHOLD",
@@ -1303,7 +1313,154 @@
                   </div>
                   <blockquote class="verify">Verify in the Rollout Management view of the UI that the rollout is now being processed. Watch the progress bars of the rollout groups.</blockquote>                  
                 </section>
-
+                
+                <section>
+                  <div class="current-page">Part 4, step 5</div>
+                  <h2>Creating a Target Filter for "EMEA"</h2>
+                  <div class="two-columns-eq">
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">curl -i -X POST http://localhost:8080/rest/v1/targetfilters -u 'admin:admin' -H 'Content-Type: application/json' -d '{"query" : "name==emeadevice*", "name" : "EMEA_Devices"}'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP POST
+                        /rest/v1/targetfilters
+                        
+                        Accept: application/hal+json
+                        Authorization: Basic admin:admin
+                        Content-Type: application/json
+                        Body:
+                        {
+                          "query": "name==emeadevice*",
+                          "name" : "EMEA_Devices"
+                        }                        
+                      </code></pre>
+                      <p>This will create a new filter which selects all devices matching the specified name prefix.</p>
+                    </div>
+                    <div>
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 201 CREATED
+                        {
+                          "id": 1,
+                          [...]
+                          "name": "EMEA_Devices",                        HTTP GET
+                        {deviceSimulatorBaseURL}/start
+                        
+                        Query Parameters:
+                          name = emeadevice
+                          amount = 15
+                          tenant = DEFAULT
+                          api = ddi
+                          endpoint = http://hawkbit:8080
+                          gatewaytoken = {gatewayToken}
+                          
+                          "query": "name==emeadevice*",
+                          "autoAssignDistributionSet": null,
+                          "_links": {
+                            "self": {
+                              "href": "/rest/v1/targetfilters/1"
+                            },
+                            "autoAssignDS": {
+                              "href": "/rest/v1/targetfilters/1/autoAssignDS"
+                            }
+                          }
+                        }
+                      </code></pre>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the Target Filter Management view of the UI that the filter is there. Select the filter and review the list of devices.</blockquote>                  
+                  <blockquote class="verify">Create another filter via the UI. Play around with the auto completion function to get familiar with the FIQL syntax.</blockquote>                  
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 4, step 6</div>
+                  <h2>Setting an "Auto Assignment" Distribution Set</h2>
+                  <div class="two-columns-eq">
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">curl -i -X POST http://localhost:8080/rest/v1/targetfilters/1/autoAssignDS -u 'admin:admin' -H 'Content-Type: application/json' -d '{"id": "1"}'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP POST
+                        /rest/v1/targetfilters/1/autoAssignDS
+                        
+                        Accept: application/hal+json
+                        Authorization: Basic admin:admin
+                        Content-Type: application/json
+                        Body:
+                        {
+                          "id": "1"
+                        }
+                      </code></pre>
+                      <p>Target filters with an "Auto Assignment Distribution Set" are resolved periodically. If the resolution result returns devices that do not have this distribution set assigned yet, hawkBit will sign it automatically.</p>
+                    </div>
+                    <div>
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                        {
+                          "id": 1,
+                          [...]
+                          "name": "EMEA_Devices",
+                          "query": "name==emeadevice*",
+                          "autoAssignDistributionSet": 1,
+                          "_links": {
+                            "self": {
+                              "href": "/rest/v1/targetfilters/1"
+                            },
+                            "autoAssignDS": {
+                              "href": "/rest/v1/targetfilters/1/autoAssignDS"
+                            }
+                          }
+                        }
+                      </code></pre>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the Target Filter Management view of the UI that the filter is now associated with the distribution set. Let's now create some new devices matching our filter...</blockquote>                  
+                </section>
+                
+                <section>
+                  <div class="current-page">Part 4, step 7</div>
+                  <h2>Creating Some More "EMEA Devices"...</h2>
+                  <div class="two-columns-eq">
+                    <div class="api-request">
+                      <div>Request</div>
+                      <form class="copy-to-clipboard" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">curl -i -X GET 'http://localhost:8083/start?name=emeadevice&amount=30&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:8080&gatewaytoken=e61c6b2b78a674d19304c357a20f1d09'</textarea>
+                        <input type="submit" value="curl2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        HTTP GET
+                        {deviceSimulatorBaseURL}/start
+                        
+                        Query Parameters:
+                          name = emeadevice
+                          amount = 30
+                          tenant = DEFAULT
+                          api = ddi
+                          endpoint = http://hawkbit:8080
+                          gatewaytoken = {gatewayToken}
+                      </code></pre>
+                      <p>Once the target filter is executed for the next time, the devices are automatically updated with the distribution set of the filter.</p>
+                    </div>
+                    <div>
+                      <div>Response</div>
+                      <pre><code data-trim>
+                        HTTP/1.1 200 OK
+                        
+                        Updated 30 DDI_HTTP connected targets!
+                      </code></pre>
+                    </div>
+                  </div>
+                  <blockquote class="verify">Verify in the Target Filter Management view of the UI that the filter captures the new devices. Watch the state of the devices.</blockquote>                  
+                  <blockquote class="verify">Try to understand the difference between a "Rollout" and an "Auto Assignment"!</blockquote>
+                </section>
+                                
                 <section>
                   <h1>Outlook</h1>
                   <ul>

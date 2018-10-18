@@ -403,9 +403,49 @@ Step 3: Create a Rollout (Mgmt API)
 Step 4: Start the Rollout (Mgmt API)
 
     Pre:
-    - Make sure the start URL from the previous response is used
+    - Make sure the start URL from the previous JSON response is used
     - Make sure the rollout ID in the request body is correct (replace "1" if needed)
         
     curl -i -X POST http://localhost:8080/rest/v1/rollouts/1/start \
         -u 'admin:admin'
         
+
+Step 5: Create a Target Filter for "EMEA" (Mgmt API)
+    
+    curl -i -X POST \
+        http://localhost:8080/rest/v1/targetfilters \
+        -u 'admin:admin' \
+        -H 'Content-Type: application/json' \
+        -d '{
+            "query" : "name==emeadevice*",
+            "name" : "EMEA_Devices"
+        }'
+        
+    Post:
+    - Retrieve the filter ID from the JSON response
+
+
+Step 6: Set Auto Assignment Distribution Set (Mgmt API)
+
+    Pre:
+    - Make sure the filter ID in the URL is correct (replace "1" if needed)
+    - Make sure the distribution set ID in the request body is correct (replace "1" if needed)
+    
+    curl -i -X POST \
+        http://localhost:8080/rest/v1/targetfilters/1/autoAssignDS \
+        -u 'admin:admin' \
+        -H 'Content-Type: application/json' \
+        -d '{
+            "id": "1"
+        }'
+
+
+Step 7: Provision some more Devices for Group "EMEA" (Device Simulator + DDI)    
+
+    Pre:
+    - Make sure the gateway token in the URL is correct (replace "e61c6b2b78a674d19304c357a20f1d09" if needed)
+
+    curl -i -X GET 'http://localhost:8083/start?name=emeadevice&amount=30&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:8080&gatewaytoken=e61c6b2b78a674d19304c357a20f1d09'
+        
+
+==END OF TUTORIAL==

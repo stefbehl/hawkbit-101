@@ -523,7 +523,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[{\n    \"requiredMigrationStep\": false,\n    \"name\": \"myOs-ds\",\n    \"description\": \"MyOS initial update\",\n    \"type\": \"os\",\n    \"version\": \"1.0\",\n    \"modules\": [{\n        \"id\": {{currentSoftwareModuleId}}\n    }]\n}]"
+							"raw": "[{\n    \"requiredMigrationStep\": false,\n    \"name\": \"myOs-ds\",\n    \"description\": \"MyOS initial update\",\n    \"type\": \"os\",\n    \"version\": \"1.0\"\n}]"
 						},
 						"url": {
 							"raw": "{{baseURL}}:{{port}}/rest/v1/distributionsets",
@@ -1444,14 +1444,19 @@
 					"response": []
 				},
 				{
-					"name": "Step 5.1: Create Target Filter for \"EMEA\" (Mgmt API)",
+					"name": "Step 5: Create a Target Filter for \"EMEA\" (Mgmt API)",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"id": "0d028b1c-9849-400d-b2be-2c47cba37282",
 								"exec": [
-									"verifyStatusCode(pm, 201);"
+									"verifyStatusCode(pm, 201);",
+									"",
+									"var filterId = JSON.parse(responseBody).id;",
+									"if (filterId) {",
+									"    saveVariable(pm, \"currentTargetFilterId\", filterId);",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -1487,14 +1492,25 @@
 					"response": []
 				},
 				{
-					"name": "Step 5.2: Create Target Filter for \"APAC\" (Mgmt API)",
+					"name": "Step 6: Set Auto Assignment Distribution Set (Mgmt API)",
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "27b435f9-3fd6-4390-a7c6-9ffc3a00a052",
+								"exec": [
+									"restoreVariable(pm, \"currentDistributionSetId\");",
+									"restoreVariable(pm, \"currentTargetFilterId\");"
+								],
+								"type": "text/javascript"
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "8c4b846c-781c-4094-ade9-5a9386b910b8",
+								"id": "bf88cdb3-340e-4d7d-9489-3ae88992299e",
 								"exec": [
-									"verifyStatusCode(pm, 201);"
+									"verifyStatusCode(pm, 200);"
 								],
 								"type": "text/javascript"
 							}
@@ -1506,16 +1522,16 @@
 							{
 								"key": "Content-Type",
 								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"query\" : \"name==apacdevice*\",\n    \"name\" : \"APAC_Devices\"\n}"
+							"raw": "{\n\t\"id\": \"{{currentDistributionSetId}}\"\n}"
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{port}}/rest/v1/targetfilters",
+							"raw": "{{baseURL}}:{{port}}/rest/v1/targetfilters/{{currentTargetFilterId}}/autoAssignDS",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -1523,50 +1539,69 @@
 							"path": [
 								"rest",
 								"v1",
-								"targetfilters"
+								"targetfilters",
+								"{{currentTargetFilterId}}",
+								"autoAssignDS"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Step 5.3: Create Target Filter for \"Americas\" (Mgmt API)",
+					"name": "Step 7: Provision some more Devices for Group \"EMEA\" (Device Simulator + DDI)",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "0d269569-0e7d-4264-800a-05ce87b137b4",
+								"id": "ffcfa180-9efc-429a-9bd6-e8b47b28eb45",
 								"exec": [
-									"verifyStatusCode(pm, 201);"
+									"verifyStatusCode(pm, 200);"
 								],
 								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"name": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
+						"method": "GET",
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"query\" : \"name==amerdevice*\",\n    \"name\" : \"Americas_Devices\"\n}"
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{baseURL}}:{{port}}/rest/v1/targetfilters",
+							"raw": "{{baseURL}}:{{deviceSimulatorPort}}/start?name=emeadevice&amount=30&tenant=DEFAULT&api=ddi&endpoint=http://hawkbit:{{port}}&gatewaytoken={{gatewayToken}}",
 							"host": [
 								"{{baseURL}}"
 							],
-							"port": "{{port}}",
+							"port": "{{deviceSimulatorPort}}",
 							"path": [
-								"rest",
-								"v1",
-								"targetfilters"
+								"start"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "emeadevice"
+								},
+								{
+									"key": "amount",
+									"value": "30"
+								},
+								{
+									"key": "tenant",
+									"value": "DEFAULT"
+								},
+								{
+									"key": "api",
+									"value": "ddi"
+								},
+								{
+									"key": "endpoint",
+									"value": "http://hawkbit:{{port}}"
+								},
+								{
+									"key": "gatewaytoken",
+									"value": "{{gatewayToken}}"
+								}
 							]
 						}
 					},
@@ -1686,80 +1721,86 @@
 	],
 	"variable": [
 		{
-			"id": "4cd0ef5d-94f4-480a-88f7-9cd08c48485c",
+			"id": "7e8b64a3-be6f-4eba-b1b7-c3b6c0c09e8b",
 			"key": "baseURL",
 			"value": "http://localhost",
 			"type": "string"
 		},
 		{
-			"id": "7e65ef10-47c1-435f-aed3-dc44443d25ac",
+			"id": "5fe68fd6-bb0b-4d89-b6a4-f0a98571690c",
 			"key": "port",
 			"value": "8080",
 			"type": "string"
 		},
 		{
-			"id": "6fb6fe8b-62d5-47bb-b50a-9bb0e78d8814",
+			"id": "c115ea1c-fed1-4fd2-acf1-a7c8d9f9e22d",
 			"key": "deviceSimulatorPort",
 			"value": "8083",
 			"type": "string"
 		},
 		{
-			"id": "d920a9a0-0e44-46a2-a053-e7998b7a55bb",
+			"id": "848ff24d-fe61-4c97-b6ba-0d4482c996a4",
 			"key": "tenant",
 			"value": "DEFAULT",
 			"type": "string"
 		},
 		{
-			"id": "40fb7ee3-b2b6-4c09-83b5-4e3dad9810b9",
+			"id": "4654134d-9bec-4ca9-b432-e99e9227021b",
 			"key": "gatewayToken",
 			"value": "e61c6b2b78a674d19304c357a20f1d09",
 			"type": "string"
 		},
 		{
-			"id": "a5e6ef7a-9f74-4608-ba60-9b07f70d67b3",
+			"id": "5e49abc8-8b29-4dd0-a19a-2d93535fb432",
 			"key": "currentTargetToken",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "94c9d994-e52e-4bd1-8821-773a4db5dbeb",
+			"id": "f03853f7-3969-4a3e-8c4c-14f64b5ec248",
 			"key": "currentSoftwareModuleId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "7c8dc5df-5514-493a-92e9-e2352837b194",
+			"id": "c9b6b4b3-4218-48df-9dc6-8858781412a3",
 			"key": "currentDistributionSetId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "da082849-5222-4f67-a344-d251245929f9",
+			"id": "ae921dc3-02c5-46a8-b345-7c3285264508",
 			"key": "currentTargetId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "94db786e-9cbf-4dd5-bbf1-e5e483c9b028",
+			"id": "39b86b11-5617-49dd-b057-7aef9deca170",
 			"key": "currentDeploymentActionHref",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "a8d6255f-2f4b-47e4-b79d-ab6c7b61fec7",
+			"id": "0b180516-4b7a-422b-9167-88e5dc7cba07",
 			"key": "currentArtifactDownloadHref",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "2d0775dc-1751-4c64-8330-3c0a7fee392e",
+			"id": "caae5b3a-6c4b-4266-b6be-a336d4476f56",
 			"key": "currentDeploymentActionId",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "c44d86b4-ac47-474f-a1a4-5dc1226a4b45",
+			"id": "2810cd04-9b82-48eb-83c1-d22e62f1e551",
 			"key": "currentRolloutId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "5dd6fded-dadc-4a1c-96f9-a2d32adb22e0",
+			"key": "currentTargetFilterId",
 			"value": "",
 			"type": "string"
 		}
