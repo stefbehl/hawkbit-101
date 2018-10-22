@@ -135,12 +135,12 @@
                     <div style="font-size: 1.5em; position:absolute; left:2em; width: 100%;">
                       <div style="display: inline-block;">
                         <a href="https://github.com/stefbehl"><img src="https://avatars2.githubusercontent.com/u/16321153?s=120&v=4" style="border-radius: 50%;" align="left"></a>
-                        <p style="margin-left: 5em; margin-top: 1.2em;">Stefan Behl</p>
+                        <p style="margin-left: 5em; margin-top: 1.2em;">Stefan Behl<br><span style="font-size: 0.8em">Bosch Software Innovations GmbH</span></p>                        
                       </div>
                       <br>
                       <div style="display: inline-block;">
                         <a href="https://github.com/schabdo"><img src="https://avatars1.githubusercontent.com/u/18215905?s=120&v=4" style="border-radius: 50%;" align="left"></a>
-                        <p style="margin-left: 5em; margin-top: 1.2em;">Dominic Schabel</p>
+                        <p style="margin-left: 5em; margin-top: 1.2em;">Dominic Schabel<br><span style="font-size: 0.8em">Bosch Software Innovations GmbH</span></p>
                       </div>
                     </div>
                 </section>
@@ -539,7 +539,7 @@
                       <pre><code data-trim>
                         HTTP/1.1 200 OK
                       </code></pre>
-                      <p>Once the device has sent its attributes, the "configData" link is no longer exposed.</p>
+                      <p>Once the device has sent its attributes, the "configData" link is no longer exposed in the response to a polling request.</p>
                       <p>You can instruct the device to re-send its (potentially updated) attributes via the UI and Mgmt API.</p>
                     </div>
                   </div>
@@ -728,7 +728,7 @@
                       </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Distribution Management view of the UI that the distribution set is created and the software module is assigned.</blockquote>                  
+                  <blockquote class="verify">Verify in the Distribution Management view of the UI that the distribution set has been created. Inspect its properties, in particular its type.</blockquote>                  
                 </section>
                 
                 <section>
@@ -773,7 +773,7 @@
                       </code></pre>                        
                     </div>
                   </div>
-                  <blockquote class="verify">Verify your software module assignments in the Distributions Management view of the UI. Review the properties of your distribution set, in particular its type.</blockquote>                  
+                  <blockquote class="verify">Verify your software module assignments in the Distributions Management view of the UI.</blockquote>                  
                 </section>
                 
                 <section>
@@ -1476,7 +1476,7 @@
                           "id": "1"
                         }
                       </code></pre>
-                      <p>Target filters with an "Auto Assignment Distribution Set" are resolved periodically. If the resolution result returns devices that do not have this distribution set assigned yet, hawkBit will sign it automatically.</p>
+                      <p>Target filters with an "Auto Assignment Distribution Set" are resolved periodically. If the resolution result returns devices that do not have this distribution set assigned yet, hawkBit will assign it automatically.</p>
                     </div>
                     <div>
                       <div>Response</div>
@@ -1539,7 +1539,7 @@
                       </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Target Filter Management view of the UI that the filter captures the new devices. Watch the state of the devices.</blockquote>                  
+                  <blockquote class="verify">Verify in the Target Filter Management view of the UI that the filter captures the new devices. Watch the state of the devices.</blockquote>
                   <blockquote class="verify">Try to understand the difference between a "Rollout" and an "Auto Assignment"!</blockquote>
                 </section>
                                 
