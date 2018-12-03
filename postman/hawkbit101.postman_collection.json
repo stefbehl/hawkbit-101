@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "08ab393e-90ac-8aaf-8a45-2ef997713e4f",
 		"name": "EclipseCon 2018 - hawkBit101 Tutorial",
-		"description": "This Postman collection is part of the hawkBit 101 Tutorial which was developed for EclipseCon 2018.\n\nIts purpose is to demonstrate the public APIs of Eclipse hawkBit, in particular the\n- Direct Device Integration API (DDI) and\n- Management REST API.\n\nThere is a separate folder for each part of the tutorial. Each folder contains a couple of requests which are meant to be executed in sequential order.\n\nIt is recommended to execute this collection against the hawkBit Docker setup which is available here:\nhttps://github.com/stefbehl/hawkbit-101\n\n\n\n===\n\nDISCLAIMER\n\nThis collection is for illustrative purposes only to provide information about Eclipse hawkBit.\nIt is provided \"AS IS\" without any warranties and support.",
+		"description": "This Postman collection is part of the hawkBit 101 Tutorial which was developed for EclipseCon 2018.\n\nIts purpose is to demonstrate the public APIs of Eclipse hawkBit, in particular the\n- Direct Device Integration API (DDI) and\n- Management REST API.\n\nThere is a separate folder for each part of the tutorial. Each folder contains a couple of requests which are meant to be executed in sequential order.\n\nIt is recommended to execute this collection against the hawkBit Docker setup which is available here:\nhttps://github.com/stefbehl/hawkbit-101\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [

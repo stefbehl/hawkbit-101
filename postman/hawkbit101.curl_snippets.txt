@@ -3,9 +3,6 @@ HawkBit 101 Tutorial - curl snippets for copy&paste
 
 The following curl commands assume a hawkBit update server running under http://localhost:8080
 
-This collection is for illustrative purposes only to provide information about Eclipse hawkBit.
-It is provided \"AS IS\" without any warranties and support.
-
 
 Deploy hawkBit setup
 =====================
