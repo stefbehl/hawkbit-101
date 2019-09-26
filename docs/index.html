@@ -35,8 +35,8 @@
         overflow: hidden;
       }
       .hawkbit101 .reveal pre {
-        width: 100%; 
-        box-shadow: none;     
+        width: 100%;
+        box-shadow: none;
       }
       .hawkbit101 blockquote {
         width: 80%;
@@ -59,7 +59,7 @@
         padding: 4px 8px;
         color: #fff;
         margin-top: 10px;
-      }      
+      }
       .hawkbit101 .api.mgmt {
         background-color: green;
       }
@@ -80,7 +80,7 @@
         position: absolute;
         top: 0;
         right: 0;
-      }     
+      }
       .hawkbit101 .copy-to-clipboard textarea {
         position: absolute;
         top: -9999px;
@@ -94,7 +94,7 @@
       .hawkbit101 .copy-to-clipboard input[type='submit']:hover,
       .hawkbit101 .copy-to-clipboard input[type='submit']:active {
         text-decoration: underline;
-        cursor: pointer;    
+        cursor: pointer;
       }
       .hawkbit101 .set-target-token input[type='submit'] {
         background-color: #f6f0f8;
@@ -107,7 +107,7 @@
       .hawkbit101 .set-target-token input[type='submit']:hover,
       .hawkbit101 .set-target-token input[type='submit']:active {
         background-color: #efdff5;
-      }      
+      }
       .hawkbit101 .set-target-token input[type='text'] {
         background-color: #faf7fa;
         border: none;
@@ -119,39 +119,44 @@
     <body class="hawkbit101">
         <div class="reveal">
             <div class="slides">
-            
+
                 <section data-background-image="https://images.unsplash.com/photo-1496867557017-559adb93b339?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1304bcfdaa956c3acad348d06ff059e3&auto=format">
                     <div style="color: white; margin-left: 15em; margin-top: 2em;">
                         <h1 style="font-size: 4em">hawkBit-101</h1>
-                        <h3>&nbsp;Tutorial @ EclipseCon Europe 2018</h3>
+                        <h3>&nbsp;Tutorial @ EclipseCon Europe 2019</h3>
                     </div>
                     <div class="footer" style="position: fixed; bottom: 0; right: 0; text-align: right;">
                       Photo by <a href="https://unsplash.com/photos/zb2vBaHYB2I">Dawid Zawiła</a> on <a href="https://unsplash.com">Unsplash</a>
                     </div>
                 </section>
-                
+
                 <section>
                   <h1>Who we are</h1>
                     <div style="font-size: 1.5em; position:absolute; left:2em; width: 100%;">
                       <div style="display: inline-block;">
                         <a href="https://github.com/stefbehl"><img src="https://avatars2.githubusercontent.com/u/16321153?s=120&v=4" style="border-radius: 50%;" align="left"></a>
-                        <p style="margin-left: 5em; margin-top: 1.2em;">Stefan Behl<br><span style="font-size: 0.8em">Bosch Software Innovations GmbH</span></p>                        
+                        <p style="margin-left: 5em; margin-top: 1.2em;">Stefan Behl<br><span style="font-size: 0.8em">Bosch Software Innovations GmbH</span></p>
                       </div>
                       <br>
                       <div style="display: inline-block;">
                         <a href="https://github.com/schabdo"><img src="https://avatars1.githubusercontent.com/u/18215905?s=120&v=4" style="border-radius: 50%;" align="left"></a>
                         <p style="margin-left: 5em; margin-top: 1.2em;">Dominic Schabel<br><span style="font-size: 0.8em">Bosch Software Innovations GmbH</span></p>
                       </div>
+                      <br>
+                      <div style="display: inline-block;">
+                        <a href="https://github.com/ramannas"><img src="https://avatars0.githubusercontent.com/u/49945739?s=120&v=4" style="border-radius: 50%;" align="left"></a>
+                        <p style="margin-left: 5em; margin-top: 1.2em;">Shruthi Manavalli Ramanna<br><span style="font-size: 0.8em">Bosch Software Innovations GmbH</span></p>
+                      </div>
                     </div>
                 </section>
-                
+
                 <section data-background-image="https://images.unsplash.com/photo-1514388614019-c755c395185c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=52ee84aaf0d189ef9efa9a80ae411457&auto=format&fit=crop&w=1050&q=80">
                   <h1 style="color: white;">Who are you?</h1>
                   <div class="footer" style="position: fixed; bottom: 0; right: 0; text-align: right;">
                     Photo by <a href="https://unsplash.com/photos/KPydzVyWfqg">Christian Chen</a> on <a href="https://unsplash.com">Unsplash</a>
                   </div>
                 </section>
-                
+
                 <section>
                     <h1>Today's mission</h1>
                     <ul style="position:absolute; left:2em;">
@@ -162,7 +167,7 @@
                       <li>Q&nbsp;&&nbsp;A</li>
                     </ul>
                 </section>
-                
+
                 <section>
                     <h1>About</h1>
                     <p>
@@ -176,22 +181,22 @@
                       <div style="justify-self: center;">independent</div>
                    </div>
                 </section>
-                
+
                 <section>
                   <h1>Update Package</h1>
                   <div class="noborder" style="margin-top: 4em;">
                     <img src="resources/images/packagemodel.png">
                   </div>
                 </section>
-                
+
                 <section>
                   <h1>Big Picture</h1>
                   <img src="resources/images/hawkBit_overview.jpg">
                 </section>
-                
+
                 <section>
                   <h1>Tutorial Overview</h1>
-                  <div class="two-columns-eq" style="grid-template-columns: 2fr 3fr">                  
+                  <div class="two-columns-eq" style="grid-template-columns: 2fr 3fr">
                     <ol style="overflow: inherit">
                       <li>Provisioning a device</li>
                       <li>Creating an update</li>
@@ -203,7 +208,7 @@
                     </div>
                   </div>
                 </section>
-                
+
                 <section>
                   <h1>Tutorial Resources</h1>
                   <div>All resources are available in the hawkBit-101 Git repository</div>
@@ -211,16 +216,16 @@
                   <br>
                   <div>Recommendation is to clone the repository</div>
                 </section>
-                
+
                 <section>
                   <h1>Docker Setup</h1>
                   <p>
-                    <a target="_blank" href="https://github.com/stefbehl/hawkbit-101/blob/master/setup/docker-compose-stack.yml">https://github.com/stefbehl/hawkbit-101/blob/master/setup/docker-compose-stack.yml</a>                      
+                    <a target="_blank" href="https://github.com/stefbehl/hawkbit-101/blob/master/setup/docker-compose-stack.yml">https://github.com/stefbehl/hawkbit-101/blob/master/setup/docker-compose-stack.yml</a>
                   </p>
                   <div style="display: grid; grid-template-columns: 40% 60%;">
                     <div>Services:
                       <ul>
-                        <li>hawkBit Update Server v0.2.3</li>
+                        <li>hawkBit Update Server v0.3.0M5</li>
                         <li>hawkBit Device Simulator</li>
                         <li>MySQL database</li>
                         <li>Rabbit MQ</li>
@@ -241,12 +246,12 @@
                         Creating service hawkbit_hawkbit
                         Creating service hawkbit_simulator
                         Creating service hawkbit_rabbitmq
-                        Creating service hawkbit_mysql                          
+                        Creating service hawkbit_mysql
                       </code></pre>
-                    </div>                      
+                    </div>
                   </div>
                 </section>
-                
+
                 <section>
                   <h1>Setup Verification</h1>
                   <div class="two-columns-eq">
@@ -260,7 +265,7 @@
                         </form>
                         <pre><code data-trim>
                           $ curl http://localhost:8080/health
-                          
+
                           {"status":"UP"}
                         </code></pre>
                       </div>
@@ -275,7 +280,7 @@
                         </form>
                         <pre><code data-trim>
                           $ curl http://localhost:8083/health
-                          
+
                           {"status":"UP"}
                         </code></pre>
                       </div>
@@ -290,7 +295,7 @@
                         </code></pre>
                       </div>
                     </div>
-                  </div>                      
+                  </div>
                 </section>
 
                 <section>
@@ -312,7 +317,7 @@
                         </li>
                       </ul>
                     </div>
-                    <div>                      
+                    <div>
                       <div>Open in your browser</div>
                       <ul>
                         <li>
@@ -333,7 +338,7 @@
                   </div><br>
                   <blockquote class="verify" style="font-size: 1.5em">Talk to us if you need help!</blockquote>
                 </section>
-                
+
                 <section>
                   <h6>Part 1</h6>
                   <h1>Provisioning a Device</h1>
@@ -363,7 +368,7 @@
                       <pre><code data-trim>
                         HTTP PUT
                         /rest/v1/system/configs/authentication.targettoken.enabled
-                          
+
                         Accept: application/hal+json
                         Authorization: Basic admin:admin
                         Content-Type: application/json
@@ -395,7 +400,7 @@
                   </div>
                   <blockquote class="verify">Verify in the System Configuration view of the UI that target token authentication is enabled.</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 1, step 2</div>
@@ -412,7 +417,7 @@
                       <pre><code data-trim>
                         HTTP POST
                         /rest/v1/targets
-                          
+
                         Accept: application/hal+json
                         Authorization: Basic admin:admin
                         Content-Type: application/json
@@ -451,7 +456,7 @@
                   </div>
                   <blockquote class="verify">Verify in the Deployment Management view of the UI that the target has been created. Create another target via the UI.</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 1, step 3</div>
@@ -468,7 +473,7 @@
                       <pre><code data-trim>
                           HTTP GET
                           /DEFAULT/controller/v1/{controllerId}
-                          
+
                           Accept: application/hal+json
                           Authorization: TargetToken {targetToken}
                       </code></pre>
@@ -494,9 +499,9 @@
                       </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the state of the target changed from UNKNOWN to REGISTERED.<br>OK, this one is really hard... :-)</blockquote>                  
+                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the state of the target changed from UNKNOWN to REGISTERED.<br>OK, this one is really hard... :-)</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 1, step 4</div>
@@ -513,7 +518,7 @@
                       <pre><code data-trim>
                         HTTP PUT
                         /DEFAULT/controller/v1/{controllerId}/configData
-                        
+
                         Accept: application/hal+json
                         Authorization: TargetToken {targetToken}
                         Content-Type: application/json
@@ -543,9 +548,9 @@
                       <p>You can instruct the device to re-send its (potentially updated) attributes via the UI and Mgmt API.</p>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the device attributes are present.</blockquote>                  
+                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the device attributes are present.</blockquote>
                 </section>
-                
+
                 <section>
                   <h6>Part 2</h6>
                   <h1>Creating an Update</h1>
@@ -558,7 +563,7 @@
                   	</ul>
                   </div>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 2, step 1</div>
@@ -575,7 +580,7 @@
                       <pre><code data-trim>
                         HTTP POST
                         /rest/v1/softwaremodules
-                        
+
                         Accept: application/hal+json
                         Authorization: Basic admin:admin
                         Content-Type: application/json
@@ -612,7 +617,7 @@
                       </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Distribution Management view of the UI that the software module has been created. Create another software module of type "Application" via the UI.</blockquote>                  
+                  <blockquote class="verify">Verify in the Distribution Management view of the UI that the software module has been created. Create another software module of type "Application" via the UI.</blockquote>
                 </section>
 
                 <section>
@@ -632,7 +637,7 @@
                       <pre><code data-trim>
                         HTTP POST
                         /rest/v1/softwaremodules/{moduleId}/artifacts
-                        
+
                         Accept: application/hal+json
                         Authorization: Basic admin:admin
                         Content-Type: multipart/form-data;
@@ -670,9 +675,9 @@
                       </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Upload view of the UI that the artifact is associated with your software module. Upload another artifact for the same software module via the UI.</blockquote>                  
+                  <blockquote class="verify">Verify in the Upload view of the UI that the artifact is associated with your software module. Upload another artifact for the same software module via the UI.</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 2, step 3</div>
@@ -689,7 +694,7 @@
                       <pre><code data-trim>
                         HTTP POST
                         /rest/v1/distributionsets
-                        
+
                         Accept: application/hal+json
                         Authorization: Basic admin:admin
                         Content-Type: application/json
@@ -728,9 +733,9 @@
                       </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Distribution Management view of the UI that the distribution set has been created. Inspect its properties, in particular its type.</blockquote>                  
+                  <blockquote class="verify">Verify in the Distribution Management view of the UI that the distribution set has been created. Inspect its properties, in particular its type.</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 2, step 4</div>
@@ -747,7 +752,7 @@
                       <pre><code data-trim>
                         HTTP POST
                         /rest/v1/distributionsets/{distributionId}/assignedSM
-                        
+
                         Authorization: Basic admin:admin
                         Content-Type: application/json
                         Body:
@@ -770,12 +775,12 @@
                           "errorCode": "hawkbit.server.error.distributionset.modules.unsupported",
                           "message": "Distribution set type does not contain the given module, i.e. is incompatible."
                         }
-                      </code></pre>                        
+                      </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify your software module assignments in the Distributions Management view of the UI.</blockquote>                  
+                  <blockquote class="verify">Verify your software module assignments in the Distributions Management view of the UI.</blockquote>
                 </section>
-                
+
                 <section>
                   <h6>Part 3</h6>
                   <h1>Updating a Single Device</h1>
@@ -789,7 +794,7 @@
                   	</ul>
                   </div>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 3, step 1</div>
@@ -806,7 +811,7 @@
                       <pre><code data-trim>
                         HTTP POST
                         /rest/v1/distributionsets/{distributionId}/assignedTargets/
-                        
+
                         Accept: application/hal+json
                         Authorization: Basic admin:admin
                         Content-Type: application/json
@@ -831,9 +836,9 @@
                     </div>
                     <!--<div>As an alternative, you can also use the API entry point "/rest/v1/targets{{targetId}}/assignedDS" to update a single device.</div>-->
                   </div>
-                  <blockquote class="verify">Verify in the Deployment Management view of the UI that a deployment action is listed in the action history of your device. Maximize the action history of your device.</blockquote>                  
+                  <blockquote class="verify">Verify in the Deployment Management view of the UI that a deployment action is listed in the action history of your device. Maximize the action history of your device.</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 3, step 2</div>
@@ -850,7 +855,7 @@
                       <pre><code data-trim>
                         HTTP GET
                         /DEFAULT/controller/v1/{controllerId}
-                        
+
                         Accept: application/hal+json
                         Authorization: TargetToken {targetToken}
                       </code></pre>
@@ -876,7 +881,7 @@
                     </div>
                   </div>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 3, step 3</div>
@@ -894,7 +899,7 @@
                         HTTP GET
                         /DEFAULT/controller/v1/{controllerId}
                             /deploymentBase/{actionId}
-                        
+
                         Accept: application/hal+json
                         Authorization: TargetToken {targetToken}
                       </code></pre>
@@ -932,9 +937,9 @@
                         </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the action history of the Deployment Management view that the update was retrieved by the device.</blockquote>                  
+                  <blockquote class="verify">Verify in the action history of the Deployment Management view that the update was retrieved by the device.</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 3, step 4</div>
@@ -952,7 +957,7 @@
                         HTTP GET
                         /DEFAULT/controller/v1/{controllerId}
                             /softwaremodules/{moduleId}/artifacts/{filename}
-                        
+
                         Authorization: TargetToken {targetToken}
                       </code></pre>
                       <p>You can configure that devices are allowed to download artifacts w/o providing a security token.</p>
@@ -961,14 +966,14 @@
                       <div>Response</div>
                       <pre><code data-trim>
                         HTTP/1.1 200 OK
-                        
+
                         This is a test update file
                         </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the action history of the Deployment Management view<br>that the device has downloaded the artifact.</blockquote>                  
+                  <blockquote class="verify">Verify in the action history of the Deployment Management view<br>that the device has downloaded the artifact.</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 3, step 5.1</div>
@@ -986,7 +991,7 @@
                         HTTP POST
                         /DEFAULT/controller/v1/{controllerId}
                             /deploymentBase/{actionId}/feedback
-                                                
+
                         Authorization: TargetToken {targetToken}
                         Content-Type: application/json
                         Body:
@@ -1014,9 +1019,9 @@
                       <p>Devices can provide arbitrary feedback (e.g. fine granular progress updates) which does not cause state transitions in the deployment action workflow.</p>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the action history of the Deployment Management view that your progress message appears in the list. Send another feedback message.</blockquote>                  
+                  <blockquote class="verify">Verify in the action history of the Deployment Management view that your progress message appears in the list. Send another feedback message.</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 3, step 5.2</div>
@@ -1034,7 +1039,7 @@
                         HTTP POST
                         /DEFAULT/controller/v1/{controllerId}
                             /deploymentBase/{actionId}/feedback
-                        
+
                         Authorization: TargetToken {targetToken}
                         Content-Type: application/json
                         Body:
@@ -1046,7 +1051,7 @@
                             },
                             "execution": "closed",
                             "details": ["The update was successfully installed."]
-                          }                            
+                          }
                         }
                       </code></pre>
                     </div>
@@ -1058,7 +1063,7 @@
                       <p>This action finishes the deployment action workflow and pushes the action into state "Finished". Further feedback requests are rejected with "HTTP/1.1 410 GONE".</p>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the deployment action is in state "Finished".</blockquote>                  
+                  <blockquote class="verify">Verify in the Deployment Management view of the UI that the deployment action is in state "Finished".</blockquote>
                 </section>
 
                 <section>
@@ -1073,7 +1078,7 @@
                   	</ul>
                   </div>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 4, step 1.1</div>
@@ -1090,7 +1095,7 @@
                       <pre><code data-trim>
                         HTTP PUT
                         /rest/v1/system/configs/authentication.gatewaytoken.enabled
-                        
+
                         Accept: application/hal+json
                         Authorization: Basic admin:admin
                         Content-Type: application/json
@@ -1123,7 +1128,7 @@
                     </div>
                   </div>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 4, step 1.2</div>
@@ -1140,11 +1145,11 @@
                       <pre><code data-trim>
                         HTTP PUT
                         /rest/v1/system/configs/authentication.gatewaytoken.key
-                        
+
                         Accept: application/hal+json
                         Authorization: Basic admin:admin
                         Content-Type: application/json
-                        Body: 
+                        Body:
                         {
                           "value": "e61C6b2B78A674d19304c357a20f1D09"
                         }
@@ -1171,7 +1176,7 @@
                         </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the System Configuration view of the UI that gateway token authentication is enabled and that the correct token is set.</blockquote>                  
+                  <blockquote class="verify">Verify in the System Configuration view of the UI that gateway token authentication is enabled and that the correct token is set.</blockquote>
                 </section>
 
                 <section>
@@ -1190,7 +1195,7 @@
                       <pre><code data-trim>
                         HTTP GET
                         {deviceSimulatorBaseURL}/start
-                        
+
                         Query Parameters:
                           name = emeadevice
                           amount = 15
@@ -1209,7 +1214,7 @@
                       <pre><code data-trim>
                         HTTP GET
                         {deviceSimulatorBaseURL}/start
-                        
+
                         Query Parameters:
                           name = apacdevice
                           amount = 20
@@ -1228,7 +1233,7 @@
                       <pre><code data-trim>
                         HTTP GET
                         {deviceSimulatorBaseURL}/start
-                        
+
                         Query Parameters:
                           name = amerdevice
                           amount = 30
@@ -1241,7 +1246,7 @@
                     <div style="position:relative">
                       <blockquote style="position:absolute;bottom:0;right:0" class="verify">Verify in the Deployment Management view of the UI that the devices are present.</blockquote>
                     </div>
-                  </div>                                    
+                  </div>
                 </section>
 
                 <section>
@@ -1260,7 +1265,7 @@
                       <pre><code data-trim>
                         HTTP POST
                         /rest/v1/rollouts
-                        
+
                         Accept: application/hal+json
                         Authorization: Basic admin:admin
                         Content-Type: application/json
@@ -1274,7 +1279,7 @@
                             "name" : "EMEA_Devices",
                             "description" : "Devices in EMEA",                        HTTP GET
                         {deviceSimulatorBaseURL}/start
-                        
+
                         Query Parameters:
                           name = emeadevice
                           amount = 15
@@ -1282,7 +1287,7 @@
                           api = ddi
                           endpoint = http://hawkbit:8080
                           gatewaytoken = {gatewayToken}
-                            
+
                             "targetFilterQuery" : "name==emea*",
                             "successCondition" : {
                               "condition" : "THRESHOLD",
@@ -1353,7 +1358,7 @@
                       </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Rollout Management view of the UI that the rollout is present. Drill down into the rollout to review the three groups.</blockquote>                  
+                  <blockquote class="verify">Verify in the Rollout Management view of the UI that the rollout is present. Drill down into the rollout to review the three groups.</blockquote>
                 </section>
 
                 <section>
@@ -1372,7 +1377,7 @@
                       <pre><code data-trim>
                         HTTP POST
                         /rest/v1/rollouts/{rolloutId}/start
-                        
+
                         Authorization: Basic admin:admin
                       </code></pre>
                       <p>The rollout has been started. Keep in mind that the devices are being simulated by our Device Simulator. The Device Simulator sends deployment feedback messages on behalf of its devices.</p>
@@ -1384,9 +1389,9 @@
                       </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Rollout Management view of the UI that the rollout is now being processed. Watch the progress bars of the rollout groups.</blockquote>                  
+                  <blockquote class="verify">Verify in the Rollout Management view of the UI that the rollout is now being processed. Watch the progress bars of the rollout groups.</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 4, step 5</div>
@@ -1403,7 +1408,7 @@
                       <pre><code data-trim>
                         HTTP POST
                         /rest/v1/targetfilters
-                        
+
                         Accept: application/hal+json
                         Authorization: Basic admin:admin
                         Content-Type: application/json
@@ -1411,7 +1416,7 @@
                         {
                           "query": "name==emeadevice*",
                           "name" : "EMEA_Devices"
-                        }                        
+                        }
                       </code></pre>
                       <p>This will create a new filter which selects all devices matching the specified name prefix.</p>
                     </div>
@@ -1424,7 +1429,7 @@
                           [...]
                           "name": "EMEA_Devices",                        HTTP GET
                         {deviceSimulatorBaseURL}/start
-                        
+
                         Query Parameters:
                           name = emeadevice
                           amount = 15
@@ -1432,7 +1437,7 @@
                           api = ddi
                           endpoint = http://hawkbit:8080
                           gatewaytoken = {gatewayToken}
-                          
+
                           "query": "name==emeadevice*",
                           "autoAssignDistributionSet": null,
                           "_links": {
@@ -1447,10 +1452,10 @@
                       </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Target Filter Management view of the UI that the filter is there. Select the filter and review the list of devices.</blockquote>                  
-                  <blockquote class="verify">Create another filter via the UI. Play around with the auto completion function to get familiar with the FIQL syntax.</blockquote>                  
+                  <blockquote class="verify">Verify in the Target Filter Management view of the UI that the filter is there. Select the filter and review the list of devices.</blockquote>
+                  <blockquote class="verify">Create another filter via the UI. Play around with the auto completion function to get familiar with the FIQL syntax.</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 4, step 6</div>
@@ -1467,7 +1472,7 @@
                       <pre><code data-trim>
                         HTTP POST
                         /rest/v1/targetfilters/1/autoAssignDS
-                        
+
                         Accept: application/hal+json
                         Authorization: Basic admin:admin
                         Content-Type: application/json
@@ -1500,9 +1505,9 @@
                       </code></pre>
                     </div>
                   </div>
-                  <blockquote class="verify">Verify in the Target Filter Management view of the UI that the filter is now associated with the distribution set. Let's now create some new devices matching our filter...</blockquote>                  
+                  <blockquote class="verify">Verify in the Target Filter Management view of the UI that the filter is now associated with the distribution set. Let's now create some new devices matching our filter...</blockquote>
                 </section>
-                
+
                 <section>
                   <div class="current-page">
                     <div>Part 4, step 7</div>
@@ -1519,7 +1524,7 @@
                       <pre><code data-trim>
                         HTTP GET
                         {deviceSimulatorBaseURL}/start
-                        
+
                         Query Parameters:
                           name = emeadevice
                           amount = 30
@@ -1534,7 +1539,7 @@
                       <div>Response</div>
                       <pre><code data-trim>
                         HTTP/1.1 200 OK
-                        
+
                         Updated 30 DDI_HTTP connected targets!
                       </code></pre>
                     </div>
@@ -1542,7 +1547,7 @@
                   <blockquote class="verify">Verify in the Target Filter Management view of the UI that the filter captures the new devices. Watch the state of the devices.</blockquote>
                   <blockquote class="verify">Try to understand the difference between a "Rollout" and an "Auto Assignment"!</blockquote>
                 </section>
-                                
+
                 <section>
                   <h1>Outlook</h1>
                   <ul>
@@ -1559,7 +1564,7 @@
                     Photo by <a href="https://unsplash.com/photos/ukzHlkoz1IE">Austin Chan</a> on <a href="https://unsplash.com">Unsplash</a>
                   </div>
                 </section>
-                
+
                 <section>
                   <h1>Thank you</h1>
                   <div style="font-size: 1.5em; position:absolute; left:2em;">
@@ -1569,10 +1574,10 @@
                     <p><i class="fa fa-book-open fa-fw"></i>&nbsp;<a href="http://www.eclipse.org/hawkbit">eclipse.org/hawkbit</a></p>
                   </div>
                 </section>
-                
+
             </div>
         </div>
-        
+
         <script src="lib/js/head.min.js"></script>
         <script src="js/reveal.js"></script>
 
@@ -1627,19 +1632,19 @@
 
             const TARGET_TOKEN = "REPLACE_WITH_TARGET_TOKEN";
             function copyToClipboard(inputElem) {
-            	var value = inputElem.value; 
+            	var value = inputElem.value;
             	if (value) {
                 	var targetToken = localStorage.getItem(TARGET_TOKEN);
                 	if (targetToken && value.indexOf(TARGET_TOKEN) >= 0) {
                 		console.log("Injecting target token " + targetToken);
-						inputElem.value = value.replace(TARGET_TOKEN, targetToken);                		                		
+						inputElem.value = value.replace(TARGET_TOKEN, targetToken);
                 	}
                 	inputElem.select();
                 	document.execCommand("copy");
             	}
             	return false;
             }
-            
+
         </script>
 
     </body>

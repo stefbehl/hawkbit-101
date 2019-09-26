@@ -43,6 +43,7 @@ services:
         condition: on-failure
     environment:
     - 'HAWKBIT_DEVICE_SIMULATOR_AUTOSTARTS_[0]_TENANT='
+    - 'HAWKBIT_DEVICE_SIMULATOR_AUTOSTARTS_[0]_AMOUNT=0'
     - 'SPRING_RABBITMQ_VIRTUALHOST=/'
     - 'SPRING_RABBITMQ_HOST=rabbitmq'
     - 'SPRING_RABBITMQ_PORT=5672'
