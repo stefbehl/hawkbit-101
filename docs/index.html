@@ -144,7 +144,6 @@
                       </div>
                       <br>
                       <div style="display: inline-block;">
-                        <a href="https://github.com/ramannas"><img src="https://avatars0.githubusercontent.com/u/49945739?s=120&v=4" style="border-radius: 50%;" align="left"></a>
                         <p style="margin-left: 5em; margin-top: 1.2em;">Shruthi Manavalli Ramanna<br><span style="font-size: 0.8em">Bosch Software Innovations GmbH</span></p>
                       </div>
                     </div>
@@ -253,37 +252,39 @@
                 </section>
 
                 <section>
+                  <h1>Verify Containers</h1>
+                    <div class="api-request" style="display: inline-block;">
+                      <form class="copy-to-clipboard" style="top:-10px" onsubmit="return copyToClipboard(this.buffer)" action="#">
+                  	    <textarea name="buffer">
+                        docker stack services hawkbit</textarea>
+                        <input type="submit" value="copy2clipboard">
+                      </form>
+                      <pre><code data-trim>
+                        $ docker stack services hawkbit
+
+                        ID                  NAME                MODE                REPLICAS            IMAGE
+                        1w1606hovhqt        hawkbit_simulator   replicated          1/1                 hawkbit/hawkbit-device-simulator:latest
+                        bc70f9c7hkfs        hawkbit_mysql       replicated          1/1                 mysql:5.7
+                        pwafzvwp6b0p        hawkbit_rabbitmq    replicated          1/1                 rabbitmq:3-management
+                        tljp62a8g27j        hawkbit_hawkbit     replicated          1/1                 hawkbit/hawkbit-update-server:latest-mysql
+                      </code></pre>
+                    </div>
+                  <div>
+                    Might take a while until all containers are present if you start stack the first time
+                  </div>
+                </section>
+
+                <section>
                   <h1>Setup Verification</h1>
                   <div class="two-columns-eq">
                     <div>
-                      <h3>Update Server</h3>
+                      <h3>Update Server (via Browser)</h3>
                       <div><a target="_blank" href="http://localhost:8080">http://localhost:8080</a></div>
-                      <div class="api-request">
-                        <form class="copy-to-clipboard" style="top:-30px" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                    	  <textarea name="buffer">curl -i http://localhost:8080/health</textarea>
-                          <input type="submit" value="copy2clipboard">
-                        </form>
-                        <pre><code data-trim>
-                          $ curl http://localhost:8080/health
-
-                          {"status":"UP"}
-                        </code></pre>
-                      </div>
                     </div>
                     <div>
-                      <h3>Device Simulator</h3>
-                      <div><a target="_blank" href="http://localhost:8080">http://localhost:8083</a></div>
-                      <div class="api-request">
-                        <form class="copy-to-clipboard" style="top:-30px" onsubmit="return copyToClipboard(this.buffer)" action="#">
-                    	  <textarea name="buffer">curl -i http://localhost:8083/health</textarea>
-                          <input type="submit" value="copy2clipboard">
-                        </form>
-                        <pre><code data-trim>
-                          $ curl http://localhost:8083/health
-
-                          {"status":"UP"}
-                        </code></pre>
-                      </div>
+                      <h3>Device Simulator (via Browser)</h3>
+                      <div><a target="_blank" href="http://localhost:8083">http://localhost:8083</a></div>
+                      <br>
                       <div>In case of a broken simulator, restart the Docker container:</div>
                       <div class="api-request">
                         <form class="copy-to-clipboard" style="top:-30px" onsubmit="return copyToClipboard(this.buffer)" action="#">
@@ -1551,11 +1552,11 @@
                 <section>
                   <h1>Outlook</h1>
                   <ul>
-                    <li>Support JDK 11</li>
-                    <li>Vaadin 8</li>
-                    <li>Custom key/value pairs for targets (<a href="https://github.com/eclipse/hawkbit/issues/737">#737</a>)</li>
-                    <li>Small improvements of rollout management</li>
-                    <li>JUnit 5, Java &gt;= 9 </li>
+                    <li>Vaadin 8 (<a href="https://github.com/eclipse/hawkbit/issues/880">#880</a>)</li>
+                    <li>Release 0.3.0 (<a href="https://github.com/eclipse/hawkbit/issues/784">#784</a>)</li>
+                    <li>Prioritization of updates (<a href="https://github.com/eclipse/hawkbit/issues/863">#863</a>)</li>
+                    <li>Integration with other device inventories (<a href="https://github.com/eclipse/hawkbit/issues/796">#796</a>)</li>
+                    <li>Support of new <a href="https://projects.eclipse.org/projects/iot.packages">Eclipse IoT Packages</a> project</li>
                   </ul>
                 </section>
 
